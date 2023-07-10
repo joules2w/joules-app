@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback, Animated, Image } from 'react-native';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const ProfileScreen = ({ logout }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
