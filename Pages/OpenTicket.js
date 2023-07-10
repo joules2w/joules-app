@@ -146,8 +146,6 @@ const OpenTicket = ({ navigation }) => {
               />
               </View>
                           
-                           
-
             <TextInput
               style={styles.textinput}
               placeholder='Search with ticket number here..'

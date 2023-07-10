@@ -68,9 +68,9 @@ const SideMenu = ({ interviewpanel, home, sparsh,Job_portal }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    margin:10
   },
   menuButton: {
     paddingVertical: 8,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: 'black',
-    fontSize: 24,
+    fontSize: 30,
   },
 });
 

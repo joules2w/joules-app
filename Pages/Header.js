@@ -1,34 +1,41 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, Text, Dimensions } from 'react-native';
 
 import ProfileScreen from './ProfileScreen';
+import SideMenu from './SideMenu';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const Header = (props) => {
     return (
         <View style={styles.header}>
-          <Image style={styles.logo} source={require('./Images/logo.png')} />
-            {/* <TouchableOpacity> */}
-          <View style={styles.profileContainer}>
-            {/* <Image style={styles.profileImage} source={require('./Images/profile.png')} /> */}
-            {/* <Text style={styles.profileName}>John Doe</Text> */}
+            <View style={styles.adjust}>
+            <SideMenu />
+            <Image style={styles.logo} source={require('./Images/logo.png')} />
+            </View>
+          
             <ProfileScreen logout={props.logout} />
-          </View>
-         
-          {/* </TouchableOpacity> */}
+      
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     header: {
+        width:windowWidth,
         flexDirection: 'row',
-        alignItems: 'center',
-        width : '75%',
-        marginLeft : '10%'
+        justifyContent:'space-between'
+
+      },
+      adjust:{
+        flexDirection:'row',
+         
+    
       },
       logo: {
-        width: 90,
-        height: 90,
+        width: 80,
+        height: 80,
       },
       profileContainer: {
         flexDirection: 'row',

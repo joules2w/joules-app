@@ -389,6 +389,7 @@ modalView: {
   tabText: {
     fontSize: 16,
     color : 'black',
+    marginLeft : '8%',
   },
   text : {
     color : 'black',

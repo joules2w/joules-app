@@ -31,10 +31,10 @@ const ProfileScreen = ({ logout }) => {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-            <View style={{flexDirection : 'row', width : '50%', justifyContent : 'space-around'}} >
+         
         <Image style={styles.profileImage} source={require('./Images/profile.png')} />
           <Text style = {styles.text}>Profile</Text>
-          </View>
+         
         </TouchableOpacity>
   
         <Modal visible={isMenuOpen} transparent animationType="fade">
@@ -59,19 +59,20 @@ const ProfileScreen = ({ logout }) => {
   
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent:'center',
+      alignItems:'flex-end',
+      margin:20
     },
     profileImage: {
         width: 30,
         height: 30,
-        marginRight: 5,
+        marginRight:10
       },
     menuButton: {
-      paddingHorizontal: 16,
-      paddingVertical: 8,
       backgroundColor: 'white',
+      flexDirection:'row',
+      justifyContent:'space-around',
+      alignItems:'center'
     },
     overlay: {
       flex: 1,

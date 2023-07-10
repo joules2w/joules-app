@@ -12,7 +12,7 @@ const Otp = ({ navigation }) => {
   const handleSubmit = () => {
     if (otp === '123') {
       Alert.alert('Success', 'OTP verification successful!');
-      navigation.navigate('Job_Portal');
+      navigation.navigate('Home');
       // navigation.navigate('Sparsh');
     } else {
       Alert.alert('Error', 'Invalid OTP!');

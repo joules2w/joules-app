@@ -83,7 +83,7 @@ const Home = ({ navigation }) => {
         <View style = {styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={{flexDirection : 'row', width : '80%'}}>
-                <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} />
+                {/* <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} /> */}
                 <Header logout={logout} />
                 </View>
                 <Text style={styles.texthead01}>Top 6 High Paying Panel Member Jobs</Text>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         textAlign : 'left',
         marginLeft : '8%',
         marginRight : '8%',
-        marginBottom : '8%',
+        // marginBottom : '3%',
         textAlign : 'justify',
     },
     footer : {
