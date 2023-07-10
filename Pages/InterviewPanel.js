@@ -63,13 +63,18 @@ const InterViewPanel = ({ navigation }) => {
         navigation.navigate('Sparsh')
     }
 
+    const home = () => {
+        navigation.navigate('Home')
+    }
+
+
 
     return (
         <View style={styles.container}>
             <ScrollView>
             <View style={{flexDirection : 'row', width : '80%'}}>
-                <SideMenu interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} />
-                <Header logout={logout} />
+                {/* <SideMenu interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} /> */}
+                <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 </View>
                 <ImageBackground style={styles.background} source={require('./Images/background.png')}>
                     <Text style={styles.texthead01}>Interview Panel</Text>

@@ -3,7 +3,6 @@ import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from '
 
 import Header from "./Header";
 import Footer from "./Footer";
-import MenuBar from './SideMenu';
 
 const Home = ({ navigation }) => {
 
@@ -79,12 +78,17 @@ const Home = ({ navigation }) => {
         const sparsh = () => {
             navigation.navigate('Sparsh')
         }
+
+        const home = () => {
+            navigation.navigate('Home')
+        }
+
     return (
         <View style = {styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={{flexDirection : 'row', width : '80%'}}>
                 {/* <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} /> */}
-                <Header logout={logout} />
+                <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 </View>
                 <Text style={styles.texthead01}>Top 6 High Paying Panel Member Jobs</Text>
                 <Text style={styles.texthead02}>If you're looking to apply for a job, it's important to know which jobs are in high demand and frequently applied for. Here are the top 6 frequently applied jobs that you might want to consider:</Text>

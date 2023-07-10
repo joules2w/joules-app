@@ -11,7 +11,7 @@ const Header = (props) => {
     return (
         <View style={styles.header}>
             <View style={styles.adjust}>
-            <SideMenu />
+            <SideMenu interviewpanel={props.interviewpanel} home={props.home} jobportal={props.jobportal} sparsh={props.sparsh} />
             <Image style={styles.logo} source={require('./Images/logo.png')} />
             </View>
           

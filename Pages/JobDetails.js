@@ -77,27 +77,31 @@ const JobDetailScreen = ({ route, navigation }) => {
     };
 
     const logout = () =>{
-      navigation.navigate('Login')
-      }
-  
-      const interviewpanel = () =>{
-          navigation.navigate('InterviewPanel')
-      }
-  
-      const jobportal = () => {
-          navigation.navigate('Job_Portal')
-      }
-  
-      const sparsh = () => {
-          navigation.navigate('Sparsh')
-      }
+        navigation.navigate('Login')
+        }
+    
+        const interviewpanel = () =>{
+            navigation.navigate('InterviewPanel')
+        }
+    
+        const jobportal = () => {
+            navigation.navigate('Job_Portal')
+        }
+    
+        const sparsh = () => {
+            navigation.navigate('Sparsh')
+        }
+
+        const home = () => {
+            navigation.navigate('Home')
+        }
 
   return (
     <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={{flexDirection : 'row', width : '80%'}}>
-                <MenuBar interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} />
-                <Header logout={logout} />
+                {/* <MenuBar interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} /> */}
+                <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 </View>
       <Text style={styles.texthead}>{jobs.title}</Text>
       <Text style={styles.text}>Job created on 23 August</Text>

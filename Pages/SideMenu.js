@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback, Animated } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const SideMenu = ({ interviewpanel, home, sparsh,Job_portal }) => {
+const SideMenu = ({ interviewpanel, home, sparsh, jobportal }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const animatedValue = new Animated.Value(0);
 
@@ -47,7 +47,7 @@ const SideMenu = ({ interviewpanel, home, sparsh,Job_portal }) => {
           <TouchableOpacity onPress={home}>
             <Text style={styles.sidetext}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={Job_portal}>
+          <TouchableOpacity onPress={jobportal}>
             <Text style={styles.sidetext}>Job Portal</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={interviewpanel}>

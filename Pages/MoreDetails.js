@@ -12,28 +12,32 @@ const { jobs } = route.params;
 
 
 const logout = () =>{
-    navigation.navigate('Login')
-    }
+  navigation.navigate('Login')
+  }
 
-    const interviewpanel = () =>{
-        navigation.navigate('InterviewPanel')
-    }
+  const interviewpanel = () =>{
+      navigation.navigate('InterviewPanel')
+  }
 
-    const jobportal = () => {
-        navigation.navigate('Job_Portal')
-    }
+  const jobportal = () => {
+      navigation.navigate('Job_Portal')
+  }
 
-    const sparsh = () => {
-        navigation.navigate('Sparsh')
-    }
+  const sparsh = () => {
+      navigation.navigate('Sparsh')
+  }
+
+  const home = () => {
+      navigation.navigate('Home')
+  }
 
 
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={{flexDirection : 'row', width : '80%'}}>
-                <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} />
-                <Header logout={logout} />
+                {/* <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} /> */}
+                <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 </View>
             <ImageBackground style={styles.background} source={require('./Images/background.png')}>
                 <View style={{ flexDirection : 'row', marginRight : '5%'}}>

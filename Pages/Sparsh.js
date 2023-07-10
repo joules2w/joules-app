@@ -69,12 +69,16 @@ const Sparsh = ({ navigation }) => {
         navigation.navigate('Sparsh')
     }
 
+    const home = () => {
+        navigation.navigate('Home')
+    }
+
   return (
     <View style={styles.container}>
       <ScrollView>
       <View style={{flexDirection : 'row', width : '80%'}}>
-                <MenuBar interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} />
-                <Header logout={logout} />
+                {/* <MenuBar interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} /> */}
+                <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 </View>
         <ImageBackground
           source={require('./Images/background.png')}
