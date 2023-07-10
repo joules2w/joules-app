@@ -52,17 +52,21 @@ const Filter = () => {
       <Modal visible={isModalVisible} transparent animationType="fade">
         <View style={styles.modalBackdrop}>
           <View style={styles.modalContent}>
-            <View style={{ flexDirection : 'row', justifyContent : 'space-between', width : '100%' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
               <Text style={styles.texthead01}>FilterBy</Text>
               <TouchableOpacity onPress={resetFilter}>
                 <Text style={styles.reset}>Reset</Text>
               </TouchableOpacity>
             </View>
             <Text style={styles.texthead}>Experience</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text>{formatExperienceValue(experienceRange[0])}</Text>
+              <Text>{formatExperienceValue(experienceRange[1])}</Text>
+            </View>
             <MultiSlider
               values={experienceRange}
               min={0}
-              max={10}
+              max={15}
               step={1}
               allowOverlap={false}
               snapped
@@ -70,24 +74,18 @@ const Filter = () => {
               onValuesChange={(values) => setExperienceRange(values)}
               minMarkerOverlapDistance={10}
               customMarkerLeft={(e) => {
-                return (
-                  <View>
-                    <Text style={styles.markerText}>{formatExperienceValue(experienceRange[0])}</Text>
-                    <Text style={styles.rangeText}>{formatExperienceValue(experienceRange[100])}</Text>
-                  </View>
-                );
+                return <View />;
               }}
               customMarkerRight={(e) => {
-                return (
-                  <View>
-                    <Text style={styles.markerText}>{formatExperienceValue(experienceRange[1])}</Text>
-                    <Text style={styles.rangeText}>{formatExperienceValue(experienceRange[10])}</Text>
-                  </View>
-                );
+                return <View />;
               }}
             />
 
             <Text style={styles.texthead}>Salary</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text>{formatSalaryValue(salaryRange[0])}</Text>
+              <Text>{formatSalaryValue(salaryRange[1])}</Text>
+            </View>
             <MultiSlider
               values={salaryRange}
               min={0}
@@ -99,20 +97,10 @@ const Filter = () => {
               onValuesChange={(values) => setSalaryRange(values)}
               minMarkerOverlapDistance={10}
               customMarkerLeft={(e) => {
-                return (
-                  <View>
-                    <Text style={styles.markerText}>{formatSalaryValue(salaryRange[0])}</Text>
-                    <Text style={styles.rangeText}>{formatSalaryValue(salaryRange[0])}</Text>
-                  </View>
-                );
+                return <View />;
               }}
               customMarkerRight={(e) => {
-                return (
-                  <View>
-                    <Text style={styles.markerText}>{formatSalaryValue(salaryRange[1])}</Text>
-                    <Text style={styles.rangeText}>{formatSalaryValue(salaryRange[1])}</Text>
-                  </View>
-                );
+                return <View />;
               }}
             />
 
@@ -120,7 +108,7 @@ const Filter = () => {
             <TextInput
               style={styles.textinput}
               placeholder="Enter location"
-              placeholderTextColor='gray'
+              placeholderTextColor="gray"
               value={location}
               onChangeText={setLocation}
             />
@@ -142,13 +130,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterButton: {
-    // backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
   },
   filterButtonText: {
     color: 'green',
-    // fontSize: 16,
   },
   modalBackdrop: {
     flex: 1,
@@ -163,52 +149,38 @@ const styles = StyleSheet.create({
     width: '70%',
     marginHorizontal: '4%',
   },
-  texthead : {
-    color : 'black',
-    fontWeight : 'bold',
-    fontSize : 18
+  texthead: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
-  texthead01 : {
-    color : 'black',
-    fontWeight : 'bold',
-    fontSize : 20
+  texthead01: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
-  slider : {
-    width : '100%',
-    height : 40,
-  },
-  text : {
-    color : 'black'
-  },
-  textinput : {
-    borderWidth : 1,
-    borderRadius : 10,
-    borderColor : 'gray',
-    color : 'black'
-  },
-  filterbutton : {
-    backgroundColor : '#5F9EA0',
-    color : 'black',
-    width : '40%',
-    alignSelf : 'center',
-    marginTop : '5%',
-    borderRadius : 5,
-    height : 30,
-  },
-  reset : {
-    color : 'red'
-  },
-  markerText: {
+  textinput: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'gray',
     color: 'black',
   },
-  rangeText: {
-    color: 'gray',
-    fontSize: 12,
-    textAlign: 'center',
+  filterbutton: {
+    backgroundColor: '#5F9EA0',
+    color: 'black',
+    width: '40%',
+    alignSelf: 'center',
+    marginTop: '5%',
+    borderRadius: 5,
+    height: 30,
+  },
+  reset: {
+    color: 'red',
   },
 });
 
 export default Filter;
+
 
 
 
