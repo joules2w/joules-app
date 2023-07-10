@@ -31,7 +31,7 @@ const ProfileScreen = ({ logout }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-        <View style={{ flexDirection: 'row', width: '50%', justifyContent: 'space-around' }}>
+        <View style={{ flexDirection: 'row',  justifyContent:'space-between' }}>
           <Image style={styles.profileImage} source={require('./Images/profile.png')} />
           <Text style={styles.text}>Profile</Text>
         </View>
@@ -60,7 +60,7 @@ const ProfileScreen = ({ logout }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   profileImage: {
