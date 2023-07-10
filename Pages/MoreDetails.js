@@ -164,7 +164,7 @@ const MoreDetails = () => {
             </View>
           </View>
         </View>
-        {/* <Footer /> */}
+        <Footer />
       </ScrollView>
     </View>
   )
