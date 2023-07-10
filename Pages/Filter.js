@@ -13,7 +13,7 @@ const Filter = () => {
   };
 
   const resetFilter = () => {
-    setExperienceRange([0, 10]);
+    setExperienceRange([0, 15]);
     setSalaryRange([0, 100]);
     setLocation('');
   };

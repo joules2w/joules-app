@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width : '75%',
-        marginLeft : '10%'
+        marginLeft : '10%',
+        
       },
       logo: {
         width: 90,
