@@ -150,7 +150,7 @@ const OpenTicket = ({ navigation }) => {
 
             <TextInput
               style={styles.textinput}
-              placeholder='search with ticket number here..'
+              placeholder='Search with ticket number here..'
               keyboardType='numeric'
               maxLength={10}
               placeholderTextColor='gray'
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
       },
       tabText: {
         fontSize: 16,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         color : 'black',
       },
       modalView: {
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
       },
       textStyle: {
         color: 'black',
-        fontWeight: 'bold',
+        fontWeight: "bold",
         paddingHorizontal:10,
       },
       button3: {
@@ -263,7 +263,6 @@ const styles = StyleSheet.create({
       buttonText3: {
         color: 'black',
         fontSize: 16,
-        fontWeight: '30',
         textAlign: 'center',
       },
       textinput : {
@@ -298,25 +297,21 @@ const styles = StyleSheet.create({
       paddingHorizontal : 10,
       borderRadius : 8,
       fontSize : 16,
-      fontWeight:10,
       backgroundColor: '#FFEAE9'
     },
     texthead06 : {
       marginLeft : 110,
       color:'black',
       fontSize : 12,
-      fontWeight:10,
     },
     heading01 : {  
         fontSize: 18,  
-        fontWeight: '800', 
         marginLeft : 20, 
         marginBottom: 8, 
         color : 'black',
     },  
     heading02 : {  
         fontSize: 15,  
-        fontWeight: '60',  
         marginBottom: 13, 
         marginLeft : 20, 
         color : 'black',
