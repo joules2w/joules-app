@@ -4,10 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from './Pages/LoginScreen';
 import OtpScreen from './Pages/OtpScreen';
+import Home from './Pages/Home';
 import Job_PortalScreen from './Pages/Job_PortalScreen';
-import DropdownMenu from './Pages/Dropdown';
 import MyReferrals from './Pages/My_referrals';
-import InteractiveDeveloper from './Pages/InteractiveDevelop';
 import InterviewPanel from './Pages/InterviewPanel';
 import MoreDetails from './Pages/MoreDetails';
 import SideMenu from './Pages/SideMenu';
@@ -15,7 +14,9 @@ import ProfileScreen from './Pages/ProfileScreen';
 import AssignPanelMember from './Pages/AssignPanelMember';
 import Sparsh from './Pages/Sparsh';
 import Ticket from './Pages/ticket';
-import TimeandDate from './Pages/TimeandDate';
+import Other from './Pages/Other';
+import JobDetails from './Pages/JobDetails';
+import OpenTicket from './Pages/OpenTicket';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,10 +26,9 @@ const App = () => {
       <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown : false }} />
         <Stack.Screen name='Otp' component={OtpScreen} options={{ headerShown : false }} />
+        <Stack.Screen name='Home' component={Home} options={{ headerShown : false }} />
         <Stack.Screen name='Job_Portal' component={Job_PortalScreen} options={{ headerShown : false }} />
-        <Stack.Screen name='Dropdown' component={DropdownMenu} />
         <Stack.Screen name='myreferral' component={MyReferrals} options={{ headerShown : false }} />
-        <Stack.Screen name='interactivedeveloper' component={InteractiveDeveloper} options={{ headerShown : false }} />
         <Stack.Screen name='InterviewPanel' component={InterviewPanel} options={{ headerShown : false }} />
         <Stack.Screen name='MoreDetails' component={MoreDetails} options={{ headerShown : false }} />
         <Stack.Screen name='SideMenu' component={SideMenu} options={{ headerShown : false }} />
@@ -36,7 +36,9 @@ const App = () => {
         <Stack.Screen name='AssignPanelMember' component={AssignPanelMember} options={{ headerShown : false }} />
         <Stack.Screen name='Sparsh' component={Sparsh} options={{ headerShown : false }} />
         <Stack.Screen name='ticket' component={Ticket} options={{ headerShown : false }} />
-        <Stack.Screen name='DateTime' component={TimeandDate} options={{ headerShown: false }} />
+        <Stack.Screen name="Other" component={Other} options={{ headerShown : false }} />
+        <Stack.Screen name='JobDetail' component={JobDetails} options={{ headerShown : false }} />
+        <Stack.Screen name='OpenTicket' component={OpenTicket} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

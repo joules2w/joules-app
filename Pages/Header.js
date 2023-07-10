@@ -1,16 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
 
-const Header = () => {
+import ProfileScreen from './ProfileScreen';
+
+const Header = (props) => {
     return (
         <View style={styles.header}>
           <Image style={styles.logo} source={require('./Images/logo.png')} />
-          <TouchableOpacity>
+            {/* <TouchableOpacity> */}
           <View style={styles.profileContainer}>
-            <Image style={styles.profileImage} source={require('./Images/profile.png')} />
-            <Text style={styles.profileName}>Profile</Text>
+            {/* <Image style={styles.profileImage} source={require('./Images/profile.png')} /> */}
+            {/* <Text style={styles.profileName}>John Doe</Text> */}
+            <ProfileScreen logout={props.logout} />
           </View>
-          </TouchableOpacity>
+         
+          {/* </TouchableOpacity> */}
         </View>
     );
 }
@@ -19,17 +23,12 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        width:'70%',
-        color:'black',
-        marginBottom: 10,
+        width : '75%',
+        marginLeft : '10%'
       },
       logo: {
-        width: 100,
-        height: 100,
-        // marginLeft : '10%',
-        marginTop: -15,
-        marginRight:25,
+        width: 90,
+        height: 90,
       },
       profileContainer: {
         flexDirection: 'row',
@@ -38,18 +37,13 @@ const styles = StyleSheet.create({
       profileImage: {
         width: 30,
         height: 30,
-        marginRight: 5,
       },
       profileName: {
         fontSize: 16,
         fontWeight: 'bold',
-        marginRight : '8%',
-        color:'black',
+        color : 'black'
       },
-});
+})
 
 
 export default Header;
-
-
-

@@ -1,31 +1,26 @@
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, Modal, Pressable,  useWindowDimensions , Picker, SafeAreaView, TouchableHighlight, Text, View, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { StyleSheet, ImageBackground, Modal, Pressable, Dimensions, useWindowDimensions, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMugSaucer } from '@fortawesome/free-solid-svg-icons/faMugSaucer'
-import { AntDesign } from '@expo/vector-icons'; // for Instagram icon
-import { Feather } from '@expo/vector-icons';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
-import { SelectList } from 'react-native-dropdown-select-list'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { FaSearch } from 'react-icons/fa';
-import { IonItem, IonList, IonSelect, IonSelectOption } from '@ionic/react';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { TabView, SceneMap } from 'react-native-tab-view';
-import { TouchableWithoutFeedback} from 'react-native'
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SceneMap } from 'react-native-tab-view';
 
 import Header from './Header';
 import Footer from './Footer';
 import SideMenu from './SideMenu';
+import MenuBar from './SideMenu'
 
 const Sparsh = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [priority, setPriority] = useState('');
+
+  const [activeTab, setActiveTab] = useState('Tab1');
+
+  const handleTabPress = (tabName) => {
+    setActiveTab(tabName);
+  };
 
 
   const [selected, setSelected] = React.useState([]);
@@ -58,38 +53,32 @@ const Sparsh = ({ navigation }) => {
     setSelected(values);
   };
 
-  const FirstRoute = () => (
-    <View style={{flexDirection : 'row', width : 70}}  />
-    
-  );
-  
-  const SecondRoute = () => (
-    <View  style={{flexDirection : 'row', width : 70}} />
-  );
-  
-  const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-  });
+  const logout = () =>{
+    navigation.navigate('Login')
+    }
 
-  const layout = useWindowDimensions();
+    const interviewpanel = () =>{
+        navigation.navigate('InterviewPanel')
+    }
 
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'Open Ticket' },
-    { key: 'second', title: 'Closed Ticket' },
-  ]);
+    const jobportal = () => {
+        navigation.navigate('Job_Portal')
+    }
+
+    const sparsh = () => {
+        navigation.navigate('Sparsh')
+    }
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={{flexDirection : 'row', width : '80%' }}>
-          <SideMenu />
-        <Header />
-        </View>
+      <View style={{flexDirection : 'row', width : '80%'}}>
+                <MenuBar interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} />
+                <Header logout={logout} />
+                </View>
         <ImageBackground
           source={require('./Images/background.png')}
-          style={styles.backgroundImage}
+          style={styles.background}
         >
           <Text style={styles.texthead02}>Sparsh</Text>
           <Text style={styles.texthead05}>
@@ -99,30 +88,33 @@ const Sparsh = ({ navigation }) => {
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ticket')}>
       <Text style={styles.button2}>Create New Ticket</Text>
     </TouchableOpacity>
-                  
-              
-  <TabView
-  navigationState={{ index, routes }}
-  onIndexChange={setIndex}
-  renderScene={SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-  })}
-/>
-                  
-                  
-<View style={styles.centeredView}>
-<Modal
-  animationType="slide"
-  transparent={true}
-  visible={modalVisible}
-  onRequestClose={() => {
-    Alert.alert('Modal has been closed.');
-    setModalVisible(!modalVisible);
-  }}>
-                <View style={styles.centeredView}>
-                  <View style={styles.modalView} >
-                  <RadioButton.Group onValueChange={value => setPriority(value)} value={priority}>
+
+        <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]}
+          onPress={() => handleTabPress('Tab1')}
+        >
+          <Text style={styles.tabText}>Open Ticket</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]}
+          onPress={() => handleTabPress('Tab2')}
+        >
+          <Text style={styles.tabText}>Close Ticket</Text>
+        </TouchableOpacity>
+      </View>
+
+      {activeTab === 'Tab1' && (
+        <View>
+          <Modal animationType="slide" transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <View>
+            <View style={styles.modalView} >
+            <RadioButton.Group onValueChange={value => setPriority(value)} value={priority}>
                   <View style={styles.radioItem}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <RadioButton color="red" value="high" />
@@ -142,59 +134,52 @@ const Sparsh = ({ navigation }) => {
                     </View>
                   </View>
                 </RadioButton.Group>
-
-                    <Pressable
-                      style={[styles.button, styles.buttonClose]}
-                      onPress={() => setModalVisible(!modalVisible)}>
-                      <Text style={styles.textStyle}>Filter</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              </Modal>
-              <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)} >
+              <Pressable style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.textStyle}>Filter</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+          <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)} >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={[styles.textStyle, { marginRight: 150 }]}>Ticket Priority</Text>
                 <Icon name='chevron-down' size={15} color='#000' />
               </View>
               </Pressable>
-            </View>
-
-                 
-                          <MultipleSelectList 
-                            onSelect={() => alert(selected)}
-                            setSelected={(val) => setSelected(val)} 
-                            label="Tickets assigned to" 
-                            data={data}  
-                            arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
-                            searchicon={<MaterialIcons name="search" size={24} color="black" />} 
-                            search={true} 
-                            boxStyles={{borderRadius:0, width: 300, height: 45, borderRadius: 20,paddingHorizontal:20, marginLeft:10}}
-                          />
+              <MultipleSelectList 
+              style={styles.text}
+                onSelect={() => alert(selected)}
+                setSelected={(val) => setSelected(val)} 
+                label="Tickets assigned to" 
+                data={data}  
+                arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
+                searchicon={<MaterialIcons name="search" size={24} color="black" />} 
+                search={true} 
+                boxStyles={{borderRadius:0, width: 300, height: 45, borderRadius: 20,paddingHorizontal:20, marginLeft:10}}
+              />
                           
-                          <View><TouchableOpacity style={styles.button3} onPress={showDatePicker}>
-                            <Text style={[styles.buttonText3, { marginRight: 100 } ] }>Select Date and Time</Text>
-                            <Icon name='chevron-down' size={15} color='#000' />
-                          </TouchableOpacity>
-                          {/* {[styles.textStyle, { marginRight: 28 }]} */}
+              <View><TouchableOpacity style={styles.button3} onPress={showDatePicker}>
+              <Text style={[styles.buttonText3, { marginRight: 100 } ] }>Select Date and Time</Text>
+              <Icon name='chevron-down' size={15} color='#000' />
+              </TouchableOpacity>
 
-                          <DateTimePickerModal
-                            isVisible={isDatePickerVisible}
-                            mode="datetime"
-                            onConfirm={handleDateConfirm}
-                            onCancel={hideDatePicker}
-                          /></View>
-                          
-                           
+              <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="datetime"
+              onConfirm={handleDateConfirm}
+              onCancel={hideDatePicker}
+              />
+              </View>
 
             <TextInput
               style={styles.textinput}
               placeholder='search with ticket number here..'
               keyboardType='numeric'
               maxLength={10}
-              placeholderTextColor='gray'
-            />
-        <View style={[styles.card, styles.elevation]}>
-          <View>
+              placeholderTextColor='gray' />
+
+            <View style={[styles.card, styles.elevation]}>
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.texthead5}>
                 High
@@ -208,8 +193,14 @@ const Sparsh = ({ navigation }) => {
             <Text style={styles.heading03}>Assigned on 10 Apirl 2023</Text>
             <View style={{ flexDirection: 'row', width: '80%', justifyContent: 'space-around' }}>
             </View>
-          </View>
         </View>
+        </View>
+      )}
+      {activeTab === 'Tab2' && (
+        <View>
+          <Text style={styles.text}>Content for Tab 2</Text>
+        </View>
+      )}
         
         <Footer />        
       </ScrollView>
@@ -226,51 +217,36 @@ const styles = StyleSheet.create({
     backgroundColor : 'white',
   },
   texthead02 : {
-    marginLeft : 10,
+    marginLeft : '8%',
     color:'black',
-    fontSize :18 ,
-    fontWeight : '800',
-    marginBottom: 5, 
+    fontWeight : 'bold',
+    fontSize :20 ,
+    marginTop : '3%',
+    marginBottom: '5%', 
   },
   texthead05 : {
-    marginLeft : 10,
+    marginLeft : '8%',
+    marginRight : '8%',
     color:'black',
     fontSize : 16,
-    fontWeight:10,
-    marginBottom : 20, 
-  },
-  image1: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 5,
+    marginBottom : '5%',
+    textAlign : 'justify'
   },
   button2 : {
     color : 'white',
-    marginLeft : 150,
+    marginLeft : '50%',
+    marginRight : '8%',
     borderRadius : 10,
-    backgroundColor :'#87CEEB',
+    backgroundColor :'#5f9ea0',
     padding : 10,
-    fontWeight: 'bold',
     textAlign : 'center',
     alignItems: 'flex-end',
   },
-  image : {
-    height : 100,
-    width : 100,
-    marginRight : 15,
-    marginBottom : 12,
-  },
-  backgroundImage : {
-    opacity:0.5,
-    marginBottom : 13,
-  },
-  image1 : {
-    height : 20,
-    width : 20,
-    marginLeft : 200,
-    flexDirection: 'row',
-  },
+  background : {
+    height : 150,
+    width : Dimensions.get('window').width,
+    opacity : 0.35,
+},
   textinput : {
     height :50,
     width : 250,
@@ -283,21 +259,18 @@ const styles = StyleSheet.create({
   },
   heading01 : {  
     fontSize: 18,  
-    fontWeight: '800', 
     marginLeft : 20, 
     marginBottom: 8, 
     color : 'black',
 },  
 heading02 : {  
     fontSize: 15,  
-    fontWeight: '60',  
     marginBottom: 13, 
     marginLeft : 20, 
     color : 'black',
 },
 heading03 : {  
   fontSize: 10,  
-  fontWeight: '600',  
   marginBottom: 13, 
   marginLeft : 20, 
   color : 'black',
@@ -324,14 +297,12 @@ texthead5 : {
   paddingHorizontal : 10,
   borderRadius : 8,
   fontSize : 16,
-  fontWeight:10,
   backgroundColor: '#FFEAE9'
 },
 texthead06 : {
   marginLeft : 110,
   color:'black',
   fontSize : 12,
-  fontWeight:10,
 }, 
 modalView: {
     margin: 20,
@@ -369,13 +340,11 @@ modalView: {
   },
   textStyle: {
     color: 'black',
-    fontWeight: 'bold',
     paddingHorizontal:10,
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-    fontWeight: 'bold',
   },
   picker: {
     width: 200,
@@ -401,9 +370,29 @@ modalView: {
   buttonText3: {
     color: 'black',
     fontSize: 16,
-    fontWeight: '30',
     textAlign: 'center',
   },
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#808080',
+  },
+  activeTab: {
+    backgroundColor: '#5f9ea0',
+  },
+  tabText: {
+    fontSize: 16,
+    color : 'black',
+  },
+  text : {
+    color : 'black',
+  }
 });
 
 export default Sparsh;

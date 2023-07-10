@@ -62,6 +62,13 @@ const Otp = ({ navigation }) => {
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Other') }>
+        <Text style={styles.buttonText}>Others</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home') }>
+        <Text style={styles.buttonText}>Home</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -97,7 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '48%',
     height: 40,
-    backgroundColor: '#87CEEB',
+    backgroundColor: '#5f9ea0',
     borderRadius: 10,
   },
   resendButtonText: {
@@ -116,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '48%',
     height: 40,
-    backgroundColor: '#87CEEB',
+    backgroundColor: '#5f9ea0',
     borderRadius: 10,
   },
   buttonText: {

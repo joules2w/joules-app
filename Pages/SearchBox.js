@@ -7,7 +7,6 @@ const SearchBox = () => {
   
     const handleSearch = (text) => {
       setSearchText(text);
-      // Perform search or filter logic here
     };
   
     return (

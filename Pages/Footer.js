@@ -41,7 +41,7 @@ const Footer = () => {
 const styles = StyleSheet.create({
   footer1: {
     marginBottom: 10,
-    backgroundColor: '#87CEEB',
+    backgroundColor: '#5f9ea0',
     fontWeight: 'bold',
     textAlign: 'center',
     alignItems: 'center',
