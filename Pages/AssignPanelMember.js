@@ -244,8 +244,10 @@ const SideMenu = () => {
     },
     menuButton: {
       padding : 8,
-      backgroundColor: 'green',
+      backgroundColor: '#5f9ea0',
       borderRadius : 5,
+      alignSelf : 'flex-end',
+      margin : '8%',
     },
     overlay: {
       flex: 1,
@@ -263,7 +265,6 @@ const SideMenu = () => {
     },
     heading : {
       color : 'gray',
-      // fontWeight : 'bold',
       fontSize : 18,
     },
     closetext : {
@@ -293,7 +294,6 @@ const SideMenu = () => {
       borderColor: 'black',
       borderRadius: 4,
       padding: 8,
-      // flex: 1,
       color : 'black',
       alignSelf : 'center',
     },

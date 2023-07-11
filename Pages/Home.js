@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
         >
           <Text style={styles.heading01}>{item.title}</Text>
           <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-          <View style={{flexDirection : 'row', width : '60%', justifyContent : 'flex-start'}}>
+          <View style={{flexDirection : 'row', width : '50%'}}>
           <Text style={styles.button01}><Text style={styles.text}>{item.skill01}</Text></Text>
           <Text style={styles.button01}><Text style={styles.text}>{item.skill02}</Text></Text>
           </View>
@@ -52,7 +52,7 @@ const Home = ({ navigation }) => {
         <View style={[styles.card, styles.elevation]}>
           <Text style={styles.heading01}>{item.title}</Text>
           <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-          <View style={{flexDirection : 'row', width : '80%', justifyContent : 'space-around'}}>
+          <View style={{flexDirection : 'row', width : '50%'}}>
           <Text style={styles.button01}><Text style={styles.text}>{item.skill01}</Text></Text>
           <Text style={styles.button01}><Text style={styles.text}>{item.skill02}</Text></Text>
           </View>
@@ -86,21 +86,16 @@ const Home = ({ navigation }) => {
     return (
         <View style = {styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <View style={{flexDirection : 'row', width : '80%'}}>
-                {/* <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} /> */}
+            <View style={styles.view01}>
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 </View>
                 <Text style={styles.texthead01}>Top 6 High Paying Panel Member Jobs</Text>
                 <Text style={styles.texthead02}>If you're looking to apply for a job, it's important to know which jobs are in high demand and frequently applied for. Here are the top 6 frequently applied jobs that you might want to consider:</Text>
 
-                <TouchableOpacity style={styles.button03} onPress={() => navigation.navigate('OpenTicket')}>
-                    <Text style={styles.buttontext}>Open Tickets</Text>
-                </TouchableOpacity>
-
                 <FlatList scrollEnabled = {false} 
-                data={Jobs} 
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={frequentJobItem} />
+                    data={Jobs} 
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={frequentJobItem} />
                 
                 <View style={styles.line} />
 
@@ -108,9 +103,9 @@ const Home = ({ navigation }) => {
                 <Text style={styles.texthead02}>Are you interested in getting paid for your opinions and expertise? Consider becoming a panel member in one of these high-paying industries.</Text>
 
                 <FlatList scrollEnabled = {false} 
-                data={Jobs} 
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={highpayJobItem} />
+                    data={Jobs} 
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={highpayJobItem} />
 
 
                 <View style={styles.footer}>
@@ -123,25 +118,27 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container : {
-        // flex : 1,
         alignContent : 'center',
         backgroundColor : '#fff',
     },
+    view01 : {
+        flexDirection : 'row', 
+        width : '80%'
+    },
     texthead01 : {
         color : 'black',
-        fontSize : 30,
+        fontSize : 25,
         textAlign : 'left',
-        marginLeft : '8%',
+        marginLeft : '5%',
         marginTop : 10,
-        marginRight : '8%',
+        marginRight : '5%',
     },
     texthead02 : {
         color : 'black',
         fontSize : 16,
-        textAlign : 'left',
-        marginLeft : '8%',
-        marginRight : '8%',
-        // marginBottom : '3%',
+        marginLeft : '5%',
+        marginRight : '5%',
+        marginBottom : '8%',
         textAlign : 'justify',
     },
     footer : {
@@ -151,6 +148,7 @@ const styles = StyleSheet.create({
         right : 0,
         justifyContent : 'center',
         alignItems : 'center',
+        textAlign : 'justify',
     },
     scrollContainer: {
         flexGrow: 1,
@@ -158,38 +156,43 @@ const styles = StyleSheet.create({
     },
     heading01 : {  
         fontSize: 18,  
-        fontWeight: '600', 
-        marginLeft : '8%', 
-        marginBottom: '4%', 
+        fontWeight: "bold", 
+        marginLeft : '5%', 
+        // marginBottom: '4%',
+        marginRight : '5%',
         color : 'black',
+        padding : 5,
     },  
     heading02 : {  
         fontSize: 14,  
-        fontWeight: '600',  
-        marginBottom: '5%', 
-        marginLeft : '8%', 
-        color : 'gray',
+        // marginBottom: '5%', 
+        marginLeft : '5%', 
+        color : '#808080',
         textAlign : 'justify',
-        marginRight : '8%',
+        marginRight : '5%',
+        padding : 5,
     },
     card: {  
-        backgroundColor: 'white',  
+        backgroundColor: '#fff',  
         borderRadius: 10,
         borderColor : 'black',
         padding : 5, 
-        marginLeft : '8%',
-        marginRight : '8%',
-        marginBottom : '8%',
+        marginLeft : '5%',
+        marginRight : '5%',
+        marginBottom : '5%',
     },  
     elevation: {  
         shadowColor: 'black',  
-        elevation: 10,  
+        elevation: 3,  
     },
     button01 : {
         backgroundColor : 'lightblue',
-        marginLeft : '10%',
-        borderRadius : 10,
-        padding : 5,
+        // margin : '8%',
+        borderRadius : 8,
+        // paddingHorizontal : 5,
+        paddingVertical : 5,
+        marginLeft : '8%',
+        // padding : 5,
     },
     button02 : {
         backgroundColor : 'lightblue',
@@ -201,13 +204,13 @@ const styles = StyleSheet.create({
     },
     text : {
         color : 'green',
+        margin : '3%',
     },
     line : {
-        borderBottomColor : 'black',
+        borderColor : 'black',
         borderBottomWidth : 1,
-        marginLeft : '10%',
-        marginRight : '10%',
-        marginTop : '5%',
+        marginLeft : '8%',
+        marginRight : '8%',
     },
     moredetails : {
         color : 'red',
@@ -216,7 +219,7 @@ const styles = StyleSheet.create({
         textDecorationLine : 'underline',
         fontSize : 15
     },
-    button03 : {
+    button : {
         backgroundColor : '#5f9ea0',
         marginRight : '8%',
         padding : 10,

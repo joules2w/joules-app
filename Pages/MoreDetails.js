@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, ImageBackground, Dimensions, ScrollView } from 
 
 import Header from "./Header";
 import Footer from "./Footer";
-import MenuBar from './SideMenu';
 import AssignPanelMember from './AssignPanelMember';
 
 const MoreDetails = ({ route, navigation }) => {
@@ -36,23 +35,16 @@ const logout = () =>{
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={{flexDirection : 'row', width : '80%'}}>
-                {/* <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} /> */}
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 </View>
             <ImageBackground style={styles.background} source={require('./Images/background.png')}>
-                <View style={{ flexDirection : 'row', marginRight : '5%'}}>
-                <View style={{ flex : 0.7 }}>
                 <Text style={styles.texthead01}>Interview Panel For Interactive Developer</Text>
-                </View>
-                <View style={{ flex : 0.3 }}>
-                <AssignPanelMember />
-                </View>
-                </View>
-                <View style={{ flexDirection : 'column'}}>
                 <Text style={styles.text}>Job created on 28th September 2015</Text>
                 <Text style={styles.texthead02}>₹ 4000 per panel member</Text>
-                </View>
             </ImageBackground>
+
+            <AssignPanelMember />
+
 
 
             <Text style={styles.texthead}>Job Description</Text>
@@ -60,9 +52,8 @@ const logout = () =>{
             <View style={styles.line} />
             <View style={{ flexDirection : 'row', width : '50%', justifyContent : 'space-between', marginLeft : '7%', marginRight : '8%' }}>
                 <View style={{ flexDirection : 'column' }}>
-                    {/* <View style={{ flex : 0.5 }}> */}
             <Text style={styles.texthead}>Eligibility</Text>
-            <Text style={styles.descriptiontext}>{jobs.eligibility}</Text>
+            <Text style={styles.eligibletext}>{jobs.eligibility}</Text>
             {/* </View> */}
             </View>
             <View style={styles.verticleLine}></View>
@@ -90,7 +81,6 @@ const logout = () =>{
 
 const styles = StyleSheet.create({
     container : {
-        flex : 1,
         backgroundColor : '#fff',
     },
     background : {
@@ -101,14 +91,13 @@ const styles = StyleSheet.create({
     texthead01 : {
         color : 'black',
         fontSize : 22,
-        textAlign : 'left',
+        fontWeight : "bold",
         marginLeft : '8%',
         marginTop : 10,
     },
     texthead02 : {
         color : 'black',
         fontSize : 18,
-        textAlign : 'left',
         marginLeft : '8%',
         marginRight : '8%',
     },
@@ -126,16 +115,23 @@ const styles = StyleSheet.create({
     texthead : {
         color : 'black',
         fontSize : 20,
-        marginLeft : '10%',
-        marginTop : '10%',
+        marginLeft : '8%',
     },
     descriptiontext : {
         color : 'black',
         fontSize : 15,
-        marginLeft : '10%',
+        marginLeft : '8%',
         marginTop : '2%',
         marginRight : '10%',
-        textAlign : 'justify'
+        textAlign : 'justify',
+    },
+    eligibletext : {
+        color : 'black',
+        fontSize : 15,
+        marginLeft : '5%',
+        marginTop : '2%',
+        marginRight : '10%',
+        textAlign : 'justify',
     },
     line : {
         borderBottomColor : 'black',
