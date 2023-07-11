@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback, Animated, Image } from 'react-native';
 
 
-const ProfileScreen = ({ logout }) => {
+const ProfileScreen = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const animatedValue = new Animated.Value(0);
   
@@ -48,9 +48,6 @@ const ProfileScreen = ({ logout }) => {
             </TouchableOpacity>
   
             <Text style = {styles.text}>Edit Profile</Text>
-            <TouchableOpacity onPress={logout} >
-                <Text style={styles.text}>LogOut</Text>
-            </TouchableOpacity>
           </Animated.View>
         </Modal>
       </View>

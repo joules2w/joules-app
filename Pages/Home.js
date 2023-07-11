@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, FlatList, Pressable, Text, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { MultipleSelectList } from 'react-native-dropdown-select-list';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -34,10 +38,7 @@ const Home = ({ navigation }) => {
 
       const frequentJobItem = ({ item }) => (
         <View style={[styles.card, styles.elevation]}>
-        <TouchableOpacity
-          style={styles.jobdItem}
-          onPress={() => frequentJobPress(item)}
-        >
+        <TouchableOpacity onPress={() => frequentJobPress(item)}>
           <Text style={styles.heading01}>{item.title}</Text>
           <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
           <View style={{flexDirection : 'row', width : '50%'}}>
@@ -61,6 +62,25 @@ const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       );
+
+      const [modalVisible, setModalVisible] = useState(false);
+
+      const [activeTab, setActiveTab] = useState('Tab1');
+
+      const handleTabPress = (tabName) => {
+        setActiveTab(tabName);
+      };
+
+      const data = [
+        {key:'1', value:'name1'},
+        {key:'2', value:'name2'},
+        {key:'3', value:'name3'},
+        {key:'4', value:'name4'},
+        {key:'5', value:'name5'},
+    ]
+
+    
+
 
 
     const logout = () =>{
@@ -108,6 +128,67 @@ const Home = ({ navigation }) => {
                     renderItem={highpayJobItem} />
 
 
+                <View style={styles.tabContainer}>
+                        <TouchableOpacity
+                        style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]}
+                        onPress={() => handleTabPress('Tab1')}
+                        >
+                        <Text style={styles.tabText}>All</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]}
+                        onPress={() => handleTabPress('Tab2')}
+                        >
+                        <Text style={styles.tabText}>Low</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        style={[styles.tabItem, activeTab === 'Tab3' && styles.activeTab]}
+                        onPress={() => handleTabPress('Tab3')}
+                        >
+                        <Text style={styles.tabText}>Medium</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        style={[styles.tabItem, activeTab === 'Tab4' && styles.activeTab]}
+                        onPress={() => handleTabPress('Tab4')}
+                        >
+                        <Text style={styles.tabText}>High</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    {activeTab === 'Tab1' && (
+                        <View>
+                            <View style={[styles.card, styles.elevation]}>
+                        <View>
+                            <View style={{ flexDirection: 'row', justifyContent : 'space-between' }}>
+                            <Text style={styles.priority}>
+                            <Text style={styles.texthead03}>High</Text>
+                            </Text>
+                            <Text style={styles.heading02}>
+                                Created on 4 Apirl 2023
+                            </Text>
+                            </View>
+                            <Text style={styles.text01}>Testing</Text>
+                            <Text style={styles.text02}>Testing</Text>
+                            <Text style={styles.text03}>Assigned on 10 Apirl 2023</Text>
+                        </View>
+                        </View>
+                        </View>
+                    )}
+                    {activeTab === 'Tab2' && (
+                        <View>
+                        <Text style={styles.text}>Content for Tab 2</Text>
+                        </View>
+                    )}
+                    {activeTab === 'Tab3' && (
+                        <View>
+                        <Text style={styles.text}>Content for Tab 3</Text>
+                        </View>
+                    )}
+                    {activeTab === 'Tab4' && (
+                        <View>
+                        <Text style={styles.text}>Content for Tab 4</Text>
+                        </View>
+                    )}
                 <View style={styles.footer}>
                 <Footer />
                 </View>
@@ -139,7 +220,7 @@ const styles = StyleSheet.create({
         marginLeft : '5%',
         marginRight : '5%',
         marginBottom : '8%',
-        textAlign : 'justify',
+        textAlign : "justify",
     },
     footer : {
         position : 'absolute',
@@ -158,14 +239,12 @@ const styles = StyleSheet.create({
         fontSize: 18,  
         fontWeight: "bold", 
         marginLeft : '5%', 
-        // marginBottom: '4%',
         marginRight : '5%',
         color : 'black',
         padding : 5,
     },  
     heading02 : {  
         fontSize: 14,  
-        // marginBottom: '5%', 
         marginLeft : '5%', 
         color : '#808080',
         textAlign : 'justify',
@@ -187,12 +266,9 @@ const styles = StyleSheet.create({
     },
     button01 : {
         backgroundColor : 'lightblue',
-        // margin : '8%',
         borderRadius : 8,
-        // paddingHorizontal : 5,
         paddingVertical : 5,
-        marginLeft : '8%',
-        // padding : 5,
+        margin : '8%',
     },
     button02 : {
         backgroundColor : 'lightblue',
@@ -204,7 +280,7 @@ const styles = StyleSheet.create({
     },
     text : {
         color : 'green',
-        margin : '3%',
+        margin : '5%',
     },
     line : {
         borderColor : 'black',
@@ -229,6 +305,57 @@ const styles = StyleSheet.create({
     buttontext : {
         color : '#fff',
         fontWeight : "bold",
+    },
+    tabContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
+    tabItem: {
+        flex: 1,
+        alignItems: 'center',
+        padding : 5,
+        backgroundColor: '#808080',
+        marginLeft : '4%',
+        marginRight : '4%',
+        borderRadius : 5
+    },
+    activeTab: {
+        backgroundColor: '#5f9ea0',
+    },
+    tabText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color : '#fff',
+    },
+    priority : {
+        backgroundColor : '#E0E0E0',
+        borderRadius : 10,
+        marginLeft : '5%',
+        padding : 5,
+    },
+    texthead03 : {
+        fontSize : 20,
+        color : 'black',
+    },
+    text01 : {
+        color : 'black',
+        fontSize : 25,
+        fontWeight : "bold",
+        marginLeft : '5%',
+        textAlign : 'left'
+    },
+    text02 : {
+        color : 'black',
+        fontSize : 16,
+        marginLeft : '5%',
+        textAlign : 'left'
+    },
+    text03 : {
+        color : 'black',
+        fontSize : 15,
+        marginLeft : '5%',
+        textAlign : 'left'
     }
 })
 

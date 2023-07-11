@@ -278,6 +278,8 @@ const SideMenu = () => {
     text : {
         color : '#fff',
         alignContent : 'center',
+        fontSize : 15,
+        padding : 10,
     },
     sidetext : {
       color : 'black',

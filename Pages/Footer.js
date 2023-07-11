@@ -20,17 +20,17 @@ const Footer = () => {
       <Text style={styles.footerText}>
         Copyright © 2023 Joulestowatts Business Solutions Pvt. Ltd. 
       </Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Text style={styles.footerText}>Follow us on:</Text>
+      <View style={styles.view}>
+        <Text style={styles.footerText}>Follow us on : </Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity onPress={openFacebook}>
-            <Icon name='facebook-official' size={25} color='#4267B2' style={{ marginRight: 10 }} />
+            <Icon name='facebook-official' size={25} color='#fff' style={{ marginRight: '10%' }} />
           </TouchableOpacity>
           <TouchableOpacity onPress={openInstagram}>
-            <Icon name='instagram' size={25} color='#4267B2' style={{ marginRight: 10 }} />
+            <Icon name='instagram' size={25} color='#fff' style={{ marginRight: "10%" }} />
           </TouchableOpacity>
           <TouchableOpacity onPress={openTwitter}>
-            <Icon name='twitter' size={25} color='#4267B2' />
+            <Icon name='twitter' size={25} color='#fff' />
           </TouchableOpacity>
         </View>
       </View>
@@ -40,15 +40,16 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
   footer1: {
-    flex: 1,
     marginBottom: 10,
-    backgroundColor: '#5f9ea0',
+    backgroundColor: '#449B93',
     fontWeight: 'bold',
-    textAlign: 'center',
-    alignItems: 'center',
+  },
+  view : {
+    flexDirection: 'row', 
+    justifyContent: 'flex-start'
   },
   footerText: {
-    marginVertical: 8,
+    padding : 10,
     color: 'white',
     fontSize: 15,
     fontWeight: "bold",

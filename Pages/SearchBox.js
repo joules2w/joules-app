@@ -11,35 +11,40 @@ const SearchBox = () => {
   
     return (
       <View style={styles.container}>
+        <View style={styles.view}>
         <Icon name="search" size={20} color="#666" style={styles.searchIcon} />
         <TextInput
           style={styles.input}
-          placeholder="Search"
+          placeholder="Search "
           value={searchText}
           onChangeText={handleSearch} placeholderTextColor={'gray'}
         />
+        </View>
       </View>
     );
   };
 
   const styles = StyleSheet.create({
     container: {
-      flexDirection: 'row',
+      flex : 1,
       alignItems: 'center',
-      paddingVertical: 8,
-      paddingHorizontal: 12,
-      backgroundColor : 'white',
+      justifyContent : 'center',
     },
     searchIcon: {
-      marginRight: 8,
+      marginRight: 10,
+    },
+    view : {
+      flexDirection : 'row',
+      alignItems : 'center',
+      borderWidth: 1,
+      borderColor: 'black',
+      borderRadius: 5,
+      paddingHorizontal: 10,
     },
     input: {
-    //   flex: 1,
-      color : 'black',
-      borderWidth : 1,
+      flex : 1,
       borderRadius : 5,
-      width : '70%',
-      height : 40,
+      height : 50,
     },
   });
 

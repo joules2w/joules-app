@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Switch, TextInput, Alert, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Switch, TextInput, Dimensions, ImageBackground, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 import Header from './Header';
 import Footer from './Footer';
-import MenuBar from './SideMenu';
+import SearchBox from './SearchBox';
+import Filter from './Filter';
 
 const JobDetailScreen = ({ route, navigation }) => {
   const { jobs } = route.params;
@@ -99,10 +100,18 @@ const JobDetailScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={{flexDirection : 'row', width : '80%'}}>
-                {/* <MenuBar interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} /> */}
-                <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-                </View>
+            <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
+            <ImageBackground style = {styles.background} source = {require('./Images/background.png')}>
+                <Text style={styles.texthead01}>Job Portal</Text>
+                <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
+            </ImageBackground>
+            <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
+                <Text style={styles.text01}>My Referrals</Text>
+            </TouchableOpacity>
+            <View style={{flexDirection : 'row', width : '100%', justifyContent : 'center', marginLeft : '5%', marginRight : '5%'}}>
+            <SearchBox />
+            <Filter />
+            </View>
       <Text style={styles.texthead}>{jobs.title}</Text>
       <Text style={styles.text}>Job created on 23 August</Text>
       <Text style={styles.texthead}>Description</Text>
@@ -117,22 +126,14 @@ const JobDetailScreen = ({ route, navigation }) => {
       <Text style={styles.texthead}>Salary</Text>
       <Text style={styles.text}>{jobs.salary}</Text>
       <View style={styles.line} />
-      <View style={{flexDirection : 'row', width : '70%', justifyContent : 'center', alignSelf : 'center', marginTop : '5%'}}>
-      <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
       <Text style={styles.texthead}>Eligibility</Text>
       <Text style={styles.text}>{`\u25CF ${jobs.eligibility}`}</Text>
-      </View>
-      <View style={styles.verticleLine}/>
-      <View style={{flexDirection : 'column', width : '60%', justifyContent : 'space-between'}}>
       <Text style={styles.texthead}>Skills</Text>
       <View style={{flexDirection : 'row', marginRight : '10%', justifyContent : 'flex-start'}}>
       <Text style={styles.button02}><Text style={styles.skilltext}>{jobs.skill01}</Text></Text>
       <Text style={styles.button02}><Text style={styles.skilltext}>{jobs.skill01}</Text></Text>
       </View>
-      </View>
-      </View>
       <View style={styles.line} />
-
 
       <View style={{flexDirection : 'row', width : '100%', justifyContent : 'space-between'}}>
             <Text style={styles.texthead}>Application</Text>
@@ -140,28 +141,19 @@ const JobDetailScreen = ({ route, navigation }) => {
                 <Text style={styles.refertext}>My Referrals</Text>
             </TouchableOpacity>
             </View>
-            <Text style={styles.text}>Switch the toggle button, if you wish to apply for this job.</Text>
+            <Text style={styles.texthead03}>Switch the toggle button, if you wish to apply for this job.</Text>
             <Switch trackColor={{true: '#344953', false: 'grey'}} style={styles.switch} value={isSwitchOn} onValueChange={handleSwitchToggle} />
-            {/* </View> */}
-            <View style={{flexDirection : 'row', width : '78%', justifyContent : 'center', marginLeft : '10%', marginRight : '10%'}}>
-                <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
-                <Text style={styles.text}>Application name<Text style={styles.require}>*</Text></Text>
+                <Text style={styles.texthead03}>Application name<Text style={styles.require}>*</Text></Text>
                 <TextInput style={styles.inputtext} 
                 placeholder='Enter your name' 
                 placeholderTextColor='#808080' />
-                </View>
-                <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
-                <Text style={styles.text}>Application Email id<Text style={styles.require}>*</Text></Text>
+                <Text style={styles.texthead03}>Application Email id<Text style={styles.require}>*</Text></Text>
                 <TextInput style={styles.inputtext} 
                 placeholder='Enter your email' 
                 placeholderTextColor='#808080'
                 value={email}
                 onChangeText={(text) => setEmail(text)} />
-                </View>
-            </View>
-            <View style={{flexDirection : 'row', width : '78%', justifyContent : 'center', marginLeft : '10%', marginRight : '10%'}}>
-                <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
-                <Text style={styles.text}>Applicant Mobile number<Text style={styles.require}>*</Text></Text>
+                <Text style={styles.texthead03}>Applicant Mobile number<Text style={styles.require}>*</Text></Text>
                 <TextInput style={styles.inputtext} 
                 placeholder='Enter your mobile number' 
                 placeholderTextColor='#808080'
@@ -169,14 +161,10 @@ const JobDetailScreen = ({ route, navigation }) => {
                 onChangeText={(text) => setPhoneNumber(text)}
                 keyboardType='numeric'
                 maxLength={10} />
-                </View>
-                <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
-                <Text style={styles.text}>Applicant total experience<Text style={styles.require}>*</Text></Text>
+                <Text style={styles.texthead03}>Applicant total experience<Text style={styles.require}>*</Text></Text>
                 <TextInput style={styles.inputtext} 
                 placeholder='Total Experience' 
                 placeholderTextColor='#808080' />
-                </View>
-            </View>
 
             <View style={[styles.card, styles.elevation]}>
                 <TouchableOpacity style={styles.attachbutton} onPress={handleFileAttachment}>
@@ -200,27 +188,54 @@ const JobDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 10,
     backgroundColor : '#fff'
   },
   texthead : {
     color : 'black',
     fontWeight : 'bold',
     fontSize : 22,
-    marginLeft : '10%',
+    marginLeft : '5%',
     marginTop : '5%'
+},
+background : {
+  height : 150,
+  width : Dimensions.get('window').width,
+  opacity : 0.5,
+},
+texthead01 : {
+  color : 'black',
+  fontSize : 30,
+  textAlign : 'left',
+  marginLeft : '5%',
+  marginRight : '5%',
+  marginTop : 10,
+},
+texthead02 : {
+  color : 'black',
+  fontSize : 18,
+  textAlign : 'justify',
+  marginLeft : '5%',
+  marginRight : '5%',
 },
 text : {
     color : 'black',
-    marginLeft : '10%',
-    marginRight : '10%',
+    marginLeft : '5%',
+    marginRight : '5%',
     textAlign : 'justify'
 },
+text01 : {
+  color : 'red',
+  marginBottom : '2%',
+  textAlign : 'right',
+  marginRight : 5,
+  fontSize : 15,
+  textDecorationLine : 'underline',
+},
 line : {
-    borderBottomColor : 'black',
-    borderBottomWidth : 1,
-    marginLeft : '10%',
-    marginRight : '10%',
+    borderBottomColor : '#808080',
+    borderBottomWidth : 0.5,
+    marginLeft : '5%',
+    marginRight : '5%',
     marginTop : '5%',
 },
 verticleLine: {
@@ -253,12 +268,14 @@ switch : {
 },
 require : {
     color : 'red',
+    fontSize : 12,
 },
 inputtext : {
     borderWidth : 1,
     borderColor : 'black',
-    marginLeft : '10%',
-    marginBottom : '10%',
+    marginLeft : '5%',
+    marginBottom : '5%',
+    marginRight : '5%',
     borderRadius : 4,
     color : 'black'
 },
@@ -282,20 +299,20 @@ card: {
     borderColor : 'black', 
     paddingVertical: 10,  
     paddingHorizontal: 10,  
-    marginLeft : '10%',
-    marginRight : '10%',
+    marginLeft : '5%',
+    marginRight : '5%',
 },
 elevation: {  
     shadowColor: 'black',  
-    elevation: 3,  
+    elevation: 2,  
 },
 submitbutton : {
     backgroundColor : '#5F9EA0',
-    alignSelf : 'center',
-    width : '20%',
-    height : '3%',
+    alignSelf : 'flex-start',
+    padding : 10,
     borderRadius : 5,
-    marginBottom : '8%',
+    marginLeft : '5%',
+    marginBottom : '5%',
     marginTop : '5%'
 },
 submittext : {
@@ -314,6 +331,12 @@ scrollContainer: {
   flexGrow: 1,
   paddingBottom: 120,
 },
+texthead03 : {
+  color : 'black',
+  fontSize : 17,
+  marginLeft : '5%',
+  marginRight : '5%',
+}
 });
 
 export default JobDetailScreen;

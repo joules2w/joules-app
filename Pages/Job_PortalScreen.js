@@ -3,7 +3,6 @@ import { Text, StyleSheet, TouchableOpacity, View, FlatList, ScrollView, ImageBa
 
 import Header from './Header';
 import Footer from './Footer';
-import MenuBar from './SideMenu';
 import FilterBy from './Filter';
 import SearchBox from './SearchBox';
 
@@ -33,13 +32,10 @@ const Job_portal = ({ navigation }) => {
     
       const renderJobItem = ({ item }) => (
         <View style={[styles.card, styles.elevation]}>
-        <TouchableOpacity
-          style={styles.jobdItem}
-          onPress={() => handleJobPress(item)}
-        >
+        <TouchableOpacity onPress={() => handleJobPress(item)}>
           <Text style={styles.heading01}>{item.title}</Text>
           <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-          <View style={{flexDirection : 'row', width : '60%', justifyContent : 'flex-start'}}>
+          <View style={{flexDirection : 'row', width : '50%'}}>
           <Text style={styles.button01}><Text style={styles.text}>{item.skill01}</Text></Text>
           <Text style={styles.button01}><Text style={styles.text}>{item.skill02}</Text></Text>
           </View>
@@ -71,11 +67,7 @@ const Job_portal = ({ navigation }) => {
     return (
     <View style={styles.container}>
         <ScrollView>
-            <View>
-                <View style={{flexDirection : 'row', width : '80%'}}>
-                {/* <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} /> */}
-                <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-                </View>
+            <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
             <ImageBackground style = {styles.background} source = {require('./Images/background.png')}>
                 <Text style={styles.texthead01}>Job Portal</Text>
                 <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
@@ -84,13 +76,11 @@ const Job_portal = ({ navigation }) => {
                 <Text style={styles.text01}>My Referrals</Text>
             </TouchableOpacity>
 
-            <View style={{flexDirection : 'row', width : '100%', justifyContent : 'center', marginRight : '10%'}}>
+            <View style={{flexDirection : 'row', width : '100%', justifyContent : 'center', marginLeft : '5%', marginRight : '5%'}}>
             <SearchBox />
             <FilterBy />
             </View>
             
-            </View>
-
             <FlatList scrollEnabled = {false} 
             data={Jobs} 
             keyExtractor={(item) => item.id.toString()}
@@ -104,11 +94,9 @@ const Job_portal = ({ navigation }) => {
 
 const styles =  StyleSheet.create({
     container : {
-        flex : 1,
         backgroundColor : 'white',
         alignItems : 'center',
     },
-
     text02 : {
         color : 'black',
         marginLeft : 40,
@@ -132,15 +120,16 @@ const styles =  StyleSheet.create({
         color : 'black',
         fontSize : 30,
         textAlign : 'left',
-        marginLeft : '8%',
+        marginLeft : '5%',
+        marginRight : '5%',
         marginTop : 10,
     },
     texthead02 : {
         color : 'black',
         fontSize : 18,
-        textAlign : 'left',
-        marginLeft : '8%',
-        marginRight : '8%',
+        textAlign : 'justify',
+        marginLeft : '5%',
+        marginRight : '5%',
     },
     textinput01 : {
         borderWidth : 1,
@@ -152,53 +141,45 @@ const styles =  StyleSheet.create({
     },
     text : {
         color : 'green',
+        margin : '5%',
     },
     icon : {
         marginRight : 10,
     },
     heading01 : {  
         fontSize: 18,  
-        fontWeight: '600', 
-        marginLeft : '8%', 
-        marginBottom: '4%', 
+        fontWeight: "bold", 
+        marginLeft : '5%', 
+        marginRight : '5%',
         color : 'black',
+        padding : 5,
     },  
     heading02 : {  
-        fontSize: 15,  
-        fontWeight: '600',  
-        marginBottom: '5%', 
-        marginLeft : '8%', 
-        color : 'gray',
+        fontSize: 14,  
+        marginLeft : '5%', 
+        color : '#808080',
         textAlign : 'justify',
-        marginRight : '8%',
+        marginRight : '5%',
+        padding : 5,
     },
     card: {  
-        backgroundColor: 'white',  
+        backgroundColor: '#fff',  
         borderRadius: 10,
-        borderColor : 'black', 
-        paddingVertical: 10,  
-        paddingHorizontal: 10,  
-        marginLeft : '8%',
-        marginRight : '8%',
-        marginBottom : '8%',
+        borderColor : 'black',
+        padding : 5, 
+        marginLeft : '5%',
+        marginRight : '5%',
+        marginBottom : '5%',
     },  
     elevation: {  
         shadowColor: 'black',  
-        elevation: 10,  
+        elevation: 3,  
     },
     button01 : {
         backgroundColor : 'lightblue',
-        marginLeft : '10%',
-        borderRadius : 10,
-        padding : 5,
-    },
-    button02 : {
-        backgroundColor : 'lightblue',
-        marginLeft : '10%',
-        marginBottom : '5%',
-        borderRadius : 10,
-        paddingHorizontal : 10,
-        paddingVertical : 3,
+        borderRadius : 8,
+        paddingVertical : 5,
+        margin : '8%',
     },
 })
 

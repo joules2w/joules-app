@@ -34,9 +34,7 @@ const logout = () =>{
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <View style={{flexDirection : 'row', width : '80%'}}>
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-                </View>
             <ImageBackground style={styles.background} source={require('./Images/background.png')}>
                 <Text style={styles.texthead01}>Interview Panel For Interactive Developer</Text>
                 <Text style={styles.text}>Job created on 28th September 2015</Text>
@@ -45,32 +43,19 @@ const logout = () =>{
 
             <AssignPanelMember />
 
-
-
             <Text style={styles.texthead}>Job Description</Text>
             <Text style={styles.descriptiontext}>{jobs.description}</Text>
             <View style={styles.line} />
-            <View style={{ flexDirection : 'row', width : '50%', justifyContent : 'space-between', marginLeft : '7%', marginRight : '8%' }}>
-                <View style={{ flexDirection : 'column' }}>
             <Text style={styles.texthead}>Eligibility</Text>
             <Text style={styles.eligibletext}>{jobs.eligibility}</Text>
-            {/* </View> */}
-            </View>
-            <View style={styles.verticleLine}></View>
-            <View style = {{ flexDirection : 'column' }}>
+            <View style={styles.line} />
             <View style={{ flex : 0.5 }}>
                 <Text style={styles.texthead}>Skills</Text>
-                <View style={{ flexDirection : 'row', width : '60%', justifyContent : 'space-between', marginLeft : '5%', marginRight : '5%' }}>
-                    <View style={{ flex : 0.5 }}>
+                <View style={{ flexDirection : 'row', justifyContent : 'flex-start', marginLeft : '5%', marginRight : '5%' }}>
                     <Text style={styles.skilltext}>{jobs.skill01}</Text>
-                    </View>
-                    <View style={{ flex : 0.5 }}>
                     <Text style={styles.skilltext}>{jobs.skill02}</Text>
                     </View>
-                    </View>
                 </View>
-            </View>
-            </View>
             <View style={styles.footer}>
             <Footer />
             </View>
@@ -81,6 +66,7 @@ const logout = () =>{
 
 const styles = StyleSheet.create({
     container : {
+        flex : 1,
         backgroundColor : '#fff',
     },
     background : {
@@ -92,18 +78,19 @@ const styles = StyleSheet.create({
         color : 'black',
         fontSize : 22,
         fontWeight : "bold",
-        marginLeft : '8%',
+        marginLeft : '5%',
+        marginRight : '5%',
         marginTop : 10,
     },
     texthead02 : {
         color : 'black',
         fontSize : 18,
-        marginLeft : '8%',
-        marginRight : '8%',
+        marginLeft : '5%',
+        marginRight : '5%',
     },
     text : {
         color : 'black',
-        marginLeft : '8%',
+        marginLeft : '5%',
     },
     button : {
         backgroundColor : '#5f9ea0',
@@ -115,14 +102,14 @@ const styles = StyleSheet.create({
     texthead : {
         color : 'black',
         fontSize : 20,
-        marginLeft : '8%',
+        marginLeft : '5%',
     },
     descriptiontext : {
         color : 'black',
         fontSize : 15,
-        marginLeft : '8%',
+        marginLeft : '5%',
         marginTop : '2%',
-        marginRight : '10%',
+        marginRight : '5%',
         textAlign : 'justify',
     },
     eligibletext : {
@@ -130,28 +117,24 @@ const styles = StyleSheet.create({
         fontSize : 15,
         marginLeft : '5%',
         marginTop : '2%',
-        marginRight : '10%',
+        marginRight : '5%',
         textAlign : 'justify',
     },
     line : {
         borderBottomColor : 'black',
         borderBottomWidth : 1,
-        marginLeft : '10%',
-        marginRight : '10%',
+        marginLeft : '5%',
+        marginRight : '5%',
         marginTop : '5%',
         marginBottom : '5%'
     },
-    verticleLine: {
-        height: '90%',
-        width: 1,
-        backgroundColor: '#909090',
-      },
       skilltext : {
-        color : 'black',
-        backgroundColor : '#5f9ea0',
-        borderRadius : 5,
+        color : 'green',
+        backgroundColor : 'lightblue',
+        borderRadius : 15,
         marginBottom : '15%',
-        padding : 2,
+        padding : 8,
+        marginRight : '5%'
       },
       footer : {
         position : 'absolute',

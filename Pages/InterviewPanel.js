@@ -35,8 +35,9 @@ const InterViewPanel = ({ navigation }) => {
   const renderJobItem = ({ item }) => (
     <View style={[styles.card, styles.elevation]}>
       <Text style={styles.heading01}>{item.title}</Text>
+      <Text style={styles.rate}>₹ 500 per panel member</Text>
       <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-      <View style={{flexDirection : 'row', width : '80%', justifyContent : 'space-around'}}>
+      <View style={{flexDirection : 'row', width : '50%'}}>
       <Text style={styles.button01}><Text style={styles.text}>{item.skill01}</Text></Text>
       <Text style={styles.button01}><Text style={styles.text}>{item.skill02}</Text></Text>
       </View>
@@ -72,17 +73,14 @@ const InterViewPanel = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ScrollView>
-            <View style={{flexDirection : 'row', width : '80%'}}>
-                {/* <SideMenu interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} /> */}
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-                </View>
                 <ImageBackground style={styles.background} source={require('./Images/background.png')}>
                     <Text style={styles.texthead01}>Interview Panel</Text>
                     <Text style={styles.texthead02}>Welcome to our Interview Panel page, where you can discover everything you need to know about panel interviews and how to excel in them.</Text>
                 </ImageBackground>
-                <View style={{ flexDirection : 'row', width : '100%', justifyContent : 'center', marginRight : '10%'}} >
-                <SearchBox />
-                <Filter />
+                <View style={{flexDirection : 'row', width : '100%', justifyContent : 'center', marginLeft : '5%', marginRight : '5%'}}>
+                    <SearchBox />
+                    <Filter />
                 </View>
                 <FlatList scrollEnabled = {false}
                 data={Jobs}
@@ -104,50 +102,59 @@ const styles = StyleSheet.create({
         height : 150,
         width : Dimensions.get('window').width,
         opacity : 0.5,
+        marginBottom : '5%',
     },
     texthead01 : {
         color : 'black',
         fontSize : 30,
         textAlign : 'left',
-        marginLeft : '8%',
+        marginLeft : '5%',
+        marginRight : '5%',
         marginTop : 10,
     },
     texthead02 : {
         color : 'black',
         fontSize : 18,
-        textAlign : 'left',
-        marginLeft : '8%',
-        marginRight : '8%',
+        textAlign : 'justify',
+        marginLeft : '5%',
+        marginRight : '5%',
     },
     card: {  
-        backgroundColor: 'white',  
+        backgroundColor: '#fff',  
         borderRadius: 10,
-        borderColor : 'black', 
-        paddingVertical: 10,  
-        paddingHorizontal: 10,  
-        marginLeft : '8%',
-        marginRight : '8%',
-        marginBottom : '8%',
+        borderColor : 'black',
+        padding : 5, 
+        marginLeft : '5%',
+        marginRight : '5%',
+        marginBottom : '5%',
     },  
     elevation: {  
         shadowColor: 'black',  
-        elevation: 10,  
+        elevation: 3,  
     },
     heading01 : {  
         fontSize: 18,  
-        fontWeight: '600', 
-        marginLeft : '5%',
+        fontWeight: "bold", 
+        marginLeft : '5%', 
         marginRight : '5%',
         color : 'black',
+        padding : 5,
     },  
     heading02 : {  
-        fontSize: 15,  
-        fontWeight: '600',  
-        marginBottom: '5%', 
-        marginLeft : '5%',
+        fontSize: 14,  
+        marginLeft : '5%', 
+        color : '#808080',
+        textAlign : 'justify',
         marginRight : '5%',
-        color : 'gray',
-        textAlign : 'justify'
+        padding : 5,
+    },
+    rate : {
+        fontSize: 15,  
+        marginLeft : '5%', 
+        color : 'black',
+        textAlign : 'justify',
+        marginRight : '5%',
+        padding : 5,
     },
     price : {
         color : 'black',
@@ -159,10 +166,9 @@ const styles = StyleSheet.create({
     },
     button01 : {
         backgroundColor : 'lightblue',
-        marginLeft : '10%',
-        borderRadius : 10,
-        paddingHorizontal : 10,
-        paddingVertical : 3,
+        borderRadius : 8,
+        paddingVertical : 5,
+        margin : '8%',
     },
     button02 : {
         backgroundColor : 'lightblue',
@@ -173,7 +179,8 @@ const styles = StyleSheet.create({
         paddingVertical : 3,
     },
     text : {
-        color : 'black'
+        color : 'green',
+        margin : '5%',
     },
     moredetails : {
         color : 'red',
