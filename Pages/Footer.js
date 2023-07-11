@@ -40,19 +40,18 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
   footer1: {
+    flex: 1,
     marginBottom: 10,
     backgroundColor: '#5f9ea0',
     fontWeight: 'bold',
     textAlign: 'center',
     alignItems: 'center',
-    flex: 0.1,
   },
   footerText: {
     marginVertical: 8,
     color: 'white',
     fontSize: 15,
-    fontWeight: 'bold',
-    marginRight: 10,
+    fontWeight: "bold",
   },
 });
 
