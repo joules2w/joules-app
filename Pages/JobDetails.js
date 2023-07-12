@@ -7,7 +7,7 @@ import SearchBox from './SearchBox';
 import Filter from './Filter';
 
 const JobDetailScreen = ({ route, navigation }) => {
-  const { jobs } = route.params;
+  const { constants } = route.params;
 
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -112,26 +112,30 @@ const JobDetailScreen = ({ route, navigation }) => {
             <SearchBox />
             <Filter />
             </View>
-      <Text style={styles.texthead}>{jobs.title}</Text>
+      <Text style={styles.texthead}>{constants.title}</Text>
       <Text style={styles.text}>Job created on 23 August</Text>
       <Text style={styles.texthead}>Description</Text>
-      <Text style={styles.text}>{jobs.description}</Text>
+      <Text style={styles.text}>{constants.description}</Text>
       <View style={styles.line} />
       <Text style={styles.texthead}>Experience</Text>
-      <Text style={styles.text}>{jobs.experience}</Text>
+      <Text style={styles.text}>{constants.experience}</Text>
       <View style={styles.line} />
       <Text style={styles.texthead}>Location</Text>
-      <Text style={styles.text}>{jobs.location}</Text>
+      <Text style={styles.text}>{constants.location}</Text>
       <View style={styles.line} />
       <Text style={styles.texthead}>Salary</Text>
-      <Text style={styles.text}>{jobs.salary}</Text>
+      <Text style={styles.text}>{constants.salary}</Text>
       <View style={styles.line} />
       <Text style={styles.texthead}>Eligibility</Text>
-      <Text style={styles.text}>{`\u25CF ${jobs.eligibility}`}</Text>
+      <Text style={styles.text}>{`\u25CF ${constants.eligibility}`}</Text>
       <Text style={styles.texthead}>Skills</Text>
       <View style={{flexDirection : 'row', marginRight : '10%', justifyContent : 'flex-start'}}>
-      <Text style={styles.button02}><Text style={styles.skilltext}>{jobs.skill01}</Text></Text>
-      <Text style={styles.button02}><Text style={styles.skilltext}>{jobs.skill01}</Text></Text>
+      <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[0]}</Text></Text>
+      <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[1]}</Text></Text>
+      <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[2]}</Text></Text>
+      <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[3]}</Text></Text>
+      <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[4]}</Text></Text>
+      <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[5]}</Text></Text>
       </View>
       <View style={styles.line} />
 

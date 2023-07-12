@@ -7,7 +7,7 @@ import AssignPanelMember from './AssignPanelMember';
 
 const MoreDetails = ({ route, navigation }) => {
 
-const { jobs } = route.params;
+const { constants } = route.params;
 
 
 const logout = () =>{
@@ -44,16 +44,20 @@ const logout = () =>{
             <AssignPanelMember />
 
             <Text style={styles.texthead}>Job Description</Text>
-            <Text style={styles.descriptiontext}>{jobs.description}</Text>
+            <Text style={styles.descriptiontext}>{constants.description}</Text>
             <View style={styles.line} />
             <Text style={styles.texthead}>Eligibility</Text>
-            <Text style={styles.eligibletext}>{jobs.eligibility}</Text>
+            <Text style={styles.eligibletext}>{constants.eligibility}</Text>
             <View style={styles.line} />
             <View style={{ flex : 0.5 }}>
                 <Text style={styles.texthead}>Skills</Text>
-                <View style={{ flexDirection : 'row', justifyContent : 'flex-start', marginLeft : '5%', marginRight : '5%' }}>
-                    <Text style={styles.skilltext}>{jobs.skill01}</Text>
-                    <Text style={styles.skilltext}>{jobs.skill02}</Text>
+                <View style={{ flexDirection : 'row', justifyContent : 'center' }}>
+                    <Text style={styles.skilltext}>{constants.skills[0]}</Text>
+                    <Text style={styles.skilltext}>{constants.skills[1]}</Text>
+                    <Text style={styles.skilltext}>{constants.skills[2]}</Text>
+                    <Text style={styles.skilltext}>{constants.skills[3]}</Text>
+                    <Text style={styles.skilltext}>{constants.skills[4]}</Text>
+                    <Text style={styles.skilltext}>{constants.skills[5]}</Text>
                     </View>
                 </View>
             <View style={styles.footer}>
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
         backgroundColor : 'lightblue',
         borderRadius : 15,
         marginBottom : '15%',
-        padding : 8,
+        paddingVertical : 8,
         marginRight : '5%'
       },
       footer : {
