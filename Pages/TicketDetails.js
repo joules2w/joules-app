@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Picker } from '@react-native-picker/picker';
-
 
 import Header from './Header';
 import Footer from './Footer';
 
 const TicketDetails = () => {
 
-    const [selectedExperience, setSelectedExperience] = useState('');
+    const [selectedValue, setSelectedValue] = useState(null);
 
     return (
         <View style={styles.container}>
@@ -38,21 +36,48 @@ const TicketDetails = () => {
                 </View>
                 <View style={{ flexDirection : 'row', justifyContent : 'flex-start' }}>
                     <Text style={styles.kay}>Ticket Priority - </Text>
-                    <Picker
-              selectedValue={selectedExperience}
-              style={styles.picker}
-              onValueChange={(itemValue) => setSelectedExperience(itemValue)}
-            >
-              <Picker.Item label="Select experience" value="" />
-              <Picker.Item label="1-2 years" value="1-2 years" />
-              <Picker.Item label="3-5 years" value="3-5 years" />
-              <Picker.Item label="6-10 years" value="6-10 years" />
-            </Picker>
+                    <DropDownPicker
+                    items={[
+                        { label: 'Value 1', value: 'Value 1' },
+                        { label: 'Value 2', value: 'Value 2' },
+                        { label: 'Value 3', value: 'Value 3' },
+                        ]}
+                        defaultValue={selectedValue}
+                        containerStyle={styles.dropdownContainer}
+                        style={styles.dropdown}
+                        itemStyle={styles.dropdownItem}
+                        labelStyle={styles.dropdownLabel}
+                        dropDownStyle={styles.dropdownMenu}
+                        arrowColor="black"
+                        onChangeItem={(item) => setSelectedValue(item.value)}
+                    />
                 </View>
                 <View style={{ flexDirection : 'row', justifyContent : 'flex-start' }}>
                     <Text style={styles.kay}>Ticket Status - </Text>
-                    <Text style={styles.value}>Value</Text>
+                    <DropDownPicker
+                    items={[
+                        { label: 'Value 1', value: 'Value 1' },
+                        { label: 'Value 2', value: 'Value 2' },
+                        { label: 'Value 3', value: 'Value 3' },
+                        ]}
+                        defaultValue={selectedValue}
+                        containerStyle={styles.dropdownContainer}
+                        style={styles.dropdown}
+                        itemStyle={styles.dropdownItem}
+                        labelStyle={styles.dropdownLabel}
+                        dropDownStyle={styles.dropdownMenu}
+                        arrowColor="black"
+                        onChangeItem={(item) => setSelectedValue(item.value)}
+                    />
                 </View>
+                <View style={styles.line} />
+                <Text style={styles.texthead01}>Discussion Point</Text>
+                <Text style={styles.description}>Description</Text>
+                <TextInput style={styles.input} placeholder='Type your message here...' placeholderTextColor='#808080'>
+                    {/* <TouchableOpacity style={styles.button}>
+                        <Text style={styles.text}>Send</Text>
+                    </TouchableOpacity> */}
+                </TextInput>
                 <View style={styles.footer}>
                     <Footer />
                 </View>
@@ -123,6 +148,41 @@ const styles = StyleSheet.create({
         marginTop : '3%',
         fontWeight : "bold",
         fontSize : 17,
+    },
+    dropdownContainer: {
+        width: '40%',
+        height: '10%',
+        marginBottom : '7%'
+      },
+      dropdown: {
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#333',
+        borderRadius: 5,
+        padding : 10,
+      },
+      dropdownItem: {
+        justifyContent: 'flex-start',
+      },
+      dropdownLabel: {
+        color: 'black',
+      },
+      dropdownMenu: {
+        marginTop: 8,
+        backgroundColor: '#fafafa',
+        borderWidth: 1,
+        borderColor: '#333',
+      },
+      line : {
+        borderBottomColor : '#808080',
+        borderBottomWidth : 0.5,
+        margin : '5%',
+    },
+    input : {
+        borderWidth : 1,
+        borderColor : '#808080',
+        borderRadius : 5,
+        margin : '5%',
     }
 })
 

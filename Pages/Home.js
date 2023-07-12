@@ -158,7 +158,7 @@ const Home = ({ navigation }) => {
                     {activeTab === 'Tab1' && (
                         <View>
                             <View style={[styles.card, styles.elevation]}>
-                        <View>
+                        <TouchableOpacity onPress={() => navigation.navigate('TicketDetails')}>
                             <View style={{ flexDirection: 'row', justifyContent : 'space-between' }}>
                             <Text style={styles.priority}>
                             <Text style={styles.texthead03}>High</Text>
@@ -170,7 +170,7 @@ const Home = ({ navigation }) => {
                             <Text style={styles.text01}>Testing</Text>
                             <Text style={styles.text02}>Testing</Text>
                             <Text style={styles.text03}>Assigned on 10 Apirl 2023</Text>
-                        </View>
+                        </TouchableOpacity>
                         </View>
                         </View>
                     )}
