@@ -13,10 +13,11 @@ import SideMenu from './Pages/SideMenu';
 import ProfileScreen from './Pages/ProfileScreen';
 import AssignPanelMember from './Pages/AssignPanelMember';
 import Sparsh from './Pages/Sparsh';
-import Ticket from './Pages/ticket';
+import Ticket from './Pages/Createticket';
 import Other from './Pages/Other';
 import JobDetails from './Pages/JobDetails';
 import OpenTicket from './Pages/OpenTicket';
+import TicketDetails from './Pages/TicketDetails'
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,7 @@ const App = () => {
         <Stack.Screen name="Other" component={Other} options={{ headerShown : false }} />
         <Stack.Screen name='JobDetail' component={JobDetails} options={{ headerShown : false }} />
         <Stack.Screen name='OpenTicket' component={OpenTicket} options={{ headerShown : false }} />
+        <Stack.Screen name='TicketDetails' component={TicketDetails} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

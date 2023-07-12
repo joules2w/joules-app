@@ -279,21 +279,18 @@ heading03 : {
   marginLeft : 20, 
   color : 'black',
 },
-  card: {  
-    backgroundColor: 'white',  
-    borderRadius: 10,
-    borderColor : 'black', 
-    paddingVertical: 10,  
-    paddingHorizontal: 10,  
-    width: '100%',
-    marginLeft : 10,
-    marginRight : 25,
-    width : 300,
-    marginBottom : 20,
+card: {  
+  backgroundColor: '#fff',  
+  borderRadius: 10,
+  borderColor : 'black',
+  padding : 5, 
+  marginLeft : '5%',
+  marginRight : '5%',
+  marginBottom : '5%',
 },  
 elevation: {  
-    shadowColor: 'black',  
-    elevation: 10,  
+  shadowColor: 'black',  
+  elevation: 3,  
 },
 texthead5 : {
   marginLeft : 10,
@@ -392,7 +389,7 @@ modalView: {
   },
   tabText: {
     fontSize: 16,
-    color : 'black',
+    color : '#fff',
     marginLeft : '8%',
   },
   text : {

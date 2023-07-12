@@ -1,51 +1,78 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-const TabNavigation = () => {
-  const [activeTab, setActiveTab] = useState('Tab1');
+const Others = () => {
+  const [isContextMenuVisible, setContextMenuVisible] = useState(false);
 
-  const handleTabPress = (tabName) => {
-    setActiveTab(tabName);
+  const showContextMenu = () => {
+    setContextMenuVisible(true);
+  };
+
+  const hideContextMenu = () => {
+    setContextMenuVisible(false);
+  };
+
+  const handleAscendingOrder = () => {
+    // Function to handle ordering by ascending
+    hideContextMenu();
+  };
+
+  const handleDescendingOrder = () => {
+    // Function to handle ordering by descending
+    hideContextMenu();
+  };
+
+  const handleHideColumn = () => {
+    // Function to handle hiding column
+    hideContextMenu();
+  };
+
+  const handleShowColumn = () => {
+    // Function to handle showing column
+    hideContextMenu();
+  };
+
+  const renderColumn = (columnName, columnContent) => {
+    return (
+      <View style={styles.column}>
+        <View style={styles.columnHeader}>
+          <Text style={styles.columnName}>{columnName}</Text>
+          <TouchableOpacity onPress={showContextMenu}>
+            <Ionicons name="ellipsis-vertical" size={20} color="gray" />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.columnContent}>{columnContent}</Text>
+        <Modal visible={isContextMenuVisible} transparent animationType="fade">
+          <View style={styles.modalContainer}>
+            <View style={styles.contextMenu}>
+              <TouchableOpacity onPress={handleAscendingOrder}>
+                <Text>Order by Ascending</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleDescendingOrder}>
+                <Text>Order by Descending</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleHideColumn}>
+                <Text>Hide Column</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleShowColumn}>
+                <Text>Show Column</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    );
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]}
-          onPress={() => handleTabPress('Tab1')}
-        >
-          <Text style={styles.tabText}>Tab 1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]}
-          onPress={() => handleTabPress('Tab2')}
-        >
-          <Text style={styles.tabText}>Tab 2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabItem, activeTab === 'Tab3' && styles.activeTab]}
-          onPress={() => handleTabPress('Tab3')}
-        >
-          <Text style={styles.tabText}>Tab 3</Text>
-        </TouchableOpacity>
+      <View style={styles.row}>
+        {renderColumn('Column 1', 'Content 1')}
+        {renderColumn('Column 2', 'Content 2')}
+        {renderColumn('Column 3', 'Content 3')}
       </View>
-
-      {activeTab === 'Tab1' && (
-        <View>
-          <Text style={styles.text}>Content for Tab 1, Content for Tab 1, Content for Tab 1</Text>
-        </View>
-      )}
-      {activeTab === 'Tab2' && (
-        <View>
-          <Text style={styles.text}>Content for Tab 2</Text>
-        </View>
-      )}
-      {activeTab === 'Tab3' && (
-        <View>
-          <Text style={styles.text}>Content for Tab 3</Text>
-        </View>
-      )}
+      {/* Render other rows */}
     </View>
   );
 };
@@ -55,28 +82,45 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-  tabContainer: {
+  row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  tabItem: {
-    flex: 1,
     alignItems: 'center',
-    paddingVertical: 10,
-    backgroundColor: '#808080',
+    marginBottom: 10,
+    color : 'black',
   },
-  activeTab: {
-    backgroundColor: 'red',
+  column: {
+    flex: 1,
+    marginRight: 10,
+    color : 'black',
   },
-  tabText: {
-    fontSize: 16,
+  columnHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+    color : 'black',
+  },
+  columnName: {
+    flex: 1,
     fontWeight: 'bold',
     color : 'black',
   },
-  text : {
-    color : 'green',
-  }
+  columnContent: {
+    marginBottom: 5,
+    color : 'black',
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color : 'black',
+  },
+  contextMenu: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 5,
+    color : 'black',
+  },
 });
 
-export default TabNavigation;
+export default Others;

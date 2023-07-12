@@ -19,10 +19,14 @@ import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 import com.reactnativecommunity.picker.RNCPickerPackage;
 // react-native-document-picker
 import com.reactnativedocumentpicker.RNDocumentPickerPackage;
+// react-native-fs
+import com.rnfs.RNFSPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-pager-view
 import com.reactnativepagerview.PagerViewPackage;
+// react-native-pdf
+import org.wonday.pdf.RNPDFPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
@@ -80,8 +84,10 @@ public class PackageList {
       new RNCViewPagerPackage(),
       new RNCPickerPackage(),
       new RNDocumentPickerPackage(),
+      new RNFSPackage(),
       new RNGestureHandlerPackage(),
       new PagerViewPackage(),
+      new RNPDFPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

@@ -66,8 +66,8 @@ const Otp = ({ navigation }) => {
         <Text style={styles.buttonText}>Others</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home') }>
-        <Text style={styles.buttonText}>Home</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TicketDetails') }>
+        <Text style={styles.buttonText}>Ticket Details</Text>
       </TouchableOpacity>
     </View>
   );
