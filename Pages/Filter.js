@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, TouchableWithoutFeedback } from 'react-native';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 const Filter = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedExperience, setSelectedExperience] = useState('');
-  const [selectedSalary, setSelectedSalary] = useState('');
+  const [experienceRange, setExperienceRange] = useState([0, 15]);
+  const [salaryRange, setSalaryRange] = useState([0, 100]);
   const [location, setLocation] = useState('');
 
   const toggleModal = () => {
@@ -13,19 +13,40 @@ const Filter = () => {
   };
 
   const resetFilter = () => {
-    setSelectedExperience('');
-    setSelectedSalary('');
+    setExperienceRange([0, 15]);
+    setSalaryRange([0, 100]);
     setLocation('');
+  };
+
+  const formatSalaryValue = (value) => {
+    if (value === 0) {
+      return '10k';
+    } else if (value === 100) {
+      return '10cr';
+    } else {
+      const salary = (value / 100) * 100000000; // Convert percentage to salary range
+      return `${salary} - ${salary + 10000000}`;
+    }
+  };
+
+  const formatExperienceValue = (value) => {
+    return `${value} years`;
   };
 
   const handleApplyFilter = () => {
     // Apply the filter based on the selected values
-    console.log('Selected Experience:', selectedExperience);
-    console.log('Selected Salary:', selectedSalary);
+    console.log('Experience Range:', experienceRange);
+    console.log('Salary Range:', salaryRange);
     console.log('Location:', location);
 
     // Close the modal
     toggleModal();
+  };
+
+  const handleModalClose = () => {
+    if (isModalVisible) {
+      toggleModal();
+    }
   };
 
   return (
@@ -35,52 +56,86 @@ const Filter = () => {
       </TouchableOpacity>
 
       <Modal visible={isModalVisible} transparent animationType="fade">
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalContent}>
-            <View style={{ flexDirection : 'row', justifyContent : 'space-between', width : '100%' }}>
-              <Text style={styles.texthead01}>FilterBy</Text>
-              <TouchableOpacity onPress={resetFilter}>
-                <Text style={styles.reset}>Reset</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.texthead}>Experience</Text>
-            <Picker
-              selectedValue={selectedExperience}
-              style={styles.picker}
-              onValueChange={(itemValue) => setSelectedExperience(itemValue)}
-            >
-              <Picker.Item label="Select experience" value="" />
-              <Picker.Item label="1-2 years" value="1-2 years" />
-              <Picker.Item label="3-5 years" value="3-5 years" />
-              <Picker.Item label="6-10 years" value="6-10 years" />
-            </Picker>
+        <TouchableWithoutFeedback onPress={handleModalClose}>
+          <View style={styles.modalBackdrop}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                  <Text style={styles.texthead01}>FilterBy</Text>
+                  <TouchableOpacity onPress={resetFilter}>
+                    <Text style={styles.reset}>Reset</Text>
+                  </TouchableOpacity>
+                </View>
+                <Text style={styles.texthead}>Experience</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text>{formatExperienceValue(experienceRange[0])}</Text>
+                  <Text>{formatExperienceValue(experienceRange[1])}</Text>
+                </View>
+                <MultiSlider
+                  values={experienceRange}
+                  min={0}
+                  max={15}
+                  step={1}
+                  allowOverlap={false}
+                  snapped
+                  sliderLength={200}
+                  onValuesChange={(values) => setExperienceRange(values)}
+                  minMarkerOverlapDistance={10}
+                  customMarkerLeft={(e) => {
+                    return <View />;
+                  }}
+                  customMarkerRight={(e) => {
+                    return <View />;
+                  }}
+                />
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text>From: {experienceRange[0]}</Text>
+                  <Text>To: {experienceRange[1]}</Text>
+                </View>
 
-            <Text style={styles.texthead}>Salary</Text>
-            <Picker
-              selectedValue={selectedSalary}
-              style={styles.picker}
-              onValueChange={(itemValue) => setSelectedSalary(itemValue)}
-            >
-              <Picker.Item label="Select salary" value="" />
-              <Picker.Item label="< $5000" value="< $5000" />
-              <Picker.Item label="$5000 - $10000" value="$5000 - $10000" />
-              <Picker.Item label="> $10000" value="> $10000" />
-            </Picker>
+                <Text style={styles.texthead}>Salary</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text>{formatSalaryValue(salaryRange[0])}</Text>
+                  <Text>{formatSalaryValue(salaryRange[1])}</Text>
+                </View>
+                <MultiSlider
+                  values={salaryRange}
+                  min={0}
+                  max={100}
+                  step={1}
+                  allowOverlap={false}
+                  snapped
+                  sliderLength={200}
+                  onValuesChange={(values) => setSalaryRange(values)}
+                  minMarkerOverlapDistance={10}
+                  customMarkerLeft={(e) => {
+                    return <View />;
+                  }}
+                  customMarkerRight={(e) => {
+                    return <View />;
+                  }}
+                />
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text>From: {salaryRange[0]}</Text>
+                  <Text>To: {salaryRange[1]}</Text>
+                </View>
 
-            <Text style={styles.texthead}>Location</Text>
-            <TextInput
-              style={styles.textinput}
-              placeholder="Enter location"
-              placeholderTextColor='gray'
-              value={location}
-              onChangeText={setLocation}
-            />
+                <Text style={styles.texthead}>Location</Text>
+                <TextInput
+                  style={styles.textinput}
+                  placeholder="Enter location"
+                  placeholderTextColor="gray"
+                  value={location}
+                  onChangeText={setLocation}
+                />
 
-            <TouchableOpacity style={styles.filterbutton} onPress={handleApplyFilter}>
-              <Text style={styles.text}>Apply Filter</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.filterbutton} onPress={handleApplyFilter}>
+                  <Text style={{color:'#fff'}}>Apply Filter</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );
@@ -93,13 +148,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterButton: {
-    // backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
   },
   filterButtonText: {
     color: 'green',
-    // fontSize: 16,
   },
   modalBackdrop: {
     flex: 1,
@@ -112,42 +165,61 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: '70%',
+    marginHorizontal: '4%',
   },
-  texthead : {
-    color : 'black',
-    fontWeight : 'bold',
-    fontSize : 18
+  texthead: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
-  texthead01 : {
-    color : 'black',
-    fontWeight : 'bold',
-    fontSize : 20
+  texthead01: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
-  picker : {
-    color : 'black',
-    backgroundColor : '#C0C0C0',
+  textinput: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'gray',
+    color: 'black',
   },
-  text : {
-    color : 'black'
+  filterbutton: {
+    backgroundColor: '#5F9EA0',
+    color: 'black',
+    width: '45%',
+    alignSelf: 'center',
+    marginTop: '5%',
+    borderRadius: 5,
+    // justifyContent:'center'
+    height: 30,
+    // placeholderTextColor:'#fff'
   },
-  textinput : {
-    borderWidth : 1,
-    borderRadius : 10,
-    borderColor : 'gray',
-    color : 'black'
+  reset: {
+    color: 'red',
   },
-  filterbutton : {
-    backgroundColor : '#5F9EA0',
-    color : 'black',
-    width : '40%',
-    alignSelf : 'center',
-    marginTop : '5%',
-    borderRadius : 5,
-    height : 30,
-  },
-  reset : {
-    color : 'red'
-  }
-})
+});
 
 export default Filter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

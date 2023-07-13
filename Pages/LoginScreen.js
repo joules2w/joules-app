@@ -10,7 +10,7 @@ const LoginScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView>
       <View>
-      <Image style = {styles.image} source = {require('./Images/logo.png')}/>
+      <Image style = {styles.image} source = {require('./Images/logo.jpg')}/>
       <Text style={styles.texthead02}>Innovative Talent Solution</Text>
       <Text style={styles.texthead05}>Creating the future</Text>
       

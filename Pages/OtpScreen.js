@@ -62,13 +62,11 @@ const Otp = ({ navigation }) => {
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Other') }>
-        <Text style={styles.buttonText}>Others</Text>
-      </TouchableOpacity>
+      
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home') }>
+      {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home') }>
         <Text style={styles.buttonText}>Home</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -133,6 +131,161 @@ const styles = StyleSheet.create({
 });
 
 export default Otp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet } from 'react-native';
+
+// const Otp = ({ navigation }) => {
+//   const [otp, setOTP] = useState('');
+//   const [timer, setTimer] = useState(30);
+
+//   const handleOTPChange = (value) => {
+//     setOTP(value);
+//   };
+
+//   const handleSubmit = () => {
+//     if (otp === '123') {
+//       Alert.alert('Success', 'OTP verification successful!');
+//       navigation.navigate('Home');
+//       // navigation.navigate('Sparsh');
+//     } else {
+//       Alert.alert('Error', 'Invalid OTP!');
+//     }
+//   };
+
+//   const handleResend = () => {
+//     setOTP('');
+//     setTimer(30);
+//   };
+
+//   useEffect(() => {
+//     const countdown = setInterval(() => {
+//       setTimer((prevTimer) => prevTimer - 1);
+//     }, 1000);
+
+//     if (timer === 0) {
+//       clearInterval(countdown);
+//     }
+
+//     return () => {
+//       clearInterval(countdown);
+//     };
+//   }, [timer]);
+
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.inputContainer}>
+//         <TextInput
+//           style={styles.input}
+//           onChangeText={handleOTPChange}
+//           value={otp}
+//           keyboardType="numeric"
+//           maxLength={4}
+//           placeholder="Enter OTP" placeholderTextColor={'black'}
+//         />
+//       </View>
+//       <View style={styles.buttonContainer}>
+//         {timer > 0 ? (
+//           <Text style={styles.timerText}>Timer: {timer}</Text>
+//         ) : (
+//           <TouchableOpacity style={styles.resendButton} onPress={handleResend}>
+//             <Text style={styles.resendButtonText}>Resend</Text>
+//           </TouchableOpacity>
+//         )}
+//         <TouchableOpacity style={styles.button} onPress={handleSubmit} >
+//           <Text style={styles.buttonText}>Submit</Text>
+//         </TouchableOpacity>
+//       </View>
+//       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Other') }>
+//         <Text style={styles.buttonText}>Others</Text>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home') }>
+//         <Text style={styles.buttonText}>Home</Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     marginVertical: 45,
+//   },
+//   inputContainer: {
+//     alignItems: 'center',
+//     marginBottom: 20,
+//     color:'black'
+//   },
+//   input: {
+//     padding: 10,
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     height: 50,
+//     width: 200,
+//     textAlign: 'center',
+//     color:'black'
+//   },
+//   timerText: {
+//     marginBottom: 10,
+//     fontSize: 16,
+//     color:'black',
+//   },
+//   resendButton: {
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     width: '48%',
+//     height: 40,
+//     backgroundColor: '#5f9ea0',
+//     borderRadius: 10,
+//   },
+//   resendButtonText: {
+//     color: 'white',
+//     fontWeight: 'bold',
+//   },
+//   buttonContainer: {
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//     marginTop: 20,
+//     width: '100%',
+//     paddingHorizontal: 20,
+//   },
+//   button: {
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     width: '48%',
+//     height: 40,
+//     backgroundColor: '#5f9ea0',
+//     borderRadius: 10,
+//   },
+//   buttonText: {
+//     color: 'white',
+//     fontWeight: 'bold',
+//   },
+// });
+
+// export default Otp;
 
 
 

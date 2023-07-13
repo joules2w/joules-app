@@ -68,7 +68,7 @@ const Job_portal = ({ navigation }) => {
     <View style={styles.container}>
         <ScrollView>
             <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-            <ImageBackground style = {styles.background} source = {require('./Images/background.png')}>
+            <ImageBackground style = {styles.background} source = {require('./Images/background.jpg')}>
                 <Text style={styles.texthead01}>Job Portal</Text>
                 <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
             </ImageBackground>

@@ -52,7 +52,9 @@ const styles = StyleSheet.create({
     padding : 10,
     color: 'white',
     fontSize: 15,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+    marginRight: 10,
+    textAlign:'center'
   },
 });
 

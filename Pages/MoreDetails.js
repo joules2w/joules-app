@@ -35,7 +35,7 @@ const logout = () =>{
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-            <ImageBackground style={styles.background} source={require('./Images/background.png')}>
+            <ImageBackground style={styles.background} source={require('./Images/background.jpg')}>
                 <Text style={styles.texthead01}>Interview Panel For Interactive Developer</Text>
                 <Text style={styles.text}>Job created on 28th September 2015</Text>
                 <Text style={styles.texthead02}>₹ 4000 per panel member</Text>

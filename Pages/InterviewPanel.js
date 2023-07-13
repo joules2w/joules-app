@@ -74,7 +74,7 @@ const InterViewPanel = ({ navigation }) => {
         <View style={styles.container}>
             <ScrollView>
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-                <ImageBackground style={styles.background} source={require('./Images/background.png')}>
+                <ImageBackground style={styles.background} source={require('./Images/background.jpg')}>
                     <Text style={styles.texthead01}>Interview Panel</Text>
                     <Text style={styles.texthead02}>Welcome to our Interview Panel page, where you can discover everything you need to know about panel interviews and how to excel in them.</Text>
                 </ImageBackground>

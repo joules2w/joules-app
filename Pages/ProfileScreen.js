@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback, Animated, Image } from 'react-native';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { MultipleSelectList } from 'react-native-dropdown-select-list';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const ProfileScreen = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +34,7 @@ const ProfileScreen = () => {
       <View style={styles.container}>
         <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
          
-        <Image style={styles.profileImage} source={require('./Images/profile.png')} />
+        <Image style={styles.profileImage} source={require('./Images/profile.jpg')} />
           <Text style = {styles.text}>Profile</Text>
          
         </TouchableOpacity>
@@ -43,9 +45,9 @@ const ProfileScreen = () => {
           </TouchableWithoutFeedback>
   
           <Animated.View style={[styles.sideMenu, { transform: [{ translateX: menuTranslateX }] }]}>
-            <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
-              <Text style = {styles.text}>Close Menu</Text>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
+            <MaterialIcons name="close" style={styles.icon} />
+          </TouchableOpacity>
   
             <Text style = {styles.text}>Edit Profile</Text>
           </Animated.View>
@@ -89,6 +91,10 @@ const ProfileScreen = () => {
       marginBottom: 16,
       padding: 8,
       backgroundColor: 'white',
+    },
+    icon: {
+      color: 'black',
+      fontSize: 30,
     },
     text : {
         color : 'black',
