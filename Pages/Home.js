@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { constants } from './StaticJobs'
 
-
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -22,7 +21,6 @@ const Home = ({ navigation }) => {
         }
         return <Text>{value}</Text>;
     };
-
 
     const frequentJobItem = ({ item }) => (
         <View style={[styles.card, styles.elevation]}>
@@ -271,16 +269,14 @@ const styles = StyleSheet.create({
     },
     tabContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         marginBottom: 20,
     },
     tabItem: {
-        flex: 1,
         alignItems: 'center',
-        padding: 5,
+        padding: 8,
         backgroundColor: '#808080',
-        marginLeft: '4%',
-        marginRight: '4%',
+        marginLeft: '5%',
         borderRadius: 5
     },
     activeTab: {

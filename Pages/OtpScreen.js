@@ -13,7 +13,6 @@ const Otp = ({ navigation }) => {
     if (otp === '123') {
       Alert.alert('Success', 'OTP verification successful!');
       navigation.navigate('Home');
-      // navigation.navigate('Sparsh');
     } else {
       Alert.alert('Error', 'Invalid OTP!');
     }
@@ -62,11 +61,8 @@ const Otp = ({ navigation }) => {
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('JobsList') }>
-        <Text style={styles.buttonText}>ABCD</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Other') }>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Details') }>
         <Text style={styles.buttonText}>Others</Text>
       </TouchableOpacity>
 
