@@ -17,7 +17,9 @@ import Ticket from './Pages/Createticket';
 import Other from './Pages/Other';
 import JobDetails from './Pages/JobDetails';
 import OpenTicket from './Pages/OpenTicket';
-import TicketDetails from './Pages/TicketDetails'
+import TicketDetails from './Pages/TicketDetails';
+import JobDetailsScreen from './Pages/JobDetailsScreen';
+import JobsListScreen from './Pages/JobsListScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +43,8 @@ const App = () => {
         <Stack.Screen name='JobDetail' component={JobDetails} options={{ headerShown : false }} />
         <Stack.Screen name='OpenTicket' component={OpenTicket} options={{ headerShown : false }} />
         <Stack.Screen name='TicketDetails' component={TicketDetails} options={{ headerShown : false }} />
+        <Stack.Screen name='JobDetails' component={JobDetailsScreen} options={{ headerShown : false }} />
+        <Stack.Screen name='JobsList' component={JobsListScreen} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

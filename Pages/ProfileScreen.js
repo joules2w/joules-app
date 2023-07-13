@@ -47,7 +47,7 @@ const ProfileScreen = () => {
               <Text style = {styles.text}>Close Menu</Text>
             </TouchableOpacity>
   
-            <Text style = {styles.text}>Edit Profile</Text>
+            <Text style = {styles.text}>Profile</Text>
           </Animated.View>
         </Modal>
       </View>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { constants } from './Constant'
+import { constants } from './StaticJobs'
 
 
 import Header from "./Header";
@@ -61,21 +61,11 @@ const Home = ({ navigation }) => {
         </View>
     );
 
-    const [modalVisible, setModalVisible] = useState(false);
-
     const [activeTab, setActiveTab] = useState('Tab1');
 
     const handleTabPress = (tabName) => {
         setActiveTab(tabName);
     };
-
-    const data = [
-        { key: '1', value: 'name1' },
-        { key: '2', value: 'name2' },
-        { key: '3', value: 'name3' },
-        { key: '4', value: 'name4' },
-        { key: '5', value: 'name5' },
-    ]
 
     const logout = () => {
         navigation.navigate('Login')
@@ -125,61 +115,53 @@ const Home = ({ navigation }) => {
                 <View style={styles.tabContainer}>
                     <TouchableOpacity
                         style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]}
-                        onPress={() => handleTabPress('Tab1')}
-                    >
+                        onPress={() => handleTabPress('Tab1')}>
                         <Text style={styles.tabText}>All</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]}
-                        onPress={() => handleTabPress('Tab2')}
-                    >
+                        onPress={() => handleTabPress('Tab2')}>
                         <Text style={styles.tabText}>Low</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.tabItem, activeTab === 'Tab3' && styles.activeTab]}
-                        onPress={() => handleTabPress('Tab3')}
-                    >
+                        onPress={() => handleTabPress('Tab3')}>
                         <Text style={styles.tabText}>Medium</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.tabItem, activeTab === 'Tab4' && styles.activeTab]}
-                        onPress={() => handleTabPress('Tab4')}
-                    >
+                        onPress={() => handleTabPress('Tab4')}>
                         <Text style={styles.tabText}>High</Text>
                     </TouchableOpacity>
                 </View>
 
                 {activeTab === 'Tab1' && (
-                    <View>
-                        <View style={[styles.card, styles.elevation]}>
-                            <TouchableOpacity onPress={() => navigation.navigate('TicketDetails')}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={styles.priority}>
-                                        <Text style={styles.texthead03}>High</Text>
-                                    </Text>
-                                    <Text style={styles.heading02}>
-                                        Created on 4 Apirl 2023
-                                    </Text>
-                                </View>
-                                <Text style={styles.text01}>Testing</Text>
-                                <Text style={styles.text02}>Testing</Text>
-                                <Text style={styles.text03}>Assigned on 10 Apirl 2023</Text>
-                            </TouchableOpacity>
-                        </View>
+                    <View style={[styles.card, styles.elevation]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('TicketDetails')}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={styles.priority}>
+                                    <Text style={styles.texthead03}>High</Text>
+                                </Text>
+                                <Text style={styles.heading02}>Created on 4 Apirl 2023</Text>
+                            </View>
+                            <Text style={styles.text01}>Testing</Text>
+                            <Text style={styles.text02}>Testing</Text>
+                            <Text style={styles.text03}>Assigned on 10 Apirl 2023</Text>
+                        </TouchableOpacity>
                     </View>
                 )}
                 {activeTab === 'Tab2' && (
-                    <View>
+                    <View style={[styles.card, styles.elevation]}>
                         <Text style={styles.text}>Content for Tab 2</Text>
                     </View>
                 )}
                 {activeTab === 'Tab3' && (
-                    <View>
+                    <View style={[styles.card, styles.elevation]}>
                         <Text style={styles.text}>Content for Tab 3</Text>
                     </View>
                 )}
                 {activeTab === 'Tab4' && (
-                    <View>
+                    <View style={[styles.card, styles.elevation]}>
                         <Text style={styles.text}>Content for Tab 4</Text>
                     </View>
                 )}
@@ -261,22 +243,14 @@ const styles = StyleSheet.create({
     button01: {
         backgroundColor: 'lightblue',
         borderRadius: 8,
-        margin:10
-    },
-    button02: {
-        backgroundColor: 'lightblue',
-        marginLeft: '10%',
-        marginBottom: '5%',
-        borderRadius: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 3,
+        margin: 10
     },
     text: {
         color: '#449b93',
         margin: 8,
-        backgroundColor : '#e0f9f6',
-        padding : 5,
-        borderRadius : 15,
+        backgroundColor: '#e0f9f6',
+        padding: 5,
+        borderRadius: 15,
     },
     line: {
         borderColor: 'black',
@@ -290,13 +264,6 @@ const styles = StyleSheet.create({
         marginRight: '3%',
         textDecorationLine: 'underline',
         fontSize: 15
-    },
-    button: {
-        backgroundColor: '#5f9ea0',
-        marginRight: '8%',
-        padding: 10,
-        borderRadius: 5,
-        alignSelf: 'flex-end',
     },
     buttontext: {
         color: '#fff',

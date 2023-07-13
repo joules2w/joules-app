@@ -62,6 +62,10 @@ const Otp = ({ navigation }) => {
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('JobsList') }>
+        <Text style={styles.buttonText}>ABCD</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Other') }>
         <Text style={styles.buttonText}>Others</Text>
       </TouchableOpacity>

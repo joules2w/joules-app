@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, FlatList, ImageBackground, Dimensions, ScrollView } from 'react-native';
-import { constants } from './Constant';
+import { constants } from './StaticJobs';
 
 import Header from "./Header";
 import Footer from "./Footer";
