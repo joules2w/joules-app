@@ -40,7 +40,7 @@ const InterViewPanel = ({ navigation }) => {
                         </View>
                     )}
                 </View>
-                <TouchableOpacity onPress={() => highpayJobPress(item)}>
+                <TouchableOpacity onPress={() => handleJobPress(item)}>
                     <Text style={styles.moredetails}>More details ➤</Text>
                 </TouchableOpacity>
             </View>
