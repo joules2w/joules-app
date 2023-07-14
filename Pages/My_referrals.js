@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, FlatList, ImageBackground, ScrollView, Dimensions } from 'react-native';
-import { referrals } from './StaticReferrals';
+import { referrals } from './StaticValues';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import Header from './Header';
 import SearchBox from './SearchBox';
@@ -33,7 +34,10 @@ const MyReferrals = ({ navigation }) => {
         <Text style={styles.value}>{item.email}</Text>
       </View>
       </View>
-      <View style={{ flexDirection : 'column' }}></View>
+      <View style={{ flexDirection : 'column', justifyContent : 'space-around' }}>
+        <MaterialIcons name="call" style={styles.icon} />
+        <MaterialIcons name="email" style={styles.icon} />
+      </View>
       </View>
     </View>
   );
@@ -149,8 +153,11 @@ const styles = StyleSheet.create({
   value: {
     color: '#808080',
     marginRight: '5%',
-    // fontWeight: "bold",
     fontSize: 16,
+  },
+  icon: {
+    color: 'black',
+    fontSize: 30,
   },
 })
 

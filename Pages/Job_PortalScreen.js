@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, FlatList, ScrollView, ImageBackground, Dimensions } from 'react-native';
-import { constants } from './StaticJobs';
+import { constants } from './StaticValues';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -19,24 +19,32 @@ const Job_portal = ({ navigation }) => {
         }
         return <Text>{value}</Text>;
     };
+    
+    const renderJobItem = ({ item }) => {
+        const skillsToShow = item.skills.slice(0, 3);
+    const remainingSkillsCount = item.skills.length - 3;
 
-    const renderJobItem = ({ item }) => (
-        <View style={[styles.card, styles.elevation]}>
-            <TouchableOpacity onPress={() => handleJobPress(item)}>
-                <Text style={styles.heading01}>{item.title}</Text>
-                <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-                <View style={{ flexDirection: 'row', width: '50%' }}>
-                    <Text style={styles.text}>{item.skills[0]}</Text>
-                    <Text style={styles.text}>{item.skills[1]}</Text>
-                    <Text style={styles.text}>{item.skills[2]}</Text>
-                    <Text style={styles.text}>{item.skills[3]}</Text>
-                    <Text style={styles.text}>{item.skills[4]}</Text>
-                    <Text style={styles.text}>{item.skills[5]}</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
-    );
-
+        return (
+            <View style={[styles.card, styles.elevation]}>
+                <TouchableOpacity onPress={() => frequentJobPress(item)}>
+                    <Text style={styles.heading01}>{item.title}</Text>
+                    <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
+                    <View style={styles.skillsContainer}>
+          {skillsToShow.map((skill, index) => (
+            <View key={index} style={styles.skillItem}>
+              <Text style={styles.skillText}>{skill}</Text>
+            </View>
+          ))}
+          {remainingSkillsCount > 0 && (
+            <View style={styles.skillItem}>
+              <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
+            </View>
+          )}
+        </View>                
+        </TouchableOpacity>
+            </View>
+        )
+    };
 
     const logout = () => {
         navigation.navigate('Login')
@@ -69,12 +77,10 @@ const Job_portal = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
                     <Text style={styles.text01}>My Referrals</Text>
                 </TouchableOpacity>
-
                 <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
                     <SearchBox />
                     <FilterBy />
                 </View>
-
                 <FlatList scrollEnabled={false}
                     data={constants}
                     keyExtractor={(item) => item.id.toString()}
@@ -177,6 +183,25 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingVertical: 5,
         margin: '8%',
+    },
+    skillsRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginBottom: 8,
+    },
+    skillsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    skillText: {
+        fontSize: 14,
+        color: '#449b93',
+        backgroundColor: '#e0f9f6',
+        padding: 10,
+        borderRadius: 20
+    },
+    skillItem: {
+        marginLeft: '5%',
     },
 })
 

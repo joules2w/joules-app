@@ -16,7 +16,6 @@ MERGED from [:react-native-document-picker] C:\Users\Intership\Documents\GitHub\
 MERGED from [:react-native-fs] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-gesture-handler] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-pager-view] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
-MERGED from [:react-native-pdf] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pdf\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-reanimated] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-reanimated\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-safe-area-context] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-screens\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
@@ -59,11 +58,9 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Intership\.gradl
 MERGED from [androidx.core:core-ktx:1.6.0] C:\Users\Intership\.gradle\caches\transforms-3\d24f9c58a74d12f952bb1fb9dd63002f\transformed\jetified-core-ktx-1.6.0\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\c9a06a332369690ad82a15ad34c082b2\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.sqlite:sqlite:2.1.0] C:\Users\Intership\.gradle\caches\transforms-3\0e4a93563ee96f055b81efc3af32138e\transformed\sqlite-2.1.0\AndroidManifest.xml:17:1-24:12
-MERGED from [com.github.TalbotGooday:AndroidPdfViewer:3.1.0-beta.3] C:\Users\Intership\.gradle\caches\transforms-3\67234a6c68ad425ac06cabaf173df393\transformed\jetified-AndroidPdfViewer-3.1.0-beta.3\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\598da386b4eeceff03617482260b2c61\transformed\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\6ff713961176329d6793f41384a425fa\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\38c771e43e3d7918fea1ac1b63a2610d\transformed\recyclerview-1.1.0\AndroidManifest.xml:17:1-24:12
-MERGED from [com.github.TalbotGooday:PdfiumAndroid:1.0.1] C:\Users\Intership\.gradle\caches\transforms-3\40d5cb56c30456723b4486859ad00f0b\transformed\jetified-PdfiumAndroid-1.0.1\AndroidManifest.xml:2:1-12:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\5eabcc03ec9b164f23b8811e98b72728\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.customview:customview:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\051b94d5509737629068e29ab64fbcdb\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.transition:transition:1.2.0] C:\Users\Intership\.gradle\caches\transforms-3\27f149f98e8a196934f0a0c01a838aff\transformed\transition-1.2.0\AndroidManifest.xml:17:1-24:12
@@ -204,8 +201,6 @@ MERGED from [:react-native-gesture-handler] C:\Users\Intership\Documents\GitHub\
 MERGED from [:react-native-gesture-handler] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-pager-view] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-pager-view] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-pdf] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pdf\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-pdf] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pdf\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-reanimated] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-reanimated\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-reanimated] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-reanimated\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
@@ -290,16 +285,12 @@ MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Inters
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\c9a06a332369690ad82a15ad34c082b2\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.sqlite:sqlite:2.1.0] C:\Users\Intership\.gradle\caches\transforms-3\0e4a93563ee96f055b81efc3af32138e\transformed\sqlite-2.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.sqlite:sqlite:2.1.0] C:\Users\Intership\.gradle\caches\transforms-3\0e4a93563ee96f055b81efc3af32138e\transformed\sqlite-2.1.0\AndroidManifest.xml:20:5-22:41
-MERGED from [com.github.TalbotGooday:AndroidPdfViewer:3.1.0-beta.3] C:\Users\Intership\.gradle\caches\transforms-3\67234a6c68ad425ac06cabaf173df393\transformed\jetified-AndroidPdfViewer-3.1.0-beta.3\AndroidManifest.xml:7:5-9:41
-MERGED from [com.github.TalbotGooday:AndroidPdfViewer:3.1.0-beta.3] C:\Users\Intership\.gradle\caches\transforms-3\67234a6c68ad425ac06cabaf173df393\transformed\jetified-AndroidPdfViewer-3.1.0-beta.3\AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\598da386b4eeceff03617482260b2c61\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\598da386b4eeceff03617482260b2c61\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\6ff713961176329d6793f41384a425fa\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\6ff713961176329d6793f41384a425fa\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\38c771e43e3d7918fea1ac1b63a2610d\transformed\recyclerview-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\38c771e43e3d7918fea1ac1b63a2610d\transformed\recyclerview-1.1.0\AndroidManifest.xml:20:5-22:41
-MERGED from [com.github.TalbotGooday:PdfiumAndroid:1.0.1] C:\Users\Intership\.gradle\caches\transforms-3\40d5cb56c30456723b4486859ad00f0b\transformed\jetified-PdfiumAndroid-1.0.1\AndroidManifest.xml:8:5-10:41
-MERGED from [com.github.TalbotGooday:PdfiumAndroid:1.0.1] C:\Users\Intership\.gradle\caches\transforms-3\40d5cb56c30456723b4486859ad00f0b\transformed\jetified-PdfiumAndroid-1.0.1\AndroidManifest.xml:8:5-10:41
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\5eabcc03ec9b164f23b8811e98b72728\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\5eabcc03ec9b164f23b8811e98b72728\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.customview:customview:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\051b94d5509737629068e29ab64fbcdb\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44

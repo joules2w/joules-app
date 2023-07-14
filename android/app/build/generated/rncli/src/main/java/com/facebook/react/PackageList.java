@@ -25,8 +25,6 @@ import com.rnfs.RNFSPackage;
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-pager-view
 import com.reactnativepagerview.PagerViewPackage;
-// react-native-pdf
-import org.wonday.pdf.RNPDFPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
@@ -87,7 +85,6 @@ public class PackageList {
       new RNFSPackage(),
       new RNGestureHandlerPackage(),
       new PagerViewPackage(),
-      new RNPDFPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

@@ -12,16 +12,24 @@ const Home = () => {
   };
 
   const renderJobCard = ({ item }) => {
+    const skillsToShow = item.skills.slice(0, 3);
+    const remainingSkillsCount = item.skills.length - 3;
+
     return (
       <View style={styles.jobCard}>
         <Text style={styles.jobTitle}>{item.title}</Text>
-        <FlatList
-          data={item.skills}
-          renderItem={renderSkillItem}
-          keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}
-          numColumns={2}
-        />
+        <View style={styles.skillsContainer}>
+          {skillsToShow.map((skill, index) => (
+            <View key={index} style={styles.skillItem}>
+              <Text style={styles.skillText}>{skill}</Text>
+            </View>
+          ))}
+          {remainingSkillsCount > 0 && (
+            <View style={styles.remainingSkills}>
+              <Text style={styles.remainingSkillsText}>+{remainingSkillsCount} more</Text>
+            </View>
+          )}
+        </View>
       </View>
     );
   };
@@ -46,8 +54,7 @@ const styles = StyleSheet.create({
   jobCard: {
     backgroundColor: '#f0f0f0',
     borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    padding: 16,
     marginBottom: 8,
   },
   jobTitle: {
@@ -55,19 +62,30 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  // skillsContainer: {
-    
-  // },
-  skillContainer: {
+  skillsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  skillItem: {
     backgroundColor: '#e0e0e0',
     borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    padding: 8,
     marginBottom: 8,
-    width: '48%',
+    marginRight: 8,
+    maxWidth: '48%',
   },
   skillText: {
     fontSize: 14,
+  },
+  remainingSkills: {
+    backgroundColor: '#e0e0e0',
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 8,
+  },
+  remainingSkillsText: {
+    fontSize: 14,
+    color: 'blue',
   },
 });
 

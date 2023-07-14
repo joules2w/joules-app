@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { constants } from './StaticJobs'
+import { constants } from './StaticValues'
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -15,49 +15,80 @@ const Home = ({ navigation }) => {
         navigation.navigate('MoreDetails', { constants });
     };
 
+    const renderSkillItem = ({ item }) => {
+        return (
+            <View style={styles.skillsContainer}>
+                <Text style={styles.skillText}>{item}</Text>
+            </View>
+        );
+    };
+
     const renderCellContent = (value) => {
-        if (value.length > 10) {
+        if (value?.length > 10) {
             return <Text>{value.substring(0, 78)}...</Text>;
         }
         return <Text>{value}</Text>;
     };
 
-    const frequentJobItem = ({ item }) => (
-        <View style={[styles.card, styles.elevation]}>
-            <TouchableOpacity onPress={() => frequentJobPress(item)}>
+    const renderskillContent = (value) => {
+        if (value.length > 40) {
+            return <Text>{value.substring(0, 40)}...</Text>;
+        }
+        return <Text>{value}</Text>;
+    };
+
+    const frequentJobItem = ({ item }) => {
+        const skillsToShow = item.skills.slice(0, 3);
+        const remainingSkillsCount = item.skills.length - 3;
+
+        return (
+            <View style={[styles.card, styles.elevation]}>
+                <TouchableOpacity onPress={() => frequentJobPress(item)}>
+                    <Text style={styles.heading01}>{item.title}</Text>
+                    <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
+                    <View style={styles.skillsContainer}>
+                        {skillsToShow.map((skill, index) => (
+                            <View key={index} style={styles.skillItem}>
+                                <Text style={styles.skillText}>{skill}</Text>
+                            </View>
+                        ))}
+                        {remainingSkillsCount > 0 && (
+                            <View style={styles.skillItem}>
+                                <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
+                            </View>
+                        )}
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
+    };
+
+    const highpayJobItem = ({ item }) => {
+        const skillsToShow = item.skills.slice(0, 3);
+        const remainingSkillsCount = item.skills.length - 3;
+
+        return (
+            <View style={[styles.card, styles.elevation]}>
                 <Text style={styles.heading01}>{item.title}</Text>
                 <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={styles.text}>{item.skills[0]}</Text>
-                    <Text style={styles.text}>{item.skills[1]}</Text>
-                    <Text style={styles.text}>{item.skills[2]}</Text>
-                    <Text style={styles.text}>{item.skills[3]}</Text>
-                    <Text style={styles.text}>{item.skills[4]}</Text>
-                    <Text style={styles.text}>{item.skills[5]}</Text>
-
+                <View style={styles.skillsContainer}>
+                    {skillsToShow.map((skill, index) => (
+                        <View key={index} style={styles.skillItem}>
+                            <Text style={styles.skillText}>{skill}</Text>
+                        </View>
+                    ))}
+                    {remainingSkillsCount > 0 && (
+                        <View style={styles.skillItem}>
+                            <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
+                        </View>
+                    )}
                 </View>
-            </TouchableOpacity>
-        </View>
-    );
-
-    const highpayJobItem = ({ item }) => (
-        <View style={[styles.card, styles.elevation]}>
-            <Text style={styles.heading01}>{item.title}</Text>
-            <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-            <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.text}>{item.skills[0]}</Text>
-                <Text style={styles.text}>{item.skills[1]}</Text>
-                <Text style={styles.text}>{item.skills[2]}</Text>
-                <Text style={styles.text}>{item.skills[3]}</Text>
-                <Text style={styles.text}>{item.skills[4]}</Text>
-                <Text style={styles.text}>{item.skills[5]}</Text>
-
+                <TouchableOpacity onPress={() => highpayJobPress(item)}>
+                    <Text style={styles.moredetails}>More details ➤</Text>
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => highpayJobPress(item)}>
-                <Text style={styles.moredetails}>More details ➤</Text>
-            </TouchableOpacity>
-        </View>
-    );
+        )
+    };
 
     const [activeTab, setActiveTab] = useState('Tab1');
 
@@ -108,7 +139,6 @@ const Home = ({ navigation }) => {
                     data={constants}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={highpayJobItem} />
-
 
                 <View style={styles.tabContainer}>
                     <TouchableOpacity
@@ -209,6 +239,10 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         paddingBottom: 120,
     },
+    skillsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
     heading01: {
         fontSize: 18,
         fontWeight: "bold",
@@ -251,10 +285,10 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     line: {
-        borderColor: 'black',
+        borderColor: '#808080',
         borderBottomWidth: 1,
-        marginLeft: '8%',
-        marginRight: '8%',
+        marginLeft: '5%',
+        marginRight: '5%',
     },
     moredetails: {
         color: 'red',
@@ -315,7 +349,22 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginLeft: '5%',
         textAlign: 'left'
-    }
+    },
+    skillsRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginBottom: 8,
+    },
+    skillText: {
+        fontSize: 14,
+        color: '#449b93',
+        backgroundColor: '#e0f9f6',
+        padding: 10,
+        borderRadius: 20
+    },
+    skillItem: {
+        marginLeft: '5%',
+    },
 })
 
 export default Home;

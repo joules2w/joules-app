@@ -47,7 +47,6 @@ const JobDetailScreen = ({ route, navigation }) => {
     }
   };
 
-
   const [isSwitchOn, setIsSwitchOn] = useState(false);
 
   const handleSwitchToggle = () => {
@@ -72,6 +71,38 @@ const JobDetailScreen = ({ route, navigation }) => {
       console.warn(err);
     }
   }, []);
+
+  const renderSkills = () => {
+    const skills = constants.skills;
+    const rows = [];
+    let row = [];
+
+    for (let i = 0; i < skills.length; i++) {
+      const skill = skills[i];
+      const isLongSkill = skill.length > 20;
+
+      if (isLongSkill || row.length === 3) {
+        rows.push(row);
+        row = [];
+      }
+
+      row.push(skill);
+
+      if (i === skills.length - 1) {
+        rows.push(row);
+      }
+    }
+
+    return rows.map((row, index) => (
+      <View key={index} style={styles.skillsRow}>
+        {row.map((skill, skillIndex) => (
+          <View key={skillIndex} style={styles.skillItem}>
+            <Text style={styles.skillText}>{skill}</Text>
+          </View>
+        ))}
+      </View>
+    ));
+  };
 
   const logout = () => {
     navigation.navigate('Login')
@@ -125,14 +156,7 @@ const JobDetailScreen = ({ route, navigation }) => {
         <Text style={styles.texthead}>Eligibility</Text>
         <Text style={styles.text}>{`\u25CF ${constants.eligibility}`}</Text>
         <Text style={styles.texthead}>Skills</Text>
-        <View style={{ flexDirection: 'row', marginRight: '10%', justifyContent: 'flex-start' }}>
-          <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[0]}</Text></Text>
-          <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[1]}</Text></Text>
-          <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[2]}</Text></Text>
-          <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[3]}</Text></Text>
-          <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[4]}</Text></Text>
-          <Text style={styles.button02}><Text style={styles.skilltext}>{constants.skills[5]}</Text></Text>
-        </View>
+        {renderSkills()}
         <View style={styles.line} />
 
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
@@ -180,8 +204,6 @@ const JobDetailScreen = ({ route, navigation }) => {
             </Text>
           ))}
         </View>
-
-
         <TouchableOpacity style={styles.submitbutton} onPress={validateInput}>
           <Text style={styles.submittext}>Apply Now</Text>
         </TouchableOpacity>
@@ -344,6 +366,21 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginLeft: '5%',
     marginRight: '5%',
+  },
+  skillsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 8,
+  },
+  skillText: {
+    fontSize: 14,
+    color : '#449b93',
+    backgroundColor : '#e0f9f6',
+    padding : 10,
+    borderRadius : 20
+  },
+  skillItem : {
+    marginLeft : '5%',
   }
 });
 

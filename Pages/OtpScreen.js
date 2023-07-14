@@ -66,11 +66,12 @@ const Otp = ({ navigation }) => {
         <Text style={styles.buttonText}>Others</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TicketDetails') }>
+      {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TicketDetails') }>
         <Text style={styles.buttonText}>Ticket Details</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
+
 };
 
 const styles = StyleSheet.create({

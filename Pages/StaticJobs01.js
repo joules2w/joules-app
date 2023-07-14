@@ -2,7 +2,7 @@ const staticJobs = [
     {
       id: 1,
       title: 'Job 1',
-      skills: ['Skill 1', 'Skill 2', 'Skill 3', 'Skill 4', 'Skill 5', 'Skill 6', 'Skill 7'],
+      skills: ['Skill 1', 'Skill 2SkillSkillSkillvvSkillSkillSkillSkillSkillSkillSkillSkillSkillSkillSkill', 'Skill 3', 'Skill 4', 'Skill 5', 'Skill 6', 'Skill 7'],
     },
     {
       id: 2,
