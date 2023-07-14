@@ -5,7 +5,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Header from './Header';
 import Footer from './Footer';
 
-const TicketDetails = () => {
+const TicketDetails = ({ route }) => {
+
+    const { ticket } = route.params;
 
     const [selectedValue, setSelectedValue] = useState(null);
 
@@ -14,21 +16,21 @@ const TicketDetails = () => {
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <Header />
                 <View style={{ flexDirection : 'row', justifyContent : 'space-between' }}>
-                    <Text style={styles.texthead01}>Ticket name</Text>
+                    <Text style={styles.texthead01}>{ticket.heading}</Text>
                     <TouchableOpacity style={styles.button}>
                         <Text style={styles.buttontext}>Save</Text>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.texthead02}>Ticket Description</Text>
-                <Text style={styles.description}>Description</Text>
+                <Text style={styles.description}>{ticket.ticketdescription} </Text>
                 <Text style={styles.texthead02}>Ticket info</Text>
                 <View style={{ flexDirection : 'row', justifyContent : 'flex-start' }}>
                     <Text style={styles.kay}>Ticket ID - </Text>
-                    <Text style={styles.value}>Value</Text>
+                    <Text style={styles.value}>{ticket.id}</Text>
                 </View>
                 <View style={{ flexDirection : 'row', justifyContent : 'flex-start' }}>
                     <Text style={styles.kay}>Created On - </Text>
-                    <Text style={styles.value}>Value</Text>
+                    <Text style={styles.value}>{ticket.createdOn}</Text>
                 </View>
                 <View style={{ flexDirection : 'row', justifyContent : 'flex-start' }}>
                     <Text style={styles.kay}>Created By - </Text>
@@ -74,9 +76,6 @@ const TicketDetails = () => {
                 <Text style={styles.texthead01}>Discussion Point</Text>
                 <Text style={styles.description}>Description</Text>
                 <TextInput style={styles.input} placeholder='Type your message here...' placeholderTextColor='#808080'>
-                    {/* <TouchableOpacity style={styles.button}>
-                        <Text style={styles.text}>Send</Text>
-                    </TouchableOpacity> */}
                 </TextInput>
                 <View style={styles.footer}>
                     <Footer />

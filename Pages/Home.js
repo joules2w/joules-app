@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { constants } from './StaticValues'
+import { constants, ticket } from './StaticValues'
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -15,13 +15,17 @@ const Home = ({ navigation }) => {
         navigation.navigate('MoreDetails', { constants });
     };
 
-    const renderSkillItem = ({ item }) => {
-        return (
-            <View style={styles.skillsContainer}>
-                <Text style={styles.skillText}>{item}</Text>
-            </View>
-        );
+    const ticketDetails = (ticket) => {
+        navigation.navigate('TicketDetails', { ticket });
     };
+
+    // const renderSkillItem = ({ item }) => {
+    //     return (
+    //         <View style={styles.skillsContainer}>
+    //             <Text style={styles.skillText}>{item}</Text>
+    //         </View>
+    //     );
+    // };
 
     const renderCellContent = (value) => {
         if (value?.length > 10) {
@@ -89,6 +93,23 @@ const Home = ({ navigation }) => {
             </View>
         )
     };
+
+    const ticketItem = ({ item }) => {
+        return(
+      <View style={[styles.card, styles.elevation]}>
+                          <TouchableOpacity onPress={() => ticketDetails(item)}>
+                              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                  <Text style={styles.priority}>
+                                      <Text style={styles.texthead03}>{item.priority}</Text>
+                                  </Text>
+                                  <Text style={styles.heading02}>Created on {item.createdOn}</Text>
+                              </View>
+                              <Text style={styles.text01}>{item.heading}</Text>
+                              <Text style={styles.text02}>{item.ticketdescription}</Text>
+                              <Text style={styles.text03}>Assigned on {item.assigned}</Text>
+                          </TouchableOpacity>
+                      </View>
+      )};
 
     const [activeTab, setActiveTab] = useState('Tab1');
 
@@ -164,19 +185,10 @@ const Home = ({ navigation }) => {
                 </View>
 
                 {activeTab === 'Tab1' && (
-                    <View style={[styles.card, styles.elevation]}>
-                        <TouchableOpacity onPress={() => navigation.navigate('TicketDetails')}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Text style={styles.priority}>
-                                    <Text style={styles.texthead03}>High</Text>
-                                </Text>
-                                <Text style={styles.heading02}>Created on 4 Apirl 2023</Text>
-                            </View>
-                            <Text style={styles.text01}>Testing</Text>
-                            <Text style={styles.text02}>Testing</Text>
-                            <Text style={styles.text03}>Assigned on 10 Apirl 2023</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <FlatList scrollEnabled={false}
+                    data={ticket}
+                    keyExtractor={(ticket) => ticket.id.toString()}
+                    renderItem={ticketItem} />
                 )}
                 {activeTab === 'Tab2' && (
                     <View style={[styles.card, styles.elevation]}>

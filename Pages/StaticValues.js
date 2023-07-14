@@ -122,4 +122,24 @@ const referrals = [
     }
 ];
 
-export { constants, referrals };
+const ticket = [
+    {
+        id : 1,
+        priority : 'High',
+        heading : 'testing',
+        ticketdescription : 'Testing',
+        assigned : '5 Jyly 2023',
+        createdOn : '25 June 2023',
+    },
+    {
+        id : 2,
+        priority : 'Low',
+        heading : 'Software Tester',
+        ticketdescription : "Software test engineer",
+        assigned : '10 June 2023',
+        createdOn : '10 May 2023',
+    }
+]
+
+
+export { constants, referrals, ticket };
