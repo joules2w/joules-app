@@ -1,46 +1,100 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
-import staticJobs from './StaticJobs01';
 
-const Home = () => {
-  const renderSkillItem = ({ item }) => {
+const HomeScreen = () => {
+  const [selectedTab, setSelectedTab] = useState('All');
+
+  const staticValues = [
+    { id: 1, title: 'Item 1', priority: 'High' },
+    { id: 2, title: 'Item 2', priority: 'Low' },
+    { id: 3, title: 'Item 3', priority: 'Medium' },
+    { id: 4, title: 'Item 4', priority: 'High' },
+    { id: 5, title: 'Item 5', priority: 'Medium' },
+    // ... more static values
+  ];
+
+  const getFilteredData = (priority) => {
+    if (priority === 'All') {
+      return staticValues;
+    }
+    return staticValues.filter((item) => item.priority === priority);
+  };
+
+  const renderCard = ({ item }) => {
+    let textColor = 'black';
+
+    if (item.priority === 'High') {
+      textColor = 'green';
+    } else if (item.priority === 'Medium') {
+      textColor = 'blue';
+    } else if (item.priority === 'Low') {
+      textColor = 'red';
+    }
+
     return (
-      <View style={styles.skillContainer}>
-        <Text style={styles.skillText}>{item}</Text>
+      <View style={styles.card}>
+        <Text style={[styles.cardTitle, { color: textColor }]}>
+          {item.title}
+        </Text>
+        <Text style={styles.cardPriority}>{item.priority}</Text>
       </View>
     );
   };
 
-  const renderJobCard = ({ item }) => {
-    const skillsToShow = item.skills.slice(0, 3);
-    const remainingSkillsCount = item.skills.length - 3;
-
+  const renderTabContent = () => {
+    const filteredData = getFilteredData(selectedTab);
     return (
-      <View style={styles.jobCard}>
-        <Text style={styles.jobTitle}>{item.title}</Text>
-        <View style={styles.skillsContainer}>
-          {skillsToShow.map((skill, index) => (
-            <View key={index} style={styles.skillItem}>
-              <Text style={styles.skillText}>{skill}</Text>
-            </View>
-          ))}
-          {remainingSkillsCount > 0 && (
-            <View style={styles.remainingSkills}>
-              <Text style={styles.remainingSkillsText}>+{remainingSkillsCount} more</Text>
-            </View>
-          )}
-        </View>
-      </View>
+      <FlatList
+        data={filteredData}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderCard}
+      />
     );
   };
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={staticJobs}
-        renderItem={renderJobCard}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      <View style={styles.tabContainer}>
+        <Text
+          style={[
+            styles.tab,
+            selectedTab === 'All' && styles.activeTab,
+          ]}
+          onPress={() => setSelectedTab('All')}
+        >
+          All
+        </Text>
+        <Text
+          style={[
+            styles.tab,
+            selectedTab === 'Low' && styles.activeTab,
+          ]}
+          onPress={() => setSelectedTab('Low')}
+        >
+          Low
+        </Text>
+        <Text
+          style={[
+            styles.tab,
+            selectedTab === 'Medium' && styles.activeTab,
+          ]}
+          onPress={() => setSelectedTab('Medium')}
+        >
+          Medium
+        </Text>
+        <Text
+          style={[
+            styles.tab,
+            selectedTab === 'High' && styles.activeTab,
+          ]}
+          onPress={() => setSelectedTab('High')}
+        >
+          High
+        </Text>
+      </View>
+      <View style={styles.contentContainer}>
+        {renderTabContent()}
+      </View>
     </View>
   );
 };
@@ -48,45 +102,43 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingTop: 20,
   },
-  jobCard: {
+  tabContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    marginBottom: 10,
+  },
+  tab: {
+    marginRight: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 10,
+    backgroundColor: '#e0e0e0',
+  },
+  activeTab: {
+    backgroundColor: 'blue', // Customize the active tab color as desired
+    color: '#fff', // Customize the active tab text color as desired
+  },
+  contentContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  card: {
     backgroundColor: '#f0f0f0',
     borderRadius: 8,
     padding: 16,
-    marginBottom: 8,
+    marginBottom: 10,
   },
-  jobTitle: {
+  cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  skillsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  skillItem: {
-    backgroundColor: '#e0e0e0',
-    borderRadius: 8,
-    padding: 8,
-    marginBottom: 8,
-    marginRight: 8,
-    maxWidth: '48%',
-  },
-  skillText: {
+  cardPriority: {
     fontSize: 14,
-  },
-  remainingSkills: {
-    backgroundColor: '#e0e0e0',
-    borderRadius: 8,
-    padding: 8,
-    marginBottom: 8,
-  },
-  remainingSkillsText: {
-    fontSize: 14,
-    color: 'blue',
+    color: 'gray',
   },
 });
 
-export default Home;
+export default HomeScreen;

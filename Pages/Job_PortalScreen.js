@@ -19,6 +19,13 @@ const Job_portal = ({ navigation }) => {
         }
         return <Text>{value}</Text>;
     };
+
+    const renderskillContent = (value) => {
+        if (value.length > 40) {
+            return <Text>{value.substring(0, 50)}...</Text>;
+        }
+        return <Text>{value}</Text>;
+    };
     
     const renderJobItem = ({ item }) => {
         const skillsToShow = item.skills.slice(0, 3);
@@ -26,13 +33,13 @@ const Job_portal = ({ navigation }) => {
 
         return (
             <View style={[styles.card, styles.elevation]}>
-                <TouchableOpacity onPress={() => frequentJobPress(item)}>
+                <TouchableOpacity onPress={() => handleJobPress(item)}>
                     <Text style={styles.heading01}>{item.title}</Text>
                     <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
                     <View style={styles.skillsContainer}>
           {skillsToShow.map((skill, index) => (
             <View key={index} style={styles.skillItem}>
-              <Text style={styles.skillText}>{skill}</Text>
+              <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
             </View>
           ))}
           {remainingSkillsCount > 0 && (
@@ -49,19 +56,15 @@ const Job_portal = ({ navigation }) => {
     const logout = () => {
         navigation.navigate('Login')
     }
-
     const interviewpanel = () => {
         navigation.navigate('InterviewPanel')
     }
-
     const jobportal = () => {
         navigation.navigate('Job_Portal')
     }
-
     const sparsh = () => {
         navigation.navigate('Sparsh')
     }
-
     const home = () => {
         navigation.navigate()
     }
@@ -75,7 +78,7 @@ const Job_portal = ({ navigation }) => {
                     <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
                 </ImageBackground>
                 <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
-                    <Text style={styles.text01}>My Referrals</Text>
+                    <Text style={styles.myreferral}>My Referrals</Text>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
                     <SearchBox />
@@ -97,28 +100,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
     },
-    text02: {
-        color: 'black',
-        marginLeft: 40,
-        marginTop: 40,
-        fontSize: 20,
-    },
     background: {
         height: 150,
         width: Dimensions.get('window').width,
-        opacity: 0.5,
-    },
-    text01: {
-        color: 'red',
-        marginBottom: '2%',
-        textAlign: 'right',
-        marginRight: 5,
-        fontSize: 15,
-        textDecorationLine: 'underline',
+        opacity: 0.45,
     },
     texthead01: {
         color: 'black',
-        fontSize: 30,
+        fontSize: 22,
         textAlign: 'left',
         marginLeft: '5%',
         marginRight: '5%',
@@ -126,44 +115,17 @@ const styles = StyleSheet.create({
     },
     texthead02: {
         color: 'black',
-        fontSize: 18,
+        fontSize: 16,
         textAlign: 'justify',
         marginLeft: '5%',
         marginRight: '5%',
     },
-    textinput01: {
-        borderWidth: 1,
-        borderColor: 'black',
-        marginLeft: 20,
-        marginRight: 70,
-        borderRadius: 5,
-        marginBottom: 30,
-    },
-    text: {
-        color: '#449b93',
-        margin: 8,
-        backgroundColor: '#e0f9f6',
-        padding: 5,
-        borderRadius: 15,
-    },
-    icon: {
-        marginRight: 10,
-    },
-    heading01: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginLeft: '5%',
-        marginRight: '5%',
-        color: 'black',
-        padding: 5,
-    },
-    heading02: {
-        fontSize: 14,
-        marginLeft: '5%',
-        color: '#808080',
-        textAlign: 'justify',
-        marginRight: '5%',
-        padding: 5,
+    myreferral : {
+        color: 'red',
+        textAlign: 'right',
+        textDecorationLine: 'underline',
+        fontSize: 13,
+        marginRight : '5%',
     },
     card: {
         backgroundColor: '#fff',
@@ -178,30 +140,36 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         elevation: 3,
     },
-    button01: {
-        backgroundColor: 'lightblue',
-        borderRadius: 8,
-        paddingVertical: 5,
-        margin: '8%',
+    heading01: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginLeft: '5%',
+        marginRight: '5%',
+        color: 'black',
+        padding: 5,
     },
-    skillsRow: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginBottom: 8,
+    heading02: {
+        fontSize: 13    ,
+        marginLeft: '5%',
+        color: '#808080',
+        textAlign: 'justify',
+        marginRight: '5%',
+        padding: 5,
     },
     skillsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
+    skillItem: {
+        padding : 3,
+        marginLeft : '5%'
+    },
     skillText: {
-        fontSize: 14,
+        fontSize: 13,
         color: '#449b93',
         backgroundColor: '#e0f9f6',
-        padding: 10,
-        borderRadius: 20
-    },
-    skillItem: {
-        marginLeft: '5%',
+        padding: 8,
+        borderRadius: 15,
     },
 })
 

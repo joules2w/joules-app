@@ -130,6 +130,7 @@ const ticket = [
         ticketdescription : 'Testing',
         assigned : '5 Jyly 2023',
         createdOn : '25 June 2023',
+        status : 'Open'
     },
     {
         id : 2,
@@ -138,8 +139,20 @@ const ticket = [
         ticketdescription : "Software test engineer",
         assigned : '10 June 2023',
         createdOn : '10 May 2023',
+        status : 'Open'
+    },
+    {
+        id : 3,
+        priority : 'Medium',
+        heading : 'Developer',
+        ticketdescription : 'Android Developer',
+        assigned : '10 Jan 2022',
+        createdOn : '30 May 2022',
+        status : 'Reopen'
     }
 ]
+
+   
 
 
 export { constants, referrals, ticket };

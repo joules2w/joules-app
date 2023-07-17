@@ -44,19 +44,15 @@ const MoreDetails = ({ route, navigation }) => {
     const logout = () => {
         navigation.navigate('Login')
     }
-
     const interviewpanel = () => {
         navigation.navigate('InterviewPanel')
     }
-
     const jobportal = () => {
         navigation.navigate('Job_Portal')
     }
-
     const sparsh = () => {
         navigation.navigate('Sparsh')
     }
-
     const home = () => {
         navigation.navigate('Home')
     }
@@ -67,19 +63,19 @@ const MoreDetails = ({ route, navigation }) => {
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 <ImageBackground style={styles.background} source={require('./Images/background.png')}>
                     <Text style={styles.texthead01}>Interview Panel For Interactive Developer</Text>
-                    <Text style={styles.text}>Job created on 28th September 2015</Text>
-                    <Text style={styles.texthead02}>₹ 4000 per panel member</Text>
+                    <Text style={styles.texthead02}>Job created on 28th September 2015</Text>
+                    <Text style={styles.texthead03}>₹ 4000 per panel member</Text>
                 </ImageBackground>
 
                 <AssignPanelMember />
 
-                <Text style={styles.texthead}>Job Description</Text>
-                <Text style={styles.descriptiontext}>{constants.description}</Text>
+                <Text style={styles.heading01}>Job Description</Text>
+                <Text style={styles.heading02}>{constants.description}</Text>
                 <View style={styles.line} />
-                <Text style={styles.texthead}>Eligibility</Text>
-                <Text style={styles.eligibletext}>{constants.eligibility}</Text>
+                <Text style={styles.heading01}>Eligibility</Text>
+                <Text style={styles.heading02}>{constants.eligibility}</Text>
                 <View style={styles.line} />
-                <Text style={styles.texthead}>Skills</Text>
+                <Text style={styles.heading01}>Skills</Text>
                 {renderSkills()}
                 <View style={styles.footer}>
                     <Footer />
@@ -91,75 +87,78 @@ const MoreDetails = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        paddingBottom: 120,
     },
     background: {
         height: 150,
         width: Dimensions.get('window').width,
-        opacity: 0.5,
+        opacity: 0.45,
     },
     texthead01: {
         color: 'black',
         fontSize: 22,
-        fontWeight: "bold",
+        textAlign: 'left',
         marginLeft: '5%',
         marginRight: '5%',
         marginTop: 10,
     },
     texthead02: {
         color: 'black',
-        fontSize: 18,
-        marginLeft: '5%',
-        marginRight: '5%',
-    },
-    text: {
-        color: 'black',
-        marginLeft: '5%',
-    },
-    button: {
-        backgroundColor: '#5f9ea0',
-        alignSelf: 'center',
-        marginRight: '8%',
-        borderRadius: 5,
-        height: '15%'
-    },
-    texthead: {
-        color: 'black',
-        fontSize: 20,
-        marginLeft: '5%',
-    },
-    descriptiontext: {
-        color: 'black',
-        fontSize: 15,
-        marginLeft: '5%',
-        marginTop: '2%',
-        marginRight: '5%',
+        fontSize: 16,
         textAlign: 'justify',
-    },
-    eligibletext: {
-        color: 'black',
-        fontSize: 15,
         marginLeft: '5%',
-        marginTop: '2%',
         marginRight: '5%',
+    },
+    texthead03: {
+        color: 'black',
+        fontSize: 16,
+        fontWeight: "bold",
         textAlign: 'justify',
+        marginLeft: '5%',
+        marginRight: '5%',
+    },
+    heading01: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginLeft: '5%',
+        marginRight: '5%',
+        color: 'black',
+        padding: 5,
+    },
+    heading02: {
+        fontSize: 13,
+        marginLeft: '5%',
+        color: '#808080',
+        textAlign: 'justify',
+        marginRight: '5%',
+        padding: 5,
     },
     line: {
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
+        borderBottomColor: '#808080',
+        borderBottomWidth: 0.5,
         marginLeft: '5%',
         marginRight: '5%',
-        marginTop: '5%',
-        marginBottom: '5%'
+        marginTop: '3%',
+        marginBottom: '3%',
     },
-    skilltext: {
-        color: 'green',
-        backgroundColor: 'lightblue',
+    skillsRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    skillItem: {
+        padding: 3,
+        marginLeft: '5%',
+    },
+    skillText: {
+        fontSize: 13,
+        color: '#449b93',
+        backgroundColor: '#e0f9f6',
+        padding: 10,
         borderRadius: 15,
-        marginBottom: '15%',
-        paddingVertical: 8,
-        marginRight: '5%'
     },
     footer: {
         position: 'absolute',
@@ -169,25 +168,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    scrollContainer: {
-        flexGrow: 1,
-        paddingBottom: 120
-    },
-    skillsRow: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginBottom: 8,
-    },
-    skillText: {
-        fontSize: 14,
-        color: '#449b93',
-        backgroundColor: '#e0f9f6',
-        padding: 10,
-        borderRadius: 15,
-    },
-    skillItem: {
-        marginLeft: '5%',
-    }
 })
 
 export default MoreDetails;

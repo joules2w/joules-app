@@ -67,8 +67,6 @@ const SideMenu = ({ interviewpanel, home, sparsh, jobportal, logout }) => {
   );
 };
 
-// Styles
-
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
   },
   menuButton: {
     paddingVertical: 8,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
   },
   overlay: {
     flex: 1,
@@ -90,7 +88,7 @@ const styles = StyleSheet.create({
     width: '60%',
     height: '100%',
     backgroundColor: '#ffffff',
-    padding: 16,
+    padding: 15,
     borderRadius: 5,
   },
   closeButton: {

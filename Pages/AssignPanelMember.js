@@ -65,7 +65,6 @@ const SideMenu = () => {
     }
   };
 
-
   const showDatePicker = () => {
     setDatePickerVisible(true);
   };
@@ -92,7 +91,6 @@ const SideMenu = () => {
       setSelectedDate(date);
     }
   };
-
 
   const [isToTimePickerVisible, setToTimePickerVisible] = useState(false);
   const [selectedToTime, setSelectedToTime] = useState(null);
@@ -131,7 +129,7 @@ const SideMenu = () => {
     <View style={styles.container}>
 
       <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-        <Text style={styles.text}>Assign As Panel Member</Text>
+        <Text style={styles.heading01}>Assign as Panel Member</Text>
       </TouchableOpacity>
 
       <Modal visible={isMenuOpen} transparent animationType="fade">
@@ -141,20 +139,20 @@ const SideMenu = () => {
 
         <Animated.View style={[styles.sideMenu, { transform: [{ translateX: menuTranslateX }] }]}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.heading}>Select Your Availability</Text>
-            <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
+            <Text style={styles.heading02}>Select Your Availability</Text>
+            <TouchableOpacity onPress={toggleMenu}>
               <MaterialIcons name="close" style={styles.icon} />
             </TouchableOpacity>
           </View>
 
           <View style={styles.inputContainer}>
             <View style={{ flexDirection: 'column' }}>
-              <Text style={styles.texthead}>Select Date</Text>
+              <Text style={styles.heading}>Select Date</Text>
               <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'space-around' }}>
                 <TextInput
                   style={styles.manualInput}
                   placeholder="Date (YYYY-MM-DD)"
-                  placeholderTextColor={'black'}
+                  placeholderTextColor={'#808080'}
                   value={manualDate}
                   onChangeText={setManualDate}
                   onBlur={handleManualDateInput}></TextInput>
@@ -166,16 +164,15 @@ const SideMenu = () => {
 
               <View style={{ flexDirection: 'row', width: '65%', justifyContent: 'space-between' }}>
                 <View style={{ flexDirection: 'column' }}>
-                  <Text style={styles.texthead}>Select From Time</Text>
+                  <Text style={styles.heading}>Select From Time</Text>
                   <View style={{ flexDirection: 'row', width: '80%', justifyContent: 'space-evenly' }}>
                     <TextInput
                       style={styles.manualInput}
                       placeholder="00:00"
-                      placeholderTextColor={'black'}
+                      placeholderTextColor={'#808080'}
                       value={manualFromTime}
                       onChangeText={setManualFromTime}
-                      onBlur={handleManualFromTimeInput}
-                    />
+                      onBlur={handleManualFromTimeInput} />
 
                     <TouchableOpacity style={styles.pickButton} onPress={showFromTimePicker}>
                       <Text style={styles.pickButtonText}>Time</Text>
@@ -184,16 +181,15 @@ const SideMenu = () => {
                 </View>
 
                 <View style={{ flexDirection: 'column' }}>
-                  <Text style={styles.texthead}>Select To Time</Text>
+                  <Text style={styles.heading}>Select To Time</Text>
                   <View style={{ flexDirection: 'row', width: '80%', justifyContent: 'space-evenly' }}>
                     <TextInput
                       style={styles.manualInput}
                       placeholder="00:00"
-                      placeholderTextColor={'black'}
+                      placeholderTextColor={'#808080'}
                       value={manualToTime}
                       onChangeText={setManualToTime}
-                      onBlur={handleManualToTimeInput}
-                    />
+                      onBlur={handleManualToTimeInput} />
 
                     <TouchableOpacity style={styles.pickButton} onPress={showToTimePicker}>
                       <Text style={styles.pickButtonText}>Time</Text>
@@ -205,29 +201,26 @@ const SideMenu = () => {
           </View>
 
           <TouchableOpacity style={styles.button} onPress={toggleMenu}>
-            <Text style={styles.text}>Schedule Appointment</Text>
+            <Text style={styles.heading01}>Schedule Appointment</Text>
           </TouchableOpacity>
 
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
             mode="date"
             onConfirm={handleDateConfirm}
-            onCancel={hideDatePicker}
-          />
+            onCancel={hideDatePicker} />
 
           <DateTimePickerModal
             isVisible={isFromTimePickerVisible}
             mode="time"
             onConfirm={handleFromTimeConfirm}
-            onCancel={hideFromTimePicker}
-          />
+            onCancel={hideFromTimePicker} />
 
           <DateTimePickerModal
             isVisible={isToTimePickerVisible}
             mode="time"
             onConfirm={handleToTimeConfirm}
-            onCancel={hideToTimePicker}
-          />
+            onCancel={hideToTimePicker} />
         </Animated.View>
       </Modal>
     </View>
@@ -236,9 +229,9 @@ const SideMenu = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
   },
   menuButton: {
     padding: 8,
@@ -246,6 +239,29 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'flex-end',
     margin: '8%',
+  },
+  heading01: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: '5%',
+    marginRight: '5%',
+    color: '#fff',
+    padding: 5,
+  },
+  heading: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: '5%',
+    marginRight: '5%',
+    color: '#000000',
+    padding: 5,
+  },
+  heading02: {
+    fontSize: 15,
+    color: '#808080',
+    textAlign: 'justify',
+    marginRight: '5%',
+    padding: 5,
   },
   overlay: {
     flex: 1,
@@ -261,41 +277,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'center',
   },
-  heading: {
-    color: 'gray',
-    fontSize: 18,
-  },
-  closetext: {
-    color: 'black',
-  },
-  texthead: {
-    color: 'black',
-    fontWeight: 'bold',
-    marginTop: '10%',
-  },
-  text: {
-    color: '#fff',
-    alignContent: 'center',
-    fontSize: 15,
-    padding: 10,
-  },
-  sidetext: {
-    color: 'black',
-    alignContent: 'center',
-    marginBottom: 20,
-    marginLeft: '8%',
-  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  manualInput: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 4,
-    padding: 8,
-    color: 'black',
-    alignSelf: 'center',
+  icon: {
+    color: '#808080',
+    fontSize: 25,
   },
   pickButton: {
     backgroundColor: 'blue',
@@ -308,6 +296,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  manualInput: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 4,
+    padding: 8,
+    color: 'black',
+    alignSelf: 'center',
+  },
   selectedTimeText: {
     marginTop: 10,
     fontSize: 18,
@@ -317,13 +313,9 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#5f9ea0',
     alignSelf: 'center',
-    padding: 10,
+    padding: 8,
     borderRadius: 5,
     marginTop: '10%',
-  },
-  icon: {
-    color: 'black',
-    fontSize: 30,
   },
 });
 

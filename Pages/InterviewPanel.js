@@ -20,6 +20,13 @@ const InterViewPanel = ({ navigation }) => {
         return <Text>{value}</Text>;
     };
 
+    const renderskillContent = (value) => {
+        if (value.length > 40) {
+            return <Text>{value.substring(0, 50)}...</Text>;
+        }
+        return <Text>{value}</Text>;
+    };
+
     const renderJobItem = ({ item }) => {
         const skillsToShow = item.skills.slice(0, 3);
         const remainingSkillsCount = item.skills.length - 3;
@@ -31,7 +38,7 @@ const InterViewPanel = ({ navigation }) => {
                 <View style={styles.skillsContainer}>
                     {skillsToShow.map((skill, index) => (
                         <View key={index} style={styles.skillItem}>
-                            <Text style={styles.skillText}>{skill}</Text>
+                            <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
                         </View>
                     ))}
                     {remainingSkillsCount > 0 && (
@@ -50,19 +57,15 @@ const InterViewPanel = ({ navigation }) => {
     const logout = () => {
         navigation.navigate('Login')
     }
-
     const interviewpanel = () => {
         navigation.navigate('InterviewPanel')
     }
-
     const jobportal = () => {
         navigation.navigate('Job_Portal')
     }
-
     const sparsh = () => {
         navigation.navigate('Sparsh')
     }
-
     const home = () => {
         navigation.navigate('Home')
     }
@@ -75,7 +78,7 @@ const InterViewPanel = ({ navigation }) => {
                     <Text style={styles.texthead01}>Interview Panel</Text>
                     <Text style={styles.texthead02}>Welcome to our Interview Panel page, where you can discover everything you need to know about panel interviews and how to excel in them.</Text>
                 </ImageBackground>
-                <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
+                <View style={styles.view}>
                     <SearchBox />
                     <Filter />
                 </View>
@@ -91,8 +94,7 @@ const InterViewPanel = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#fff',
         alignContent: 'center',
     },
     background: {
@@ -103,18 +105,26 @@ const styles = StyleSheet.create({
     },
     texthead01: {
         color: 'black',
-        fontSize: 30,
+        fontSize: 22,
         textAlign: 'left',
         marginLeft: '5%',
         marginRight: '5%',
         marginTop: 10,
+        fontWeight : "bold"
     },
     texthead02: {
         color: 'black',
-        fontSize: 18,
+        fontSize: 16,
         textAlign: 'justify',
         marginLeft: '5%',
         marginRight: '5%',
+    },
+    view : {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'center',
+        marginLeft: '5%',
+        marginRight: '5%'
     },
     card: {
         backgroundColor: '#fff',
@@ -130,7 +140,7 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     heading01: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: "bold",
         marginLeft: '5%',
         marginRight: '5%',
@@ -138,76 +148,33 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     heading02: {
-        fontSize: 14,
+        fontSize: 13    ,
         marginLeft: '5%',
         color: '#808080',
         textAlign: 'justify',
         marginRight: '5%',
         padding: 5,
     },
-    rate: {
-        fontSize: 15,
-        marginLeft: '5%',
-        color: 'black',
-        textAlign: 'justify',
-        marginRight: '5%',
-        padding: 5,
-    },
-    price: {
-        color: 'black',
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginLeft: '8%',
-        marginRight: '8%',
-        marginBottom: '4%',
-    },
-    button01: {
-        backgroundColor: 'lightblue',
-        borderRadius: 8,
-        paddingVertical: 5,
-        margin: '8%',
-    },
-    button02: {
-        backgroundColor: 'lightblue',
-        marginLeft: '10%',
-        marginBottom: '5%',
-        borderRadius: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 3,
-    },
-    text: {
-        color: '#449b93',
-        margin: 8,
-        backgroundColor: '#e0f9f6',
-        padding: 5,
-        borderRadius: 15,
-    },
-    moredetails: {
-        color: 'red',
-        textAlign: 'right',
-        marginRight: '3%',
-        textDecorationLine: 'underline',
-        fontSize: 15
-    },
-    skillsRow: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginBottom: 8,
-    },
-    skillText: {
-        fontSize: 14,
-        color: '#449b93',
-        backgroundColor: '#e0f9f6',
-        padding: 10,
-        borderRadius: 20
-    },
     skillsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
     skillItem: {
-        marginLeft: '5%',
-    }
+        padding : 3,
+    },
+    skillText: {
+        fontSize: 13,
+        color: '#449b93',
+        backgroundColor: '#e0f9f6',
+        padding: 8,
+        borderRadius: 15,
+    },
+    moredetails : {
+        color: 'red',
+        textAlign: 'right',
+        textDecorationLine: 'underline',
+        fontSize: 13,
+    },    
 })
 
 export default InterViewPanel;

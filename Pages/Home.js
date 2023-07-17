@@ -7,6 +7,16 @@ import Footer from "./Footer";
 
 const Home = ({ navigation }) => {
 
+    const [selectedTab, setSelectedTab] = useState('All');
+
+    const getFilteredData = (priority) => {
+        if (priority === 'All') {
+            return ticket;
+        }
+        return ticket.filter((item) => item.priority === priority);
+    };
+
+
     const frequentJobPress = (constants) => {
         navigation.navigate('JobDetail', { constants });
     };
@@ -19,14 +29,6 @@ const Home = ({ navigation }) => {
         navigation.navigate('TicketDetails', { ticket });
     };
 
-    // const renderSkillItem = ({ item }) => {
-    //     return (
-    //         <View style={styles.skillsContainer}>
-    //             <Text style={styles.skillText}>{item}</Text>
-    //         </View>
-    //     );
-    // };
-
     const renderCellContent = (value) => {
         if (value?.length > 10) {
             return <Text>{value.substring(0, 78)}...</Text>;
@@ -36,7 +38,7 @@ const Home = ({ navigation }) => {
 
     const renderskillContent = (value) => {
         if (value.length > 40) {
-            return <Text>{value.substring(0, 40)}...</Text>;
+            return <Text>{value.substring(0, 50)}...</Text>;
         }
         return <Text>{value}</Text>;
     };
@@ -53,7 +55,7 @@ const Home = ({ navigation }) => {
                     <View style={styles.skillsContainer}>
                         {skillsToShow.map((skill, index) => (
                             <View key={index} style={styles.skillItem}>
-                                <Text style={styles.skillText}>{skill}</Text>
+                                <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
                             </View>
                         ))}
                         {remainingSkillsCount > 0 && (
@@ -78,7 +80,7 @@ const Home = ({ navigation }) => {
                 <View style={styles.skillsContainer}>
                     {skillsToShow.map((skill, index) => (
                         <View key={index} style={styles.skillItem}>
-                            <Text style={styles.skillText}>{skill}</Text>
+                            <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
                         </View>
                     ))}
                     {remainingSkillsCount > 0 && (
@@ -95,44 +97,56 @@ const Home = ({ navigation }) => {
     };
 
     const ticketItem = ({ item }) => {
-        return(
-      <View style={[styles.card, styles.elevation]}>
-                          <TouchableOpacity onPress={() => ticketDetails(item)}>
-                              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                  <Text style={styles.priority}>
-                                      <Text style={styles.texthead03}>{item.priority}</Text>
-                                  </Text>
-                                  <Text style={styles.heading02}>Created on {item.createdOn}</Text>
-                              </View>
-                              <Text style={styles.text01}>{item.heading}</Text>
-                              <Text style={styles.text02}>{item.ticketdescription}</Text>
-                              <Text style={styles.text03}>Assigned on {item.assigned}</Text>
-                          </TouchableOpacity>
-                      </View>
-      )};
+        
+        let backgroundColor = '#808080';
 
-    const [activeTab, setActiveTab] = useState('Tab1');
+    if (item.priority === 'High') {
+        backgroundColor = 'green';
+    } else if (item.priority === 'Medium') {
+        backgroundColor = 'blue';
+    } else if (item.priority === 'Low') {
+        backgroundColor = 'red';
+    }
 
-    const handleTabPress = (tabName) => {
-        setActiveTab(tabName);
+        return (
+            <View style={[styles.card, styles.elevation]}>
+                <TouchableOpacity onPress={() => ticketDetails(item)}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={[styles.priority, { backgroundColor : backgroundColor }]}>
+                            <Text style={styles.texthead03}>{item.priority}</Text>
+                        </Text>
+                        <Text style={styles.heading02}>Created on {item.createdOn}</Text>
+                    </View>
+                    <Text style={styles.heading01}>{item.heading}</Text>
+                    <Text style={styles.heading02}>{item.ticketdescription}</Text>
+                    <Text style={styles.texthead03}>Assigned on {item.assigned}</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    };
+
+    const renderTabContent = () => {
+        const ticket = getFilteredData(selectedTab);
+        return (
+            <FlatList scrollEnabled={false}
+                data={ticket}
+                keyExtractor={(ticket) => ticket.id.toString()}
+                renderItem={ticketItem} />
+        );
     };
 
     const logout = () => {
         navigation.navigate('Login')
     }
-
     const interviewpanel = () => {
         navigation.navigate('InterviewPanel')
     }
-
     const jobportal = () => {
         navigation.navigate('Job_Portal')
     }
-
     const sparsh = () => {
         navigation.navigate('Sparsh')
     }
-
     const home = () => {
         navigation.navigate('Home')
     }
@@ -161,50 +175,33 @@ const Home = ({ navigation }) => {
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={highpayJobItem} />
 
-                <View style={styles.tabContainer}>
-                    <TouchableOpacity
-                        style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]}
-                        onPress={() => handleTabPress('Tab1')}>
-                        <Text style={styles.tabText}>All</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]}
-                        onPress={() => handleTabPress('Tab2')}>
-                        <Text style={styles.tabText}>Low</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.tabItem, activeTab === 'Tab3' && styles.activeTab]}
-                        onPress={() => handleTabPress('Tab3')}>
-                        <Text style={styles.tabText}>Medium</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.tabItem, activeTab === 'Tab4' && styles.activeTab]}
-                        onPress={() => handleTabPress('Tab4')}>
-                        <Text style={styles.tabText}>High</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.tabContainer}>
+                        <TouchableOpacity
+                            style={[styles.tabItem, selectedTab === 'All' && styles.activeTab]}
+                            onPress={() => setSelectedTab('All')}>
+                            <Text style={styles.tabText}>All</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.tabItem, selectedTab === 'Low' && styles.activeTab]}
+                            onPress={() => setSelectedTab('Low')}>
+                            <Text style={styles.tabText}>Low</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.tabItem, selectedTab === 'Medium' && styles.activeTab]}
+                            onPress={() => setSelectedTab('Medium')}>
+                            <Text style={styles.tabText}>Medium</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.tabItem, selectedTab === 'High' && styles.activeTab]}
+                            onPress={() => setSelectedTab('High')}>
+                            <Text style={styles.tabText}>High</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                {activeTab === 'Tab1' && (
-                    <FlatList scrollEnabled={false}
-                    data={ticket}
-                    keyExtractor={(ticket) => ticket.id.toString()}
-                    renderItem={ticketItem} />
-                )}
-                {activeTab === 'Tab2' && (
-                    <View style={[styles.card, styles.elevation]}>
-                        <Text style={styles.text}>Content for Tab 2</Text>
+                    <View>
+                        {renderTabContent()}
                     </View>
-                )}
-                {activeTab === 'Tab3' && (
-                    <View style={[styles.card, styles.elevation]}>
-                        <Text style={styles.text}>Content for Tab 3</Text>
-                    </View>
-                )}
-                {activeTab === 'Tab4' && (
-                    <View style={[styles.card, styles.elevation]}>
-                        <Text style={styles.text}>Content for Tab 4</Text>
-                    </View>
-                )}
+
                 <View style={styles.footer}>
                     <Footer />
                 </View>
@@ -222,55 +219,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '80%'
     },
-    texthead01: {
-        color: 'black',
-        fontSize: 25,
-        textAlign: 'left',
-        marginLeft: '5%',
-        marginTop: 10,
-        marginRight: '5%',
-    },
-    texthead02: {
-        color: 'black',
-        fontSize: 16,
-        marginLeft: '5%',
-        marginRight: '5%',
-        marginBottom: '8%',
-        textAlign: "justify",
-    },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'justify',
-    },
-    scrollContainer: {
-        flexGrow: 1,
-        paddingBottom: 120,
-    },
-    skillsContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-    },
-    heading01: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginLeft: '5%',
-        marginRight: '5%',
-        color: 'black',
-        padding: 5,
-    },
-    heading02: {
-        fontSize: 14,
-        marginLeft: '5%',
-        color: '#808080',
-        textAlign: 'justify',
-        marginRight: '5%',
-        padding: 5,
-    },
     card: {
         backgroundColor: '#fff',
         borderRadius: 10,
@@ -284,34 +232,78 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         elevation: 3,
     },
-    button01: {
-        backgroundColor: 'lightblue',
-        borderRadius: 8,
-        margin: 10
-    },
-    text: {
-        color: '#449b93',
-        margin: 8,
-        backgroundColor: '#e0f9f6',
+    heading01: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginLeft: '5%',
+        marginRight: '5%',
+        color: 'black',
         padding: 5,
+    },
+    heading02: {
+        fontSize: 13    ,
+        marginLeft: '5%',
+        color: '#808080',
+        textAlign: 'justify',
+        marginRight: '5%',
+        padding: 5,
+    },
+    skillsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    skillItem: {
+        padding : 3,
+    },
+    skillText: {
+        fontSize: 13,
+        color: '#449b93',
+        backgroundColor: '#e0f9f6',
+        padding: 8,
         borderRadius: 15,
+    },
+    moredetails: {
+        color: 'red',
+        textAlign: 'right',
+        textDecorationLine: 'underline',
+        fontSize: 13,
+    },
+    priority : {
+        // backgroundColor : '#808080',
+        borderRadius : 8,
+        padding : 5,
+        marginLeft : '5%'
+    },
+    texthead03: {
+        fontSize: 15,
+        color: '#fff',
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        paddingBottom: 120,
+    },
+    texthead01: {
+        color: 'black',
+        fontSize: 20,
+        textAlign: 'left',
+        marginLeft: '5%',
+        marginRight: '5%',
+        marginTop: 15,
+        fontWeight : "bold",
+    },
+    texthead02: {
+        color: 'black',
+        fontSize: 15,
+        marginLeft: '5%',
+        marginRight: '5%',
+        marginBottom: '8%',
+        textAlign: "justify",
     },
     line: {
         borderColor: '#808080',
         borderBottomWidth: 1,
         marginLeft: '5%',
         marginRight: '5%',
-    },
-    moredetails: {
-        color: 'red',
-        textAlign: 'right',
-        marginRight: '3%',
-        textDecorationLine: 'underline',
-        fontSize: 15
-    },
-    buttontext: {
-        color: '#fff',
-        fontWeight: "bold",
     },
     tabContainer: {
         flexDirection: 'row',
@@ -323,60 +315,26 @@ const styles = StyleSheet.create({
         padding: 8,
         backgroundColor: '#808080',
         marginLeft: '5%',
-        borderRadius: 5
+        borderRadius: 5,
+        color: '#fff',
     },
     activeTab: {
         backgroundColor: '#5f9ea0',
     },
     tabText: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: "bold",
         color: '#fff',
     },
-    priority: {
-        backgroundColor: '#E0E0E0',
-        borderRadius: 10,
-        marginLeft: '5%',
-        padding: 5,
-    },
-    texthead03: {
-        fontSize: 20,
-        color: 'black',
-    },
-    text01: {
-        color: 'black',
-        fontSize: 25,
-        fontWeight: "bold",
-        marginLeft: '5%',
-        textAlign: 'left'
-    },
-    text02: {
-        color: 'black',
-        fontSize: 16,
-        marginLeft: '5%',
-        textAlign: 'left'
-    },
-    text03: {
-        color: 'black',
-        fontSize: 15,
-        marginLeft: '5%',
-        textAlign: 'left'
-    },
-    skillsRow: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginBottom: 8,
-    },
-    skillText: {
-        fontSize: 14,
-        color: '#449b93',
-        backgroundColor: '#e0f9f6',
-        padding: 10,
-        borderRadius: 20
-    },
-    skillItem: {
-        marginLeft: '5%',
-    },
+    footer: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'justify',
+    },    
 })
 
 export default Home;

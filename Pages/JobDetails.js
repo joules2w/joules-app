@@ -107,19 +107,15 @@ const JobDetailScreen = ({ route, navigation }) => {
   const logout = () => {
     navigation.navigate('Login')
   }
-
   const interviewpanel = () => {
     navigation.navigate('InterviewPanel')
   }
-
   const jobportal = () => {
     navigation.navigate('Job_Portal')
   }
-
   const sparsh = () => {
     navigation.navigate('Sparsh')
   }
-
   const home = () => {
     navigation.navigate('Home')
   }
@@ -133,51 +129,52 @@ const JobDetailScreen = ({ route, navigation }) => {
           <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
         </ImageBackground>
         <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
-          <Text style={styles.text01}>My Referrals</Text>
+          <Text style={styles.myreferral}>My Referrals</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
           <SearchBox />
           <Filter />
         </View>
-        <Text style={styles.texthead}>{constants.title}</Text>
-        <Text style={styles.text}>Job created on 23 August</Text>
-        <Text style={styles.texthead}>Description</Text>
-        <Text style={styles.text}>{constants.description}</Text>
+        <Text style={styles.heading03}>{constants.title}</Text>
+        <Text style={styles.heading02}>Job created on 23 August</Text>
+        <Text style={styles.heading01}>Description</Text>
+        <Text style={styles.heading02}>{constants.description}</Text>
         <View style={styles.line} />
-        <Text style={styles.texthead}>Experience</Text>
-        <Text style={styles.text}>{constants.experience}</Text>
+        <Text style={styles.heading01}>Experience</Text>
+        <Text style={styles.heading02}>{constants.experience}</Text>
         <View style={styles.line} />
-        <Text style={styles.texthead}>Location</Text>
-        <Text style={styles.text}>{constants.location}</Text>
+        <Text style={styles.heading01}>Location</Text>
+        <Text style={styles.heading02}>{constants.location}</Text>
         <View style={styles.line} />
-        <Text style={styles.texthead}>Salary</Text>
-        <Text style={styles.text}>{constants.salary}</Text>
+        <Text style={styles.heading01}>Salary</Text>
+        <Text style={styles.heading02}>{constants.salary}</Text>
         <View style={styles.line} />
-        <Text style={styles.texthead}>Eligibility</Text>
-        <Text style={styles.text}>{`\u25CF ${constants.eligibility}`}</Text>
-        <Text style={styles.texthead}>Skills</Text>
+        <Text style={styles.heading01}>Eligibility</Text>
+        <Text style={styles.heading02}>{`\u25CF ${constants.eligibility}`}</Text>
+        <View style={styles.line} />
+        <Text style={styles.heading01}>Skills</Text>
         {renderSkills()}
         <View style={styles.line} />
 
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
           <Text style={styles.texthead}>Application</Text>
           <TouchableOpacity style={styles.referbutton} onPress={() => navigation.navigate('myreferral')}>
-            <Text style={styles.refertext}>My Referrals</Text>
+            <Text style={styles.myreferral}>My Referrals</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.texthead03}>Switch the toggle button, if you wish to apply for this job.</Text>
+        <Text style={styles.heading02}>Switch the toggle button, if you wish to apply for this job.</Text>
         <Switch trackColor={{ true: '#344953', false: 'grey' }} style={styles.switch} value={isSwitchOn} onValueChange={handleSwitchToggle} />
-        <Text style={styles.texthead03}>Application name<Text style={styles.require}>*</Text></Text>
+        <Text style={styles.heading01}>Application name<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Enter your name'
           placeholderTextColor='#808080' />
-        <Text style={styles.texthead03}>Application Email id<Text style={styles.require}>*</Text></Text>
+        <Text style={styles.heading01}>Application Email id<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Enter your email'
           placeholderTextColor='#808080'
           value={email}
           onChangeText={(text) => setEmail(text)} />
-        <Text style={styles.texthead03}>Applicant Mobile number<Text style={styles.require}>*</Text></Text>
+        <Text style={styles.heading01}>Applicant Mobile number<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Enter your mobile number'
           placeholderTextColor='#808080'
@@ -185,14 +182,14 @@ const JobDetailScreen = ({ route, navigation }) => {
           onChangeText={(text) => setPhoneNumber(text)}
           keyboardType='numeric'
           maxLength={10} />
-        <Text style={styles.texthead03}>Applicant total experience<Text style={styles.require}>*</Text></Text>
+        <Text style={styles.heading01}>Applicant total experience<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Total Experience'
           placeholderTextColor='#808080' />
 
         <View style={[styles.card, styles.elevation]}>
           <TouchableOpacity style={styles.attachbutton} onPress={handleDocumentSelection}>
-            <Text style={styles.attachtext}>File supported (.pdf), file size should not exceed more than 10 MB</Text>
+            <Text style={styles.heading02}>File supported (.pdf), file size should not exceed more than 10 MB</Text>
             <Text style={styles.uploadtext}>Upload file</Text>
           </TouchableOpacity>
           {fileResponse.map((file, index) => (
@@ -217,24 +214,20 @@ const JobDetailScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff'
   },
-  texthead: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 22,
-    marginLeft: '5%',
-    marginTop: '5%'
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 120,
   },
   background: {
     height: 150,
     width: Dimensions.get('window').width,
-    opacity: 0.5,
+    opacity: 0.45,
   },
   texthead01: {
     color: 'black',
-    fontSize: 30,
+    fontSize: 22,
     textAlign: 'left',
     marginLeft: '5%',
     marginRight: '5%',
@@ -242,72 +235,82 @@ const styles = StyleSheet.create({
   },
   texthead02: {
     color: 'black',
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'justify',
     marginLeft: '5%',
     marginRight: '5%',
   },
-  text: {
-    color: 'black',
+  myreferral: {
+    color: 'red',
+    textAlign: 'right',
+    textDecorationLine: 'underline',
+    fontSize: 15,
+    marginRight: '8%',
+  },
+  heading01: {
+    fontSize: 16,
+    fontWeight: "bold",
     marginLeft: '5%',
     marginRight: '5%',
-    textAlign: 'justify'
+    color: 'black',
+    padding: 5,
   },
-  text01: {
-    color: 'red',
-    marginBottom: '2%',
-    textAlign: 'right',
-    marginRight: 5,
-    fontSize: 15,
-    textDecorationLine: 'underline',
+  heading02: {
+    fontSize: 13,
+    marginLeft: '5%',
+    color: '#808080',
+    textAlign: 'justify',
+    marginRight: '5%',
+    padding: 5,
+  },
+  heading03: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: '5%',
+    marginRight: '5%',
+    marginTop: '5%',
+    color: 'black',
+    padding: 5,
   },
   line: {
     borderBottomColor: '#808080',
     borderBottomWidth: 0.5,
     marginLeft: '5%',
     marginRight: '5%',
-    marginTop: '5%',
+    marginTop: '3%',
   },
-  verticleLine: {
-    height: '100%',
-    width: 1,
-    backgroundColor: '#909090',
+  skillsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 8,
   },
-  button02: {
-    backgroundColor: 'lightblue',
+  skillItem: {
+    padding: 3,
     marginLeft: '5%',
+  },
+  skillText: {
+    fontSize: 13,
+    color: '#449b93',
+    backgroundColor: '#e0f9f6',
+    padding: 10,
+    borderRadius: 15,
+  },
+  card: {
+    backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 5,
-  },
-  skilltext: {
-    color: 'black',
-    marginLeft: '10%',
-    marginRight: '10%',
-  },
-  referbutton: {
-    width: '30%',
-    alignSelf: 'center',
-    marginTop: '10%',
-  },
-  refertext: {
-    color: 'red',
-  },
-  switch: {
-    marginRight: '10%',
-    borderColor: 'black'
-  },
-  require: {
-    color: 'red',
-    fontSize: 12,
-  },
-  inputtext: {
-    borderWidth: 1,
     borderColor: 'black',
+    padding: 5,
     marginLeft: '5%',
-    marginBottom: '5%',
     marginRight: '5%',
-    borderRadius: 4,
-    color: 'black'
+    marginBottom: '5%',
+  },
+  elevation: {
+    shadowColor: 'black',
+    elevation: 3,
+  },
+  attachbutton: {
+    alignSelf: 'center',
+    borderRadius: 5
   },
   attachbutton: {
     alignSelf: 'center',
@@ -322,19 +325,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textDecorationLine: 'underline',
     color: '#5F9EA0',
-  },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    borderColor: 'black',
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    marginLeft: '5%',
-    marginRight: '5%',
-  },
-  elevation: {
-    shadowColor: 'black',
-    elevation: 2,
   },
   submitbutton: {
     backgroundColor: '#5F9EA0',
@@ -357,31 +347,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  scrollContainer: {
-    flexGrow: 1,
-    paddingBottom: 120,
-  },
-  texthead03: {
+  texthead: {
     color: 'black',
-    fontSize: 17,
+    fontWeight: 'bold',
+    fontSize: 22,
     marginLeft: '5%',
+    marginTop: '5%'
+  },
+  require: {
+    color: 'red',
+    fontSize: 12,
+  },
+  inputtext: {
+    borderWidth: 1,
+    borderColor: 'black',
+    marginLeft: '5%',
+    marginBottom: '5%',
     marginRight: '5%',
+    borderRadius: 4,
+    color: 'black'
   },
-  skillsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 8,
+  switch: {
+    marginRight: '10%',
+    borderColor: 'black'
   },
-  skillText: {
-    fontSize: 14,
-    color : '#449b93',
-    backgroundColor : '#e0f9f6',
-    padding : 10,
-    borderRadius : 20
-  },
-  skillItem : {
-    marginLeft : '5%',
-  }
 });
 
 export default JobDetailScreen;
