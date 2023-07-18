@@ -16,7 +16,6 @@ import Sparsh from './Pages/Sparsh';
 import Ticket from './Pages/Createticket';
 import Other from './Pages/Other';
 import JobDetails from './Pages/JobDetails';
-import OpenTicket from './Pages/OpenTicket';
 import TicketDetails from './Pages/TicketDetails';
 import HomeScreen from './Pages/HomeScreen';
 
@@ -40,7 +39,6 @@ const App = () => {
         <Stack.Screen name='ticket' component={Ticket} options={{ headerShown : false }} />
         <Stack.Screen name="Other" component={Other} options={{ headerShown : false }} />
         <Stack.Screen name='JobDetail' component={JobDetails} options={{ headerShown : false }} />
-        <Stack.Screen name='OpenTicket' component={OpenTicket} options={{ headerShown : false }} />
         <Stack.Screen name='TicketDetails' component={TicketDetails} options={{ headerShown : false }} />
         <Stack.Screen name='Details' component={HomeScreen} options={{ headerShown : false }} />
 

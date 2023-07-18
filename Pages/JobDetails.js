@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     marginRight: '5%',
     color: 'black',
-    padding: 5,
+    padding: 3,
   },
   heading02: {
     fontSize: 13,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     color: '#808080',
     textAlign: 'justify',
     marginRight: '5%',
-    padding: 5,
+    padding: 3,
   },
   heading03: {
     fontSize: 16,
@@ -359,10 +359,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   inputtext: {
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 0.5,
+    borderColor: '#000000',
     marginLeft: '5%',
-    marginBottom: '5%',
+    marginBottom: '2%',
     marginRight: '5%',
     borderRadius: 4,
     color: 'black'

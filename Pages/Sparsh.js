@@ -1,5 +1,18 @@
+
+
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, Modal, Pressable, Dimensions, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  ImageBackground,
+  Modal,
+  Pressable,
+  Dimensions,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
@@ -8,6 +21,7 @@ import { Button } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+
 import Header from './Header';
 import Footer from './Footer';
 
@@ -15,6 +29,7 @@ const Sparsh = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [priority, setPriority] = useState('');
   const [activeTab, setActiveTab] = useState('Tab1');
+
 
 
   const [selected, setSelected] = React.useState([]);
@@ -31,19 +46,30 @@ const Sparsh = ({ navigation }) => {
   };
 
 
-
-  const [dates, setDates] = React.useState();
+  const [range, setRange] = React.useState({ startDate: undefined, endDate: undefined });
   const [open, setOpen] = React.useState(false);
 
   const onDismiss = React.useCallback(() => {
     setOpen(false);
   }, [setOpen]);
 
-  const onConfirm = React.useCallback((params) => {
-    setOpen(false);
-    setDates(params.dates);
-    console.log('[on-change-multi]', params);
-  }, []);
+  const onConfirm = React.useCallback(
+    ({ startDate, endDate }) => {
+      setOpen(false);
+      setRange({ startDate, endDate });
+    },
+    [setOpen, setRange]
+  );
+
+  const getButtonTitle = () => {
+    if (range.startDate && range.endDate) {
+      const startDateString = range.startDate.toDateString();
+      const endDateString = range.endDate.toDateString();
+      return `${startDateString} - ${endDateString}`;
+    } else {
+      return "Select Date";
+    }
+  };
 
   const handleSelect = () => {
     Alert.alert('Selected:', selected.join(', '));
@@ -134,43 +160,68 @@ const Sparsh = ({ navigation }) => {
                         </View>
                       </View>
                     </RadioButton.Group>
-                    <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => {
+                        setModalVisible(!modalVisible);
+                        if (priority) {
+                          console.log('Filter by:', priority);
+
+                        }
+                      }}
+                    >
                       <Text style={styles.textStyle}>Filter</Text>
                     </Pressable>
+
+
                   </View>
                 </View>
               </Modal>
-              <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)}>
+              <Pressable
+                style={[styles.button, styles.buttonOpen]}
+                onPress={() => setModalVisible(true)}
+              >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={[styles.textStyle, { marginRight: 150 }]}>Ticket Priority</Text>
+                  <Text style={[styles.textStyle, { marginRight: '50%' }]}>
+                    {priority ? `${priority.charAt(0).toUpperCase() + priority.slice(1)} Priority` : 'Ticket Priority'}
+                  </Text>
                   <Icon name="chevron-down" size={15} color="#000" />
                 </View>
               </Pressable>
-              <MultipleSelectList
-                style={styles.text}
-                onSelect={() => alert(selected)}
-                setSelected={(val) => setSelected(val)}
-                placeholder="Tickets assigned to"
-                data={data}
-                arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
-                searchicon={<MaterialIcons name="search" size={24} color="black" />}
-                search={true}
-                boxStyles={{ borderRadius: 0, width: 300, height: 45, borderRadius: 20, paddingHorizontal: 20, marginLeft: 10 }}
-              />
 
-              <View style={{ width: '100%', padding: '2%', color: "black" }}>
-                <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
-                  <Text style={{ color: 'black' }}>Select Dates</Text>
+
+              <View style={styles.cont1}>
+                <MultipleSelectList
+                  style={styles.text}
+                  onSelect={() => alert(selected)}
+                  setSelected={(val) => setSelected(val)}
+                  label="Tickets assigned to"
+                  data={data}
+                  arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
+                  searchicon={<MaterialIcons name="search" size={24} color="black" />}
+                  search={true}
+                  boxStyles={{ borderRadius: 0, width: '98.9%', height: 45, borderRadius: 30, padding: '2%', paddingHorizontal: '5%' }}
+                />
+              </View>
+              <View style={styles.container1}>
+                <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined" style={styles.button022}>
+                  <Text style={styles.buttonText}>{getButtonTitle()}</Text>
                 </Button>
                 <DatePickerModal
                   locale="en"
-                  mode="multiple"
+                  mode="range"
                   visible={open}
                   onDismiss={onDismiss}
-                  dates={dates}
+                  startDate={range.startDate}
+                  endDate={range.endDate}
                   onConfirm={onConfirm}
+                  startLabel="Start Date"
+                  endLabel="End Date"
+                  saveLabel="Save"
                 />
               </View>
+
+
 
 
               <TextInput
@@ -226,43 +277,66 @@ const Sparsh = ({ navigation }) => {
                         </View>
                       </View>
                     </RadioButton.Group>
-                    <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => {
+                        setModalVisible(!modalVisible);
+                        if (priority) {
+                          console.log('Filter by:', priority);
+
+                        }
+                      }}
+                    >
                       <Text style={styles.textStyle}>Filter</Text>
                     </Pressable>
+
+
                   </View>
                 </View>
               </Modal>
-              <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)}>
+              <Pressable
+                style={[styles.button, styles.buttonOpen]}
+                onPress={() => setModalVisible(true)}
+              >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={[styles.textStyle, { marginRight: 150 }]}>Ticket Priority</Text>
+                  <Text style={[styles.textStyle, { marginRight: '50%' }]}>
+                    {priority ? `${priority.charAt(0).toUpperCase() + priority.slice(1)} Priority` : 'Ticket Priority'}
+                  </Text>
                   <Icon name="chevron-down" size={15} color="#000" />
                 </View>
               </Pressable>
-              <MultipleSelectList
-                style={styles.text}
-                onSelect={() => alert(selected)}
-                setSelected={(val) => setSelected(val)}
-                label="Tickets assigned to"
-                data={data}
-                arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
-                searchicon={<MaterialIcons name="search" size={24} color="black" />}
-                search={true}
-                boxStyles={{ borderRadius: 0, width: 300, height: 45, borderRadius: 20, paddingHorizontal: 20, marginLeft: 10 }}
-              />
+              <View style={styles.cont1}>
+                <MultipleSelectList
+                  style={styles.text}
+                  onSelect={() => alert(selected)}
+                  setSelected={(val) => setSelected(val)}
+                  label="Tickets assigned to"
+                  data={data}
+                  arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
+                  searchicon={<MaterialIcons name="search" size={24} color="black" />}
+                  search={true}
+                  boxStyles={{ borderRadius: 0, width: '98.9%', height: 45, borderRadius: 30, padding: '2%', paddingHorizontal: '5%' }}
+                />
+              </View>
 
-              <View style={{ width: '100%', padding: '2%', color: "black" }}>
-                <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
-                  <Text style={{ color: 'black' }}>Select Dates</Text>
+              <View style={styles.container1}>
+                <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined" style={styles.button022}>
+                  <Text style={styles.buttonText}>{getButtonTitle()}</Text>
                 </Button>
                 <DatePickerModal
                   locale="en"
-                  mode="multiple"
+                  mode="range"
                   visible={open}
                   onDismiss={onDismiss}
-                  dates={dates}
+                  startDate={range.startDate}
+                  endDate={range.endDate}
                   onConfirm={onConfirm}
+                  startLabel="Start Date"
+                  endLabel="End Date"
+                  saveLabel="Save"
                 />
               </View>
+
 
 
 
@@ -325,6 +399,7 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
     alignItems: 'flex-end',
+    width: '50%'
   },
   background: {
     height: 150,
@@ -474,6 +549,27 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
   },
+  button04: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 10,
+    height: '22%'
+  },
+  label: {
+    color: 'black',
+  },
+  container1: {
+    width: "100%",
+    padding: '2%'
+  },
+  button022: {
+    borderColor: 'black',
+    borderWidth: 1
+  },
+  buttonText: {
+    color: 'black'
+  },
+  cont1: { padding: '2%' }
 });
 
 export default Sparsh;

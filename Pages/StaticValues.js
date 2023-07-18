@@ -130,6 +130,7 @@ const ticket = [
         ticketdescription : 'Testing',
         assigned : '5 Jyly 2023',
         createdOn : '25 June 2023',
+        createdBy : 'Arjun',
         status : 'Open'
     },
     {
@@ -139,6 +140,7 @@ const ticket = [
         ticketdescription : "Software test engineer",
         assigned : '10 June 2023',
         createdOn : '10 May 2023',
+        createdBy : 'Harish',
         status : 'Open'
     },
     {
@@ -148,6 +150,7 @@ const ticket = [
         ticketdescription : 'Android Developer',
         assigned : '10 Jan 2022',
         createdOn : '30 May 2022',
+        createdBy : 'Pramod',
         status : 'Reopen'
     }
 ]

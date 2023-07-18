@@ -87,6 +87,7 @@ const MoreDetails = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
+        flex : 1,
         backgroundColor: '#fff',
     },
     scrollContainer: {
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
         marginLeft: '5%',
         marginRight: '5%',
         color: 'black',
-        padding: 5,
+        padding: 3,
     },
     heading02: {
         fontSize: 13,
@@ -135,15 +136,14 @@ const styles = StyleSheet.create({
         color: '#808080',
         textAlign: 'justify',
         marginRight: '5%',
-        padding: 5,
+        padding: 3,
     },
     line: {
         borderBottomColor: '#808080',
         borderBottomWidth: 0.5,
         marginLeft: '5%',
         marginRight: '5%',
-        marginTop: '3%',
-        marginBottom: '3%',
+        padding : 8
     },
     skillsRow: {
         flexDirection: 'row',

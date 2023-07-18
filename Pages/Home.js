@@ -37,7 +37,7 @@ const Home = ({ navigation }) => {
     };
 
     const renderskillContent = (value) => {
-        if (value.length > 40) {
+        if (value?.length > 40) {
             return <Text>{value.substring(0, 50)}...</Text>;
         }
         return <Text>{value}</Text>;
@@ -254,6 +254,7 @@ const styles = StyleSheet.create({
     },
     skillItem: {
         padding : 3,
+        marginLeft : '5%',
     },
     skillText: {
         fontSize: 13,
@@ -269,7 +270,6 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     priority : {
-        // backgroundColor : '#808080',
         borderRadius : 8,
         padding : 5,
         marginLeft : '5%'

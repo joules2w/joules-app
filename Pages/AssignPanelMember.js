@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#5f9ea0',
     borderRadius: 5,
     alignSelf: 'flex-end',
-    margin: '8%',
+    margin: '5%',
   },
   heading01: {
     fontSize: 16,
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#5f9ea0',
     alignSelf: 'center',
-    padding: 8,
+    padding: 5,
     borderRadius: 5,
     marginTop: '10%',
   },

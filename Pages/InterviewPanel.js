@@ -14,14 +14,14 @@ const InterViewPanel = ({ navigation }) => {
     };
 
     const renderCellContent = (value) => {
-        if (value.length > 10) {
+        if (value?.length > 10) {
             return <Text>{value.substring(0, 78)}...</Text>;
         }
         return <Text>{value}</Text>;
     };
 
     const renderskillContent = (value) => {
-        if (value.length > 40) {
+        if (value?.length > 40) {
             return <Text>{value.substring(0, 50)}...</Text>;
         }
         return <Text>{value}</Text>;
