@@ -1,61 +1,50 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
-const HomeScreen = () => {
-  const [salaryRange, setSalaryRange] = useState([0, 200]);
-  const [salaryText, setSalaryText] = useState('');
+const API_BASE_URL = 'http://www.consultant.joulestowatts-uat.com/auth/sendotp'; // Replace with your API base URL
 
-  const formatSalary = (value) => {
-    const crore = Math.floor(value / 10000000);
-    const lakh = Math.floor((value - crore * 10000000) / 100000);
-    const thousand = Math.floor((value - crore * 10000000 - lakh * 100000) / 1000);
+const LoginScreen = ({ navigation }) => {
+  const [phoneNumber, setPhoneNumber] = useState('');
 
-    let formattedSalary = '';
-    if (crore > 0) {
-      formattedSalary += crore + ' Cr ';
+  const sendOtpToMobile = async () => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/send-otp`, { phoneNumber });
+      // Handle the response from the API, if needed.
+      // For example, you can show a success message to the user.
+      Alert.alert('OTP Sent', 'OTP has been sent to your mobile number.');
+      // Navigate to the OTP verification screen
+      navigation.navigate('Home', { phoneNumber });
+    } catch (error) {
+      // Handle errors, such as displaying an error message to the user.
+      console.error('Error sending OTP:', error);
+      Alert.alert('Error', 'Failed to send OTP. Please try again later.');
     }
-    if (lakh > 0) {
-      formattedSalary += lakh + ' Lakh ';
-    }
-    if (thousand > 0) {
-      formattedSalary += thousand + ' Thousand ';
-    }
-
-    return formattedSalary.trim();
-  };
-
-  const handleSalaryChange = (values) => {
-    setSalaryRange(values);
-    const formattedMinSalary = formatSalary(values[0] * 100000);
-    const formattedMaxSalary = formatSalary(values[1] * 100000);
-    const formattedSalary = `${formattedMinSalary} - ${formattedMaxSalary}`;
-    setSalaryText(formattedSalary);
   };
 
   return (
-    <View>
-      <Text style={{ color : '#000000' }}>Salary Range: {salaryText}</Text>
-      <MultiSlider
-      style={styles.slider}
-        values={salaryRange}
-        min={0}
-        max={200}
-        step={1}
-        sliderLength={300}
-        onValuesChange={handleSalaryChange}
-        allowOverlap
-        snapped
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Phone Number"
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}
       />
+      <Button title="Send OTP" onPress={sendOtpToMobile} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  slider : {
-    color : '#000000',
-    marginLeft : '5%',
-  }
-})
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  input: {
+    borderBottomWidth: 1,
+    marginBottom: 20,
+    color : '#000000'
+  },
+});
 
-export default HomeScreen;
+export default LoginScreen;

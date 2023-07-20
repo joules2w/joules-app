@@ -1,26 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image, Alert, StyleSheet, ScrollView } from 'react-native';
 
-const Otp = ({ navigation }) => {
+const Otp = ({ navigation, route }) => {
   const [otp, setOTP] = useState('');
   const [timer, setTimer] = useState(30);
+  const { phone } = route.params; // Get the phone number passed from LoginScreen
 
   const handleOTPChange = (value) => {
     setOTP(value);
   };
 
   const handleSubmit = () => {
-    if (otp === '123') {
-      Alert.alert('Success', 'OTP verification successful!');
-      navigation.navigate('Home');
-    } else {
-      Alert.alert('Error', 'Invalid OTP!');
-    }
+    verifyOTP(phone, otp);
   };
 
-  const handleResend = () => {
-    setOTP('');
-    setTimer(30);
+  const verifyOTP = (phoneNumber, enteredOTP) => {
+    const apiUrl = 'http://www.consultant.joulestowatts-uat.com/auth/verifyotp'; // Replace with your actual API URL
+
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        phone: phoneNumber,
+        otpEnteredByUser: enteredOTP,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('OTP verification response:', data);
+        if (data) {
+          Alert.alert('Success', 'OTP verification successful!');
+          navigation.navigate('Home');
+        } else {
+          Alert.alert('Error', 'Invalid OTP!');
+        }
+      })
+      .catch((error) => {
+        console.error('Error verifying OTP:', error);
+        Alert.alert('Error', 'Failed to verify OTP. Please try again later.');
+      });
   };
 
   useEffect(() => {
@@ -37,41 +62,79 @@ const Otp = ({ navigation }) => {
     };
   }, [timer]);
 
+  const handleResend = () => {
+    setOTP('');
+    setTimer(30);
+    sendOTP(phone);
+  };
+
+  const sendOTP = (phoneNumber) => {
+    const apiUrl = 'http://www.consultant.joulestowatts-uat.com/auth/sendotp'; // Replace with your actual API URL
+
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        phone: phoneNumber,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('OTP sent successfully!', data);
+      })
+      .catch((error) => {
+        console.error('Error sending OTP:', error);
+        Alert.alert('Error', 'Failed to send OTP. Please try again later.');
+      });
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={handleOTPChange}
-          value={otp}
-          keyboardType="numeric"
-          maxLength={4}
-          placeholder="Enter OTP" placeholderTextColor={'black'}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        {timer > 0 ? (
-          <Text style={styles.timerText}>Timer: {timer}</Text>
-        ) : (
-          <TouchableOpacity style={styles.resendButton} onPress={handleResend}>
-            <Text style={styles.resendButtonText}>Resend</Text>
+      <ScrollView>
+        <Image style={styles.image} source={require('./Images/logo.png')} />
+        <Text style={styles.texthead02}>Innovative Talent Solution</Text>
+        <Text style={styles.texthead05}>Creating the future</Text>
+
+        <Text style={styles.texthead04}>Welcome to Joules to Watts Consultant Portal</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={handleOTPChange}
+            value={otp}
+            keyboardType="numeric"
+            maxLength={4}
+            placeholder="Enter OTP"
+            placeholderTextColor={'black'}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          {timer > 0 ? (
+            <Text style={styles.timerText}>Timer: {timer}</Text>
+          ) : (
+            <TouchableOpacity style={styles.resendButton} onPress={handleResend}>
+              <Text style={styles.resendButtonText}>Resend</Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
-        )}
-        <TouchableOpacity style={styles.button} onPress={handleSubmit} >
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Details') }>
-        <Text style={styles.buttonText}>Others</Text>
+        </View>
+      </ScrollView>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Others')}>
+        <Text style={styles.buttonText}>Home</Text>
       </TouchableOpacity>
-
-      {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TicketDetails') }>
-        <Text style={styles.buttonText}>Ticket Details</Text>
-      </TouchableOpacity> */}
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TimeandDate')}>
+        <Text style={styles.buttonText}>TimeandDate</Text>
+      </TouchableOpacity>
     </View>
   );
-
 };
 
 const styles = StyleSheet.create({
@@ -79,12 +142,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 45,
+    backgroundColor: '#fff',
   },
   inputContainer: {
     alignItems: 'center',
     marginBottom: 20,
-    color:'black'
+    color: 'black',
   },
   input: {
     padding: 10,
@@ -93,12 +156,12 @@ const styles = StyleSheet.create({
     height: 50,
     width: 200,
     textAlign: 'center',
-    color:'black'
+    color: 'black',
   },
   timerText: {
     marginBottom: 10,
     fontSize: 16,
-    color:'black',
+    color: 'black',
   },
   resendButton: {
     alignItems: 'center',
@@ -114,7 +177,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     marginTop: 20,
     width: '100%',
     paddingHorizontal: 20,
@@ -131,127 +194,32 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  texthead02: {
+    marginLeft: '10%',
+    marginBottom: 10,
+    marginRight: '10%',
+    color: 'black',
+    fontSize: 32,
+  },
+  texthead04: {
+    color: 'black',
+    fontSize: 20,
+    marginLeft: '10%',
+    marginBottom: 20,
+    marginRight: '10%',
+  },
+  texthead05: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: '100',
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  textinput01: {
+    height: 40,
+    width: 300,
+    color: 'red',
+  },
 });
 
 export default Otp;
-
-
-
-
-
-// import React from 'react';
-// import { useState } from 'react';
-// import { StyleSheet, TextInput, Text, TouchableOpacity, View, Alert, ScrollView } from 'react-native';
-
-
-// const OtpScreen = ({ navigation }) => {
-
-//     const [otp, setOTP] = useState('');
-
-//     const handleOTPChange = (value) => {
-//       setOTP(value);
-//     };
-  
-//     const handleSubmit = () => {
-//       // Verify the OTP here
-//       if (otp === '1234') {
-//         Alert.alert('Success', 'OTP verification successful!');
-//         navigation.navigate('Job_Portal');
-//       } else {
-//         Alert.alert('Error', 'Invalid OTP!');
-//       }
-//     };
-
-
-//     const [isModalVisible, setModalVisible] = useState(false);
-
-//   const handleOpenModal = () => {
-//     setModalVisible(true);
-//   };
-
-//   const handleCloseModal = () => {
-//     setModalVisible(false);
-//   };
-
-
-
-//     return (
-//         <View style={styles.container}>
-//           <ScrollView>
-//                 <TextInput style={styles.input} onChangeText={handleOTPChange} value={otp} keyboardType="numeric" 
-//                     maxLength={4} placeholder="Enter your OTP" placeholderTextColor={'gray'} />
-//                 <View style={{ flexDirection : 'row', justifyContent : 'center', width : '80%'}} >
-
-//                 <TouchableOpacity style={styles.button01} onPress={handleSubmit} >
-//                     <Text style={styles.buttonText}>Submit</Text>
-//                 </TouchableOpacity>
-//                 <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('login')}>
-//                     <Text style={styles.buttonText}>Cancel</Text>
-//                 </TouchableOpacity>
-                
-//                 </View>
-
-//                 <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('InterviewPanel')}>
-//                   <Text style={styles.buttonText}>InterView Panel</Text>
-//                 </TouchableOpacity>
-
-//                 <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('AssignPanelMember')}>
-//                   <Text style={styles.buttonText}>AssignPanelMember</Text>
-//                 </TouchableOpacity>
-
-//                 <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('DateTime')}>
-//                   <Text style={styles.buttonText}>DateTime</Text>
-//                 </TouchableOpacity>
-    
-//                 </ScrollView>
-//         </View> 
-//     );
-// }
-
-// const styles = StyleSheet.create({
-//     container : {
-//         flex : 1,
-//         alignItems : 'center',
-//         backgroundColor : 'white',
-//     },
-//     text : {
-//       color : 'black',
-//     },
-//     input: {
-//         width: 300,
-//         height: 40,
-//         borderWidth: 1,
-//         borderColor: 'black',
-//         marginBottom: 10,
-//         color : 'black',
-//         marginTop : 200,
-//         marginLeft : 30,
-//         marginRight : 30,
-//         borderRadius : 5,
-//         marginBottom : 30,
-//       },
-//       submitbutton : {
-//         alignItems : 'center',
-//         justifyContent : 'center',
-//         marginLeft : 30,
-//         width : 100,
-//         height : 30,
-//         backgroundColor : '#75C597',
-//       },
-//       button01: {
-//         marginLeft: 40,
-//         padding: 10,
-//         width : 120,
-//         backgroundColor: '#75C597',
-//         borderRadius: 5,
-//         marginBottom : 20,
-//       },
-//       menuContainer: {
-//         flex: 1,
-//         paddingTop: 20,
-//         paddingHorizontal: 10,
-//         backgroundColor: 'white',
-//       }
-// })
-
-// export default OtpScreen;
