@@ -8,7 +8,7 @@ import SearchBox from './SearchBox';
 import Filter from './Filter';
 
 const JobDetailScreen = ({ route, navigation }) => {
-  const { constants } = route.params;
+  const { job } = route.params;
 
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -73,11 +73,11 @@ const JobDetailScreen = ({ route, navigation }) => {
   }, []);
 
   const renderSkills = () => {
-    const skills = constants.skills;
+    const skills = job.skills;
     const rows = [];
     let row = [];
 
-    for (let i = 0; i < skills.length; i++) {
+    for (let i = 0; i < skills?.length; i++) {
       const skill = skills[i];
       const isLongSkill = skill.length > 20;
 
@@ -135,22 +135,22 @@ const JobDetailScreen = ({ route, navigation }) => {
           <SearchBox />
           <Filter />
         </View>
-        <Text style={styles.heading03}>{constants.title}</Text>
+        <Text style={styles.heading03}>{job.title}</Text>
         <Text style={styles.heading02}>Job created on 23 August</Text>
         <Text style={styles.heading01}>Description</Text>
-        <Text style={styles.heading02}>{constants.description}</Text>
+        <Text style={styles.heading02}>{job.description}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Experience</Text>
-        <Text style={styles.heading02}>{constants.experience}</Text>
+        <Text style={styles.heading02}>{job.experience}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Location</Text>
-        <Text style={styles.heading02}>{constants.location}</Text>
+        <Text style={styles.heading02}>{job.location}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Salary</Text>
-        <Text style={styles.heading02}>{constants.salary}</Text>
+        <Text style={styles.heading02}>{job.salary}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Eligibility</Text>
-        <Text style={styles.heading02}>{`\u25CF ${constants.eligibility}`}</Text>
+        <Text style={styles.heading02}>{`\u25CF ${job.eligibility}`}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Skills</Text>
         {renderSkills()}

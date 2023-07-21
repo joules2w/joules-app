@@ -1,44 +1,39 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, Alert, TouchableOpacity, ScrollView } from 'react-native';
+import axios from 'axios';
+
+const API_BASE_URL = 'http://www.consultant.joulestowatts-uat.com/auth'; // Replace with your API base URL
 
 const LoginScreen = ({ navigation }) => {
-  const [emailOrMobile, setEmailOrMobile] = useState('');
 
-  const handleEmailOrMobileChange = (value) => {
-    setEmailOrMobile(value);
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handlePhoneNumber = (value) => {
+    setPhoneNumber(value);
   };
 
-  const handleSendOTP = () => {
-    sendOTP(emailOrMobile);
+  const handleOTP = () => {
+    sendOTP(phoneNumber);
   };
 
-  const sendOTP = (emailOrMobile) => {
-    const apiUrl = 'http://www.consultant.joulestowatts-uat.com/auth/sendotp'; // Replace with your actual API URL
+  const sendOTP = (phoneNumber) => {
+    const apiUrl = `${API_BASE_URL}/sendotp`; // Use the correct API endpoint
 
-    fetch(apiUrl, {
-      method: 'POST',
+    axios.post(apiUrl, { phone : phoneNumber }, {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        phone: emailOrMobile,
-      }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('OTP sent successfully!', data);
-        // After successfully sending OTP, navigate to the Otp screen
-        navigation.navigate('Otp', { phone: emailOrMobile }); // Pass the phone parameter here
-      })
-      .catch((error) => {
-        console.error('Error sending OTP:', error);
-        Alert.alert('Error', 'Failed to send OTP. Please try again later.');
-      });
+    .then((response) => {
+      console.log('OTP sent successfully!', response.data);
+      Alert.alert('Otp sent successfully');
+      // After successfully sending OTP, navigate to the Otp screen
+      navigation.navigate('Otp', { phone :  phoneNumber }); // Pass the phone parameter here
+    })
+    .catch((error) => {
+      console.error('Error sending OTP:', error);
+      Alert.alert('Error', 'Failed to send OTP. Please try again later.');
+    });
   };
 
   return (
@@ -57,12 +52,12 @@ const LoginScreen = ({ navigation }) => {
             placeholder="Enter your gmail/Mobile no."
             keyboardType="numeric"
             maxLength={10}
-            placeholderTextColor="gray"
-            onChangeText={handleEmailOrMobileChange}
-            value={emailOrMobile}
+            placeholderTextColor="#808080"
+            value={phoneNumber}
+            onChangeText={handlePhoneNumber}
           />
           <View style={{ flexDirection: 'row', width: '80%', justifyContent: 'space-around' }}>
-            <TouchableOpacity style={styles.button01} onPress={handleSendOTP}>
+            <TouchableOpacity style={styles.button01} onPress={handleOTP}>
               <Text style={styles.buttonText}>Send OTP</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button01}>

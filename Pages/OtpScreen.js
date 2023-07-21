@@ -1,51 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Image, Alert, StyleSheet, ScrollView } from 'react-native';
+import axios from 'axios';
 
-const Otp = ({ navigation, route }) => {
-  const [otp, setOTP] = useState('');
+const API_BASE_URL = 'http://www.consultant.joulestowatts-uat.com/auth';
+
+const OtpScreen = ({ route, navigation }) => {
+
+  const [otp, setOtp] = useState('');
   const [timer, setTimer] = useState(30);
-  const { phone } = route.params; // Get the phone number passed from LoginScreen
+  const { phone } = route.params;
 
-  const handleOTPChange = (value) => {
-    setOTP(value);
+  const handleResend = () => {
+    setOtp('');
+    setTimer(30);
+    sendOTP(phone);
   };
 
-  const handleSubmit = () => {
-    verifyOTP(phone, otp);
-  };
+  const sendOTP = (phoneNumber) => {
+    const apiUrl = `${API_BASE_URL}/sendotp`;
 
-  const verifyOTP = (phoneNumber, enteredOTP) => {
-    const apiUrl = 'http://www.consultant.joulestowatts-uat.com/auth/verifyotp'; // Replace with your actual API URL
-
-    fetch(apiUrl, {
-      method: 'POST',
+    axios.post(apiUrl, { phone: phoneNumber }, {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        phone: phoneNumber,
-        otpEnteredByUser: enteredOTP,
-      }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('OTP verification response:', data);
-        if (data) {
-          Alert.alert('Success', 'OTP verification successful!');
-          navigation.navigate('Home');
-        } else {
-          Alert.alert('Error', 'Invalid OTP!');
-        }
-      })
-      .catch((error) => {
-        console.error('Error verifying OTP:', error);
-        Alert.alert('Error', 'Failed to verify OTP. Please try again later.');
-      });
+    .then((response) => {
+      console.log('OTP sent successfully!', response.data);
+      Alert.alert('Otp resend successfully');
+    })
+    .catch((error) => {
+      console.error('Error sending OTP:', error);
+      if (error.response) {
+        // The request was made and the server responded with an error status code
+        console.error('Error status:', error.response.status);
+        console.error('Error data:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error('Error:', error.message);
+      }
+  
+      Alert.alert('Error', 'Failed to send OTP. Please try again later.');
+    });
   };
 
   useEffect(() => {
@@ -62,38 +60,36 @@ const Otp = ({ navigation, route }) => {
     };
   }, [timer]);
 
-  const handleResend = () => {
-    setOTP('');
-    setTimer(30);
-    sendOTP(phone);
+  const handleOTPChange = (value) => {
+    setOtp(value);
   };
 
-  const sendOTP = (phoneNumber) => {
-    const apiUrl = 'http://www.consultant.joulestowatts-uat.com/auth/sendotp'; // Replace with your actual API URL
+  const handleSubmit = () => {
+    verifyOTP(phone, otp);
+  };
 
-    fetch(apiUrl, {
-      method: 'POST',
+  const verifyOTP = (phoneNumber, enteredOTP) => {
+    const apiUrl = `${API_BASE_URL}/verifyotp`;
+
+    axios.post(apiUrl, { phone: phoneNumber, otpEnteredByUser: enteredOTP }, {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        phone: phoneNumber,
-      }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('OTP sent successfully!', data);
-      })
-      .catch((error) => {
-        console.error('Error sending OTP:', error);
-        Alert.alert('Error', 'Failed to send OTP. Please try again later.');
-      });
-  };
+    .then((response) => {
+      console.log('OTP verification response:', response.data);
+      if (response.data) {
+        Alert.alert('Success', 'OTP verification successful!');
+        navigation.navigate('Home');
+      } else {
+        Alert.alert('Error', 'Invalid OTP!');
+      }
+    })
+    .catch((error) => {
+      console.error('Error verifying OTP:', error);
+      Alert.alert('Error', 'Failed to verify OTP. Please try again later.');
+    });
+  };  
 
   return (
     <View style={styles.container}>
@@ -127,12 +123,6 @@ const Otp = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Others')}>
-        <Text style={styles.buttonText}>Home</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TimeandDate')}>
-        <Text style={styles.buttonText}>TimeandDate</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -222,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Otp;
+export default OtpScreen;

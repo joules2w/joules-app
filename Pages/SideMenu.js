@@ -90,7 +90,7 @@ const ProfileScreen = ({ interviewpanel, home, sparsh, jobportal, logout }) => {
       top: 0,
       left : 0,
       width: '50%',
-      height: '50%',
+      height: '100%',
       backgroundColor: '#ffffff',
       padding: 16,
       borderRadius : 5,

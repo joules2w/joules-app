@@ -1,6 +1,5 @@
-import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, FlatList, ScrollView, ImageBackground, Dimensions } from 'react-native';
-import { constants } from './StaticValues';
+import React, { useEffect, useState } from 'react';
+import { Text, StyleSheet, TouchableOpacity, View, FlatList, ScrollView, ImageBackground, Dimensions, ActivityIndicator } from 'react-native';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -8,92 +7,136 @@ import FilterBy from './Filter';
 import SearchBox from './SearchBox';
 
 const Job_portal = ({ navigation }) => {
+  const [jobs, setJobs] = useState([]);
 
-    const handleJobPress = (constants) => {
-        navigation.navigate('JobDetail', { constants });
-    };
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
-    const renderCellContent = (value) => {
-        if (value?.length > 10) {
-            return <Text>{value.substring(0, 78)}...</Text>;
-        }
-        return <Text>{value}</Text>;
-    };
+  const fetchJobs = async () => {
+    try {
 
-    const renderskillContent = (value) => {
-        if (value?.length > 40) {
-            return <Text>{value.substring(0, 50)}...</Text>;
-        }
-        return <Text>{value}</Text>;
-    };
-    
-    const renderJobItem = ({ item }) => {
-        const skillsToShow = item.skills.slice(0, 3);
-    const remainingSkillsCount = item.skills.length - 3;
+        const apiurl = 'http://www.consultant.joulestowatts-uat.com/job/get_all_jobs?page=2&limit=10&search=&jobExperience=2-6&jobSalary=500000-1100000&jobLocation=Bangalore';
+        const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
+      const response = await fetch(apiurl, {
+        method : 'GET',
+        headers : {
+            'Authorization': `Bearer ${bearerToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-        return (
-            <View style={[styles.card, styles.elevation]}>
-                <TouchableOpacity onPress={() => handleJobPress(item)}>
-                    <Text style={styles.heading01}>{item.title}</Text>
-                    <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-                    <View style={styles.skillsContainer}>
-          {skillsToShow.map((skill, index) => (
-            <View key={index} style={styles.skillItem}>
-              <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
-            </View>
-          ))}
-          {remainingSkillsCount > 0 && (
-            <View style={styles.skillItem}>
-              <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
-            </View>
-          )}
-        </View>                
-        </TouchableOpacity>
-            </View>
-        )
-    };
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-    const logout = () => {
-        navigation.navigate('Login')
+      const data = await response.json();
+      console.log('Fetched jobs:', data);
+      setJobs(data);
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
     }
-    const interviewpanel = () => {
-        navigation.navigate('InterviewPanel')
+  };
+
+  const handleJobPress = (job) => {
+    navigation.navigate('JobDetail', { job });
+  };
+
+  const renderCellContent = (value) => {
+    if (value?.length > 10) {
+      return <Text>{value.substring(0, 78)}...</Text>;
     }
-    const jobportal = () => {
-        navigation.navigate('Job_Portal')
+    return <Text>{value}</Text>;
+  };
+
+  const renderskillContent = (value) => {
+    if (value?.length > 40) {
+      return <Text>{value.substring(0, 50)}...</Text>;
     }
-    const sparsh = () => {
-        navigation.navigate('Sparsh')
-    }
-    const home = () => {
-        navigation.navigate('Home')
-    }
+    return <Text>{value}</Text>;
+  };
+
+  const renderJobItem = ({ item }) => {
+    if (!item) {
+        return null;
+      }
+
+    const jobId = item.jobId || '';
+    const jobTitle = item.jobTitle || '';
+    const jobDescription = item.jobDescription || '';
+    const jobSkills = item.jobSkills || [];
+
+    const skillsToShow = jobSkills.slice(0, 3);
+    const remainingSkillsCount = jobSkills.length - 3;
 
     return (
-        <View style={styles.container}>
-            <ScrollView>
-                <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-                <ImageBackground style={styles.background} source={require('./Images/background.png')}>
-                    <Text style={styles.texthead01}>Job Portal</Text>
-                    <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
-                </ImageBackground>
-                <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
-                    <Text style={styles.myreferral}>My Referrals</Text>
-                </TouchableOpacity>
-                <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
-                    <SearchBox />
-                    <FilterBy />
-                </View>
-                <FlatList scrollEnabled={false}
-                    data={constants}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={renderJobItem} />
-
-                <Footer />
-            </ScrollView>
-        </View>
+      <View style={[styles.card, styles.elevation]}>
+        <TouchableOpacity onPress={() => handleJobPress(item)}>
+          <Text style={styles.heading01}>{jobTitle}</Text>
+          <Text style={styles.heading02}>{renderCellContent(jobDescription)}</Text>
+          <View style={styles.skillsContainer}>
+            {skillsToShow.map((skill, index) => (
+              <View key={index} style={styles.skillItem}>
+                <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
+              </View>
+            ))}
+            {remainingSkillsCount > 0 && (
+              <View style={styles.skillItem}>
+                <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
+              </View>
+            )}
+          </View>
+        </TouchableOpacity>
+      </View>
     );
-}
+  };
+
+  const logout = () => {
+    navigation.navigate('Login');
+  };
+
+  const interviewpanel = () => {
+    navigation.navigate('InterviewPanel');
+  };
+
+  const jobportal = () => {
+    navigation.navigate('Job_Portal');
+  };
+
+  const sparsh = () => {
+    navigation.navigate('Sparsh');
+  };
+
+  const home = () => {
+    navigation.navigate('Home');
+  };
+
+  return (
+    <View style={styles.container}>
+        <ScrollView>
+          <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
+          <ImageBackground style={styles.background} source={require('./Images/background.png')}>
+            <Text style={styles.texthead01}>Job Portal</Text>
+            <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
+          </ImageBackground>
+          <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
+            <Text style={styles.myreferral}>My Referrals</Text>
+          </TouchableOpacity>
+          <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
+            <SearchBox />
+            <FilterBy />
+          </View>
+          <FlatList
+            scrollEnabled={false}
+            data={jobs.data}
+            keyExtractor={(item) => item?.jobId?.toString()}
+            renderItem={renderJobItem}
+          />
+          <Footer />
+        </ScrollView>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
     container: {
