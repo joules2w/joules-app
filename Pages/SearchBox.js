@@ -38,12 +38,11 @@ const SearchBox = () => {
       alignItems : 'center',
       borderWidth: 1,
       borderColor: 'black',
-      borderRadius: 5,
+      borderRadius: 10,
       paddingHorizontal: 10,
     },
     input: {
       flex : 1,
-      borderRadius : 5,
       height : 50,
     },
   });

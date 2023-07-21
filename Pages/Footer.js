@@ -40,9 +40,9 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
   footer1: {
-    marginBottom: 10,
     backgroundColor: '#449B93',
     fontWeight: 'bold',
+    
   },
   view : {
     flexDirection: 'row', 
@@ -52,9 +52,8 @@ const styles = StyleSheet.create({
     padding : 10,
     color: 'white',
     fontSize: 15,
-    fontWeight: 'bold',
-    marginRight: 10,
-    textAlign:'center'
+    fontWeight: "bold",
+    textAlign:"center",
   },
 });
 
