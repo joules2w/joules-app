@@ -122,6 +122,9 @@ const OtpScreen = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Details')}>
+            <Text style={styles.buttonText}>Others</Text>
+          </TouchableOpacity>
       </ScrollView>
     </View>
   );

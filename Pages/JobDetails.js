@@ -73,13 +73,13 @@ const JobDetailScreen = ({ route, navigation }) => {
   }, []);
 
   const renderSkills = () => {
-    const skills = job.skills;
+    const skills = job?.jobSkills;
     const rows = [];
     let row = [];
 
     for (let i = 0; i < skills?.length; i++) {
       const skill = skills[i];
-      const isLongSkill = skill.length > 20;
+      const isLongSkill = skill.length > 50;
 
       if (isLongSkill || row.length === 3) {
         rows.push(row);
@@ -103,6 +103,11 @@ const JobDetailScreen = ({ route, navigation }) => {
       </View>
     ));
   };
+  const jobExperienceFrom = job?.jobExperience?.[0]?.jobExperienceFrom || '';
+  const jobExperienceTo = job?.jobExperience?.[0]?.jobExperienceTo || '';
+
+  const jobSalaryFrom = job?.JobSalary?.[0]?.jobSalaryFrom || '';
+  const jobSalaryTo = job?.JobSalary?.[0]?.jobSalaryTo || '';
 
   const logout = () => {
     navigation.navigate('Login')
@@ -135,22 +140,22 @@ const JobDetailScreen = ({ route, navigation }) => {
           <SearchBox />
           <Filter />
         </View>
-        <Text style={styles.heading03}>{job.title}</Text>
+        <Text style={styles.heading03}>{job.jobTitle}</Text>
         <Text style={styles.heading02}>Job created on 23 August</Text>
         <Text style={styles.heading01}>Description</Text>
-        <Text style={styles.heading02}>{job.description}</Text>
+        <Text style={styles.heading02}>{job.jobDescription}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Experience</Text>
-        <Text style={styles.heading02}>{job.experience}</Text>
+        <Text style={styles.heading02}>{jobExperienceFrom} to {jobExperienceTo} years</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Location</Text>
-        <Text style={styles.heading02}>{job.location}</Text>
+        <Text style={styles.heading02}>{job?.jobLocation || ''}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Salary</Text>
-        <Text style={styles.heading02}>{job.salary}</Text>
+        <Text style={styles.heading02}>{jobSalaryFrom} to {jobSalaryTo}</Text>
         <View style={styles.line} />
-        <Text style={styles.heading01}>Eligibility</Text>
-        <Text style={styles.heading02}>{`\u25CF ${job.eligibility}`}</Text>
+        <Text style={styles.heading01}>Responsibilities</Text>
+        <Text style={styles.heading02}>{`\u25CF ${job.jobResponsibilities}`}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Skills</Text>
         {renderSkills()}
@@ -240,12 +245,15 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     marginRight: '5%',
   },
+  referbutton : {
+    marginRight : '5%',
+    marginTop : '5%',
+  },
   myreferral: {
     color: 'red',
     textAlign: 'right',
     textDecorationLine: 'underline',
     fontSize: 15,
-    marginRight: '8%',
   },
   heading01: {
     fontSize: 16,
@@ -285,14 +293,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   skillItem: {
-    padding: 3,
+    padding: 2,
     marginLeft: '5%',
   },
   skillText: {
-    fontSize: 13,
+    fontSize: 12,
     color: '#449b93',
     backgroundColor: '#e0f9f6',
-    padding: 10,
+    padding: 8,
     borderRadius: 15,
   },
   card: {
@@ -368,8 +376,8 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   switch: {
-    marginRight: '10%',
-    borderColor: 'black'
+    marginRight: '5%',
+    borderColor: '#000000'
   },
 });
 

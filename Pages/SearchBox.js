@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const SearchBox = () => {
-    const [searchText, setSearchText] = useState('');
-  
-    const handleSearch = (text) => {
-      setSearchText(text);
-    };
+
+const SearchBox = ({ searchQuery, onSearch }) => {
+  const [query, setQuery] = useState(searchQuery || '');
+
+  const handleSearch = (text) => {
+    setQuery(text);
+    onSearch(text); // Call the onSearch prop with the updated text
+  };
+
+  useEffect(() => {
+    // Reset the search query when the component is re-rendered
+    setQuery(searchQuery);
+  }, [searchQuery]);
+
   
     return (
       <View style={styles.container}>
@@ -16,8 +24,9 @@ const SearchBox = () => {
         <TextInput
           style={styles.input}
           placeholder="Search "
-          value={searchText}
-          onChangeText={handleSearch} placeholderTextColor={'gray'}
+          placeholderTextColor={'#808080'}
+          value={query}
+          onChangeText={handleSearch} 
         />
         </View>
       </View>
@@ -44,6 +53,7 @@ const SearchBox = () => {
     input: {
       flex : 1,
       height : 50,
+      color : '#000000',
     },
   });
 

@@ -7,10 +7,10 @@ import AssignPanelMember from './AssignPanelMember';
 
 const MoreDetails = ({ route, navigation }) => {
 
-    const { constants } = route.params;
+    const { job } = route.params;
 
     const renderSkills = () => {
-        const skills = constants.skills;
+        const skills = job.jobSkills;
         const rows = [];
         let row = [];
 
@@ -62,7 +62,7 @@ const MoreDetails = ({ route, navigation }) => {
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 <ImageBackground style={styles.background} source={require('./Images/background.png')}>
-                    <Text style={styles.texthead01}>Interview Panel For Interactive Developer</Text>
+                    <Text style={styles.texthead01}>Interview Panel For {job.jobTitle}</Text>
                     <Text style={styles.texthead02}>Job created on 28th September 2015</Text>
                     <Text style={styles.texthead03}>₹ 4000 per panel member</Text>
                 </ImageBackground>
@@ -70,10 +70,10 @@ const MoreDetails = ({ route, navigation }) => {
                 <AssignPanelMember />
 
                 <Text style={styles.heading01}>Job Description</Text>
-                <Text style={styles.heading02}>{constants.description}</Text>
+                <Text style={styles.heading02}>{job.jobDescription}</Text>
                 <View style={styles.line} />
-                <Text style={styles.heading01}>Eligibility</Text>
-                <Text style={styles.heading02}>{constants.eligibility}</Text>
+                <Text style={styles.heading01}>Responsibilities</Text>
+                <Text style={styles.heading02}>{job.jobResponsibilities}</Text>
                 <View style={styles.line} />
                 <Text style={styles.heading01}>Skills</Text>
                 {renderSkills()}

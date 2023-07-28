@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, FlatList, ImageBackground, Dimensions, ScrollView } from 'react-native';
-import { constants } from './StaticValues';
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -9,8 +8,55 @@ import Filter from "./Filter";
 
 const InterViewPanel = ({ navigation }) => {
 
-    const handleJobPress = (constants) => {
-        navigation.navigate('MoreDetails', { constants });
+    const [jobs, setJobs] = useState([]);
+    const [filteredJobs, setFilteredJobs] = useState([]); 
+    const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+        fetchJobs();
+    }, []);
+
+    const handleSearch = useCallback((searchQuery) => {
+        setSearchQuery(searchQuery);
+        const filteredJobs = jobs.data.filter((job) => {
+          const skills = job.jobSkills || [];
+          const normalizedQuery = searchQuery.toLowerCase();
+          return (
+            job.jobTitle.toLowerCase().includes(normalizedQuery) ||
+            job.jobLocation.toLowerCase().includes(normalizedQuery) ||
+            skills.some((skill) => skill.toLowerCase().includes(normalizedQuery))
+          );
+        });
+        setFilteredJobs(filteredJobs);
+      }, [jobs.data]);
+
+    const fetchJobs = async () => {
+        try {
+
+            const apiurl = 'http://www.consultant.joulestowatts-uat.com/job/get_all_jobs?page=2&limit=10&search=&jobExperience=2-6&jobSalary=500000-1100000&jobLocation=Bangalore';
+            const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
+            const response = await fetch(apiurl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${bearerToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('Fetched jobs:', data);
+            setJobs(data);
+        } catch (error) {
+            console.error('Error fetching jobs:', error);
+        }
+    };
+
+    const handleJobPress = (job) => {
+        navigation.navigate('MoreDetails', { job });
     };
 
     const renderCellContent = (value) => {
@@ -28,27 +74,35 @@ const InterViewPanel = ({ navigation }) => {
     };
 
     const renderJobItem = ({ item }) => {
-        const skillsToShow = item.skills.slice(0, 3);
-        const remainingSkillsCount = item.skills.length - 3;
+        if (!item) {
+            return null;
+        }
+
+        const jobId = item.jobId || '';
+        const jobTitle = item.jobTitle || '';
+        const jobDescription = item.jobDescription || '';
+        const jobSkills = item.jobSkills || [];
+
+        const skillsToShow = jobSkills.slice(0, 3);
+        const remainingSkillsCount = jobSkills.length - 3;
 
         return (
             <View style={[styles.card, styles.elevation]}>
-                <Text style={styles.heading01}>{item.title}</Text>
-                <Text style={styles.heading02}>{renderCellContent(item.description)}</Text>
-                <View style={styles.skillsContainer}>
-                    {skillsToShow.map((skill, index) => (
-                        <View key={index} style={styles.skillItem}>
-                            <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
-                        </View>
-                    ))}
-                    {remainingSkillsCount > 0 && (
-                        <View style={styles.skillItem}>
-                            <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
-                        </View>
-                    )}
-                </View>
                 <TouchableOpacity onPress={() => handleJobPress(item)}>
-                    <Text style={styles.moredetails}>More details ➤</Text>
+                    <Text style={styles.heading01}>{jobTitle}</Text>
+                    <Text style={styles.heading02}>{renderCellContent(jobDescription)}</Text>
+                    <View style={styles.skillsContainer}>
+                        {skillsToShow.map((skill, index) => (
+                            <View key={index} style={styles.skillItem}>
+                                <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
+                            </View>
+                        ))}
+                        {remainingSkillsCount > 0 && (
+                            <View style={styles.skillItem}>
+                                <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
+                            </View>
+                        )}
+                    </View>
                 </TouchableOpacity>
             </View>
         )
@@ -79,11 +133,11 @@ const InterViewPanel = ({ navigation }) => {
                     <Text style={styles.texthead02}>Welcome to our Interview Panel page, where you can discover everything you need to know about panel interviews and how to excel in them.</Text>
                 </ImageBackground>
                 <View style={styles.view}>
-                    <SearchBox />
+                    <SearchBox searchQuery={searchQuery} onSearch={handleSearch} />
                     <Filter />
                 </View>
                 <FlatList scrollEnabled={false}
-                    data={constants}
+                    data={filteredJobs.length > 0 ? filteredJobs : jobs.data}
                     renderItem={renderJobItem}
                     keyExtractor={(item) => item.id.toString()} />
                 <Footer />
@@ -110,7 +164,7 @@ const styles = StyleSheet.create({
         marginLeft: '5%',
         marginRight: '5%',
         marginTop: 10,
-        fontWeight : "bold"
+        fontWeight: "bold"
     },
     texthead02: {
         color: 'black',
@@ -119,7 +173,7 @@ const styles = StyleSheet.create({
         marginLeft: '5%',
         marginRight: '5%',
     },
-    view : {
+    view: {
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'center',
@@ -148,7 +202,7 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     heading02: {
-        fontSize: 13    ,
+        fontSize: 13,
         marginLeft: '5%',
         color: '#808080',
         textAlign: 'justify',
@@ -160,7 +214,8 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     skillItem: {
-        padding : 3,
+        padding: 3,
+        marginLeft: '5%',
     },
     skillText: {
         fontSize: 13,
@@ -169,12 +224,12 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 15,
     },
-    moredetails : {
+    moredetails: {
         color: 'red',
         textAlign: 'right',
         textDecorationLine: 'underline',
         fontSize: 13,
-    },    
+    },
 })
 
 export default InterViewPanel;
