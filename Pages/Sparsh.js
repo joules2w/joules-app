@@ -1,96 +1,152 @@
-
-
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  ImageBackground,
-  Modal,
-  Pressable,
-  Dimensions,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import { RadioButton } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { MultipleSelectList } from 'react-native-dropdown-select-list';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Button } from 'react-native-paper';
-import { DatePickerModal } from 'react-native-paper-dates';
+import { StyleSheet, ImageBackground, Modal, Dimensions, Text, FlatList, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-
+import CheckBox from 'react-native-check-box';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Header from './Header';
 import Footer from './Footer';
+import { ticket } from './StaticValues'
 
-const Sparsh = ({ navigation }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [priority, setPriority] = useState('');
+const Sparsh = ({ navigation, onSelectionConfirmed }) => {
+
   const [activeTab, setActiveTab] = useState('Tab1');
 
+  const [isPriorityDropdownOpen, setIsPriorityDropdownOpen] = useState(false);
+  const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false);
 
+  const [selectedPriority, setSelectedPriority] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
 
-  const [selected, setSelected] = React.useState([]);
-  const data = [
-    { key: '1', value: 'name1' },
-    { key: '2', value: 'name2' },
-    { key: '3', value: 'name3' },
-    { key: '4', value: 'name4' },
-    { key: '5', value: 'name5' },
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const PriorityOptions = ['High', 'Medium', 'Low'];
+  const DateOptions = ['Today', 'Yesterday', 'This week', 'Custom date']
+
+  const multipleSelectionData = [
+    { id: 1, label: 'Ramya' },
+    { id: 2, label: 'Priyanka' },
+    { id: 3, label: 'Tharani' },
+    { id: 4, label: 'Sheetal' },
+    { id: 5, label: 'Khushboo' },
+    { id: 6, label: 'Sindhura' },
+    { id: 7, label: 'Meenu' },
+    { id: 8, label: 'Pooja' },
+    { id: 9, label: 'Sumona' },
+    { id: 10, label: 'Sai' },
   ];
+
+  const [selectedTab, setSelectedTab] = useState('All');
+
+  const getFilteredData = (selectedPriority) => {
+    if (selectedPriority === 'All') {
+      return ticket;
+    }
+    return ticket?.filter((item) => item.priority === selectedPriority);
+  };
 
   const handleTabPress = (tabName) => {
     setActiveTab(tabName);
   };
 
-
-  const [range, setRange] = React.useState({ startDate: undefined, endDate: undefined });
-  const [open, setOpen] = React.useState(false);
-
-  const onDismiss = React.useCallback(() => {
-    setOpen(false);
-  }, [setOpen]);
-
-  const onConfirm = React.useCallback(
-    ({ startDate, endDate }) => {
-      setOpen(false);
-      setRange({ startDate, endDate });
-    },
-    [setOpen, setRange]
-  );
-
-  const getButtonTitle = () => {
-    if (range.startDate && range.endDate) {
-      const startDateString = range.startDate.toDateString();
-      const endDateString = range.endDate.toDateString();
-      return `${startDateString} - ${endDateString}`;
+  const handleItemToggle = (item) => {
+    if (selectedItems.includes(item.id)) {
+      setSelectedItems(selectedItems.filter((id) => id !== item.id));
     } else {
-      return "Select Date";
+      setSelectedItems([...selectedItems, item.id]);
     }
   };
 
-  const handleSelect = () => {
-    Alert.alert('Selected:', selected.join(', '));
+  const handleSelectionConfirm = () => {
+    setModalVisible(false);
+    if (typeof onSelectionConfirmed === 'function') {
+      onSelectionConfirmed(selectedItems);
+    }
+  };
+
+  const clearFilter = () => {
+    setSelectedPriority('');
+    setSelectedItems('');
+    setSelectedDate('');
+    setSelectedTab('All'); // Set selectedTab to 'All' to show all tickets
+  }
+
+  const ticketDetails = (ticket) => {
+    navigation.navigate('TicketDetails', { ticket });
+  };
+
+  const handlePrioritySelect = (option) => {
+    setSelectedPriority(option);
+    setIsPriorityDropdownOpen(false);
+    // After selecting the priority, filter the tickets based on the selected priority
+    setSelectedTab(option);
+  };
+
+  const handleDateSelect = (option) => {
+    setSelectedDate(option);
+    setIsDateDropdownOpen(false);
+  };
+
+  const togglePriorityDropdown = () => {
+    setIsPriorityDropdownOpen(!isPriorityDropdownOpen);
+  };
+
+  const toggleDateDropdown = () => {
+    setIsDateDropdownOpen(!isDateDropdownOpen);
+  };
+
+  const ticketItem = ({ item }) => {
+
+    let backgroundColor = '#808080';
+
+    if (item.priority === 'High') {
+      backgroundColor = 'green';
+    } else if (item.priority === 'Medium') {
+      backgroundColor = 'blue';
+    } else if (item.priority === 'Low') {
+      backgroundColor = 'red';
+    }
+
+    return (
+      <View style={[styles.card, styles.elevation]}>
+        <TouchableOpacity onPress={() => ticketDetails(item)}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={[styles.priority, { backgroundColor: backgroundColor }]}>
+              <Text style={styles.texthead03}>{item.priority}</Text>
+            </Text>
+            <Text style={styles.heading02}>Created on {item.createdOn}</Text>
+          </View>
+          <Text style={styles.heading01}>{item.heading}</Text>
+          <Text style={styles.heading02}>{item.ticketdescription}</Text>
+          <Text style={styles.texthead03}>Assigned on {item.assigned}</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  };
+
+  const renderTabContent = () => {
+    const filteredTickets = getFilteredData(selectedPriority || selectedTab);
+    return (
+      <FlatList scrollEnabled={false}
+        data={filteredTickets}
+        keyExtractor={(ticket) => ticket.id.toString()}
+        renderItem={ticketItem} />
+    );
   };
 
   const logout = () => {
     navigation.navigate('Login');
   };
-
   const interviewpanel = () => {
     navigation.navigate('InterviewPanel');
   };
-
   const jobportal = () => {
     navigation.navigate('Job_Portal');
   };
-
   const sparsh = () => {
     navigation.navigate('Sparsh');
   };
-
   const home = () => {
     navigation.navigate('Home');
   };
@@ -98,271 +154,130 @@ const Sparsh = ({ navigation }) => {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <ScrollView>
-          <View style={{ flexDirection: 'row', width: '80%' }}>
-            <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-          </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {/* Header */}
+          <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
+
+          {/* Image background */}
           <ImageBackground source={require('./Images/background.png')} style={styles.background}>
-            <Text style={styles.texthead02}>Sparsh</Text>
-            <Text style={styles.texthead05}>
-              Say Hello to Hassle-Free HR Query Resolution with sparsh : Your On-Stop Tcking Raising Platform
-            </Text>
+            <Text style={styles.texthead01}>Sparsh</Text>
+            <Text style={styles.texthead02}>Say Hello to Hassle-Free HR Query Resolution with sparsh : Your On-Stop Tcking Raising Platform</Text>
           </ImageBackground>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ticket')}>
-            <Text style={styles.button2}>Create New Ticket</Text>
+
+          {/* Create new ticket */}
+          <TouchableOpacity style={styles.createbutton} onPress={() => navigation.navigate('ticket')}>
+            <Text style={styles.createbuttontext}>Create New Ticket</Text>
           </TouchableOpacity>
 
+          {/* Open and Close Tickets */}
           <View style={styles.tabContainer}>
-            <TouchableOpacity
-              style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]}
-              onPress={() => handleTabPress('Tab1')}
-            >
+            <TouchableOpacity style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]} onPress={() => handleTabPress('Tab1')}>
               <Text style={styles.tabText}>Open Ticket</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]}
-              onPress={() => handleTabPress('Tab2')}
-            >
+            <TouchableOpacity style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]} onPress={() => handleTabPress('Tab2')}>
               <Text style={styles.tabText}>Close Ticket</Text>
             </TouchableOpacity>
           </View>
 
           {activeTab === 'Tab1' && (
             <View>
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                  Alert.alert('Modal has been closed.');
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <View>
-                  <View style={styles.modalView}>
-                    <RadioButton.Group onValueChange={value => setPriority(value)} value={priority}>
-                      <View style={styles.radioItem}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <RadioButton color="red" value="high" />
-                          <Text style={[styles.modalText, { color: 'red' }]}>High Priority</Text>
-                        </View>
-                      </View>
-                      <View style={styles.radioItem}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <RadioButton color="orange" value="medium" />
-                          <Text style={[styles.modalText, { color: 'orange' }]}>Medium Priority</Text>
-                        </View>
-                      </View>
-                      <View style={styles.radioItem}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <RadioButton color="#3590ae" value="low" />
-                          <Text style={[styles.modalText, { color: '#3590ae' }]}>Low Priority</Text>
-                        </View>
-                      </View>
-                    </RadioButton.Group>
-                    <Pressable
-                      style={[styles.button, styles.buttonClose]}
-                      onPress={() => {
-                        setModalVisible(!modalVisible);
-                        if (priority) {
-                          console.log('Filter by:', priority);
+              <View style={styles.tabview}>
+                <Text style={styles.text}>FilterBy</Text>
+                <TouchableOpacity onPress={clearFilter}>
+                  <Text style={styles.clearfiltertext}>Clear Filter</Text>
+                </TouchableOpacity>
+              </View>
 
-                        }
-                      }}
-                    >
-                      <Text style={styles.textStyle}>Filter</Text>
-                    </Pressable>
-
-
+              {/* Select Ticket priority */}
+              <TouchableOpacity onPress={togglePriorityDropdown} style={styles.dropdownButton}>
+                <Text style={styles.dropdownButtonText}>Ticket priority : {selectedPriority}</Text>
+              </TouchableOpacity>
+              <Modal transparent
+                visible={isPriorityDropdownOpen}
+                animationType="fade"
+                onRequestClose={() => setIsPriorityDropdownOpen(false)}>
+                <View style={styles.modalContainer}>
+                  <View style={styles.dropdownList}>
+                    {PriorityOptions.map((option, index) => (
+                      <TouchableOpacity style={styles.dropdownOption} key={index}
+                        onPress={() => handlePrioritySelect(option)}>
+                        <Text style={styles.dropdownOptionText}>{option}</Text>
+                      </TouchableOpacity>
+                    ))}
                   </View>
                 </View>
               </Modal>
-              <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => setModalVisible(true)}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={[styles.textStyle, { marginRight: '50%' }]}>
-                    {priority ? `${priority.charAt(0).toUpperCase() + priority.slice(1)} Priority` : 'Ticket Priority'}
-                  </Text>
-                  <Icon name="chevron-down" size={15} color="#000" />
+
+              {/* Select Ticket assign to */}
+              <TouchableOpacity style={styles.dropdownButton} onPress={() => setModalVisible(true)}>
+                <Text style={styles.dropdownButtonText}>Ticket Assigned To </Text>
+              </TouchableOpacity>
+              <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+                <View style={styles.modalContainer}>
+                  <View style={styles.modalContent}>
+                    {multipleSelectionData.map((item) => (
+                      <TouchableOpacity key={item.id} onPress={() => handleItemToggle(item)}>
+                        <View style={styles.itemContainer}>
+                          <CheckBox
+                            isChecked={selectedItems.includes(item.id)}
+                            onClick={() => handleItemToggle(item)}
+                            checkBoxColor="black"
+                            checkedCheckBoxColor="black"
+                          />
+                          <Text style={styles.text}>{item.label}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                    <TouchableOpacity style={styles.confirmbutton} onPress={handleSelectionConfirm}>
+                      <Text style={styles.confirmtext}>Confirm</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </Pressable>
+              </Modal>
 
+              {/* Select Start and End date */}
+              <TouchableOpacity onPress={toggleDateDropdown} style={styles.dropdownButton}>
+                <Text style={styles.dropdownButtonText}>Created Date : {selectedDate}</Text>
+              </TouchableOpacity>
+              <Modal transparent
+                visible={isDateDropdownOpen}
+                animationType="fade"
+                onRequestClose={() => setIsDateDropdownOpen(false)}>
+                <View style={styles.modalContainer}>
+                  <View style={styles.dropdownList}>
+                    {DateOptions.map((DateOptions, index) => (
+                      <TouchableOpacity style={styles.dropdownOption} key={index}
+                        onPress={() => handleDateSelect(DateOptions)}>
+                        <Text style={styles.dropdownOptionText}>{DateOptions}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </View>
+              </Modal>
 
-              <View style={styles.cont1}>
-                <MultipleSelectList
-                  style={styles.text}
-                  onSelect={() => alert(selected)}
-                  setSelected={(val) => setSelected(val)}
-                  label="Tickets assigned to"
-                  data={data}
-                  arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
-                  searchicon={<MaterialIcons name="search" size={24} color="black" />}
-                  search={true}
-                  boxStyles={{ borderRadius: 0, width: '98.9%', height: 45, borderRadius: 30, padding: '2%', paddingHorizontal: '5%' }}
+              {/* Search */}
+              <View style={styles.view}>
+                <Icon name="search" size={20} color="#666" style={styles.searchIcon} />
+                <TextInput style={styles.textinput}
+                  placeholder="search with ticket number here.."
+                  keyboardType="numeric"
+                  maxLength={10}
+                  placeholderTextColor="gray"
                 />
               </View>
-              <View style={styles.container1}>
-                <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined" style={styles.button022}>
-                  <Text style={styles.buttonText}>{getButtonTitle()}</Text>
-                </Button>
-                <DatePickerModal
-                  locale="en"
-                  mode="range"
-                  visible={open}
-                  onDismiss={onDismiss}
-                  startDate={range.startDate}
-                  endDate={range.endDate}
-                  onConfirm={onConfirm}
-                  startLabel="Start Date"
-                  endLabel="End Date"
-                  saveLabel="Save"
-                />
-              </View>
 
-
-
-
-              <TextInput
-                style={styles.textinput}
-                placeholder="search with ticket number here.."
-                keyboardType="numeric"
-                maxLength={10}
-                placeholderTextColor="gray"
-              />
-
-              <View style={[styles.card, styles.elevation]}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.texthead5}>High</Text>
-                  <Text style={styles.texthead06}>Created on 4 Apirl 2023</Text>
-                </View>
-                <Text style={styles.heading01}>Testing</Text>
-                <Text style={styles.heading02}>Testing</Text>
-                <Text style={styles.heading03}>Assigned on 10 Apirl 2023</Text>
-                <View style={{ flexDirection: 'row', width: '80%', justifyContent: 'space-around' }}></View>
+              {/* Tickets */}
+              <View>
+                {renderTabContent()}
               </View>
             </View>
           )}
           {activeTab === 'Tab2' && (
             <View>
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                  Alert.alert('Modal has been closed.');
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <View>
-                  <View style={styles.modalView}>
-                    <RadioButton.Group onValueChange={value => setPriority(value)} value={priority}>
-                      <View style={styles.radioItem}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <RadioButton color="red" value="high" />
-                          <Text style={[styles.modalText, { color: 'red' }]}>High Priority</Text>
-                        </View>
-                      </View>
-                      <View style={styles.radioItem}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <RadioButton color="orange" value="medium" />
-                          <Text style={[styles.modalText, { color: 'orange' }]}>Medium Priority</Text>
-                        </View>
-                      </View>
-                      <View style={styles.radioItem}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <RadioButton color="#3590ae" value="low" />
-                          <Text style={[styles.modalText, { color: '#3590ae' }]}>Low Priority</Text>
-                        </View>
-                      </View>
-                    </RadioButton.Group>
-                    <Pressable
-                      style={[styles.button, styles.buttonClose]}
-                      onPress={() => {
-                        setModalVisible(!modalVisible);
-                        if (priority) {
-                          console.log('Filter by:', priority);
-
-                        }
-                      }}
-                    >
-                      <Text style={styles.textStyle}>Filter</Text>
-                    </Pressable>
-
-
-                  </View>
-                </View>
-              </Modal>
-              <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => setModalVisible(true)}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={[styles.textStyle, { marginRight: '50%' }]}>
-                    {priority ? `${priority.charAt(0).toUpperCase() + priority.slice(1)} Priority` : 'Ticket Priority'}
-                  </Text>
-                  <Icon name="chevron-down" size={15} color="#000" />
-                </View>
-              </Pressable>
-              <View style={styles.cont1}>
-                <MultipleSelectList
-                  style={styles.text}
-                  onSelect={() => alert(selected)}
-                  setSelected={(val) => setSelected(val)}
-                  label="Tickets assigned to"
-                  data={data}
-                  arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
-                  searchicon={<MaterialIcons name="search" size={24} color="black" />}
-                  search={true}
-                  boxStyles={{ borderRadius: 0, width: '98.9%', height: 45, borderRadius: 30, padding: '2%', paddingHorizontal: '5%' }}
-                />
-              </View>
-
-              <View style={styles.container1}>
-                <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined" style={styles.button022}>
-                  <Text style={styles.buttonText}>{getButtonTitle()}</Text>
-                </Button>
-                <DatePickerModal
-                  locale="en"
-                  mode="range"
-                  visible={open}
-                  onDismiss={onDismiss}
-                  startDate={range.startDate}
-                  endDate={range.endDate}
-                  onConfirm={onConfirm}
-                  startLabel="Start Date"
-                  endLabel="End Date"
-                  saveLabel="Save"
-                />
-              </View>
-
-
-
-
-
-              <TextInput
-                style={styles.textinput}
-                placeholder="search with ticket number here.."
-                keyboardType="numeric"
-                maxLength={10}
-                placeholderTextColor="gray"
-              />
-
-              <View style={[styles.card, styles.elevation]}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.texthead5}>High</Text>
-                  <Text style={styles.texthead06}>Created on 4 Apirl 2023</Text>
-                </View>
-                <Text style={styles.heading01}>Testing</Text>
-                <Text style={styles.heading02}>Testing</Text>
-                <Text style={styles.heading03}>Assigned on 10 Apirl 2023</Text>
-                <View style={{ flexDirection: 'row', width: '80%', justifyContent: 'space-around' }}></View>
-              </View>
             </View>
           )}
 
-          <Footer />
+          <View style={styles.footer}><Footer /></View>
         </ScrollView>
       </View>
     </SafeAreaProvider>
@@ -371,10 +286,19 @@ const Sparsh = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white',
+    alignContent: 'center',
+    backgroundColor: '#fff',
   },
-  texthead02: {
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 120,
+  },
+  background: {
+    height: 150,
+    width: Dimensions.get('window').width,
+    opacity: 0.35,
+  },
+  texthead01: {
     marginLeft: '8%',
     color: 'black',
     fontWeight: 'bold',
@@ -382,7 +306,7 @@ const styles = StyleSheet.create({
     marginTop: '3%',
     marginBottom: '5%',
   },
-  texthead05: {
+  texthead02: {
     marginLeft: '8%',
     marginRight: '8%',
     color: 'black',
@@ -390,49 +314,124 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
     textAlign: 'justify',
   },
-  button2: {
-    color: 'white',
-    marginLeft: '50%',
-    marginRight: '8%',
+  createbutton: {
+    padding: 10,
+    borderRadius: 10,
+    textAlign: 'left',
+  },
+  createbuttontext: {
+    color: '#fff',
+    alignSelf: 'flex-end',
+    marginRight: '5%',
     borderRadius: 10,
     backgroundColor: '#5f9ea0',
     padding: 10,
     textAlign: 'center',
-    alignItems: 'flex-end',
-    width: '50%'
   },
-  background: {
-    height: 150,
-    width: Dimensions.get('window').width,
-    opacity: 0.35,
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: '5%',
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#808080',
+    borderRadius: 10,
+  },
+  activeTab: {
+    backgroundColor: '#5f9ea0',
+  },
+  tabText: {
+    fontSize: 15,
+    color: '#fff',
+  },
+  tabview: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: '5%',
+  },
+  text: {
+    color: '#000000',
+  },
+  clearfiltertext: {
+    color: 'red',
+    textDecorationLine: 'underline',
+  },
+  dropdownButton: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#808080',
+    borderRadius: 15,
+    alignItems: 'center',
+    marginLeft: '5%',
+    marginRight: '5%',
+    marginBottom: '2%',
+  },
+  dropdownButtonText: {
+    fontSize: 13,
+    color: '#000000',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  dropdownList: {
+    backgroundColor: '#fff',
+    width: 150,
+    borderRadius: 5,
+    padding: 10,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  dropdownOption: {
+    paddingVertical: 5,
+  },
+  dropdownOptionText: {
+    fontSize: 15,
+    color: '#000000',
+  },
+  confirmbutton: {
+    backgroundColor: '#5f9ea0',
+    marginLeft: '10%',
+    marginRight: '10%',
+    borderRadius: 10,
+  },
+  confirmtext: {
+    color: '#fff',
+    fontSize: 15,
+    alignSelf: 'center',
+    padding: 10,
+  },
+  view: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#808080',
+    margin: '5%',
+    width: '60%',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+  },
+  searchIcon: {
+    marginRight: 10,
   },
   textinput: {
-    height: 50,
-    width: 250,
-    borderWidth: 1,
-    color: 'black',
-    borderRadius: 12,
-    margin: 55,
-    marginBottom: 20,
-    marginLeft: 20,
+    color: '#000000'
   },
-  heading01: {
-    fontSize: 18,
-    marginLeft: 20,
-    marginBottom: 8,
-    color: 'black',
-  },
-  heading02: {
-    fontSize: 15,
-    marginBottom: 13,
-    marginLeft: 20,
-    color: 'black',
-  },
-  heading03: {
-    fontSize: 10,
-    marginBottom: 13,
-    marginLeft: 20,
-    color: 'black',
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   card: {
     backgroundColor: '#fff',
@@ -447,129 +446,49 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     elevation: 3,
   },
-  texthead5: {
-    marginLeft: 10,
-    color: '#FF6666',
-    paddingHorizontal: 10,
+  priority: {
     borderRadius: 8,
+    padding: 5,
+    marginLeft: '5%'
+  },
+  texthead03: {
+    fontSize: 15,
+    color: '#fff',
+  },
+  heading01: {
     fontSize: 16,
-    backgroundColor: '#FFEAE9',
-  },
-  texthead06: {
-    marginLeft: 90,
+    marginLeft: 20,
+    fontWeight : "bold",
+    marginBottom: 8,
     color: 'black',
-    fontSize: 12,
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    shadowColor: '#000',
+  heading02: {
+    fontSize: 15,
+    marginBottom: 13,
+    marginLeft: 20,
+    color: 'black',
   },
-  shadowOffset: {
-    width: 0,
-    height: 2,
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    marginVertical: 260,
-  },
-  button: {
-    marginBottom: 10,
-    padding: 10,
-    borderRadius: 10,
-    textAlign: 'left',
-  },
-  buttonOpen: {
-    backgroundColor: '#d3d3d3',
-    borderRadius: 20,
-    height: 54.9,
+  subtabContainer: {
     flexDirection: 'row',
-    marginHorizontal: 10,
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-    borderRadius: 15,
-    width: 80,
-    height: 37.5,
-  },
-  textStyle: {
-    color: 'black',
-    paddingHorizontal: 10,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  picker: {
-    width: 200,
-    height: 44,
-    borderColor: 'gray',
-    borderWidth: 1,
+    justifyContent: 'flex-start',
     marginBottom: 20,
   },
-  radioItem: {
-    flexDirection: 'row',
-    marginTop: 10,
-  },
-  button3: {
-    flexDirection: 'row',
+  subtabItem: {
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    backgroundColor: 'lightgray',
-    borderRadius: 5,
-    marginRight: 100,
-  },
-  buttonText3: {
-    marginRight: 5,
-    fontWeight: 'bold',
-  },
-
-  tabContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  tabItem: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: 10,
+    padding: 8,
     backgroundColor: '#808080',
+    marginLeft: '5%',
+    borderRadius: 5,
+    color: '#fff',
   },
-  activeTab: {
+  subactiveTab: {
     backgroundColor: '#5f9ea0',
   },
-  tabText: {
-    fontSize: 16,
+  subtabText: {
+    fontSize: 15,
+    fontWeight: "bold",
     color: '#fff',
-    marginLeft: '8%',
   },
-  text: {
-    color: 'black',
-  },
-  button04: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 10,
-    height: '22%'
-  },
-  label: {
-    color: 'black',
-  },
-  container1: {
-    width: "100%",
-    padding: '2%'
-  },
-  button022: {
-    borderColor: 'black',
-    borderWidth: 1
-  },
-  buttonText: {
-    color: 'black'
-  },
-  cont1: { padding: '2%' }
 });
 
 export default Sparsh;

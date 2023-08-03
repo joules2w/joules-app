@@ -103,11 +103,50 @@ const JobDetailScreen = ({ route, navigation }) => {
       </View>
     ));
   };
-  const jobExperienceFrom = job?.jobExperience?.[0]?.jobExperienceFrom || '';
-  const jobExperienceTo = job?.jobExperience?.[0]?.jobExperienceTo || '';
 
-  const jobSalaryFrom = job?.JobSalary?.[0]?.jobSalaryFrom || '';
-  const jobSalaryTo = job?.JobSalary?.[0]?.jobSalaryTo || '';
+  const renderExperience = () => {
+    const { jobExperience } = job;
+
+    if (jobExperience && jobExperience.length > 0) {
+      const firstExperience = jobExperience[0];
+
+      if (firstExperience.jobExperienceFrom && firstExperience.jobExperienceTo) {
+        return `${firstExperience.jobExperienceFrom} to ${firstExperience.jobExperienceTo}years`;
+      } else if (firstExperience.jobExperienceFrom) {
+        return `${firstExperience.jobExperienceFrom} years`;
+      } else if (firstExperience.jobExperienceTo) {
+        return `Fresher to ${firstExperience.jobExperienceTo} years`;
+      }
+    }
+
+    return 'Experience details not available';
+  };
+
+  const renderSalary = () => {
+    const { JobSalary } = job;
+
+    if (JobSalary && JobSalary.length > 0) {
+      const firstSalary = JobSalary[0];
+
+      if (firstSalary.jobSalaryFrom && firstSalary.jobSalaryTo) {
+        return `${formatSalary(firstSalary.jobSalaryFrom)} to ${formatSalary(firstSalary.jobSalaryTo)}`;
+      } else if (firstSalary.jobSalaryFrom) {
+        return `${formatSalary(firstSalary.jobSalaryFrom)}`;
+      } else if (firstSalary.jobSalaryTo) {
+        return `${formatSalary(firstSalary.jobSalaryTo)}`;
+      }
+    }
+
+    return 'Salary details not available';
+  };
+
+  const formatSalary = (salary) => {
+    // If salary has 1 or 2 digits, add 'LPA' to it
+    if (salary.toString().length <= 2) {
+      return `${salary} LPA`;
+    }
+    return salary;
+  };
 
   const logout = () => {
     navigation.navigate('Login')
@@ -136,23 +175,25 @@ const JobDetailScreen = ({ route, navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
           <Text style={styles.myreferral}>My Referrals</Text>
         </TouchableOpacity>
-        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
+        {/* <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
           <SearchBox />
           <Filter />
-        </View>
+        </View> */}
         <Text style={styles.heading03}>{job.jobTitle}</Text>
         <Text style={styles.heading02}>Job created on 23 August</Text>
         <Text style={styles.heading01}>Description</Text>
         <Text style={styles.heading02}>{job.jobDescription}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Experience</Text>
-        <Text style={styles.heading02}>{jobExperienceFrom} to {jobExperienceTo} years</Text>
+        {/* <Text style={styles.heading02}>{jobExperienceFrom} to {jobExperienceTo} years</Text> */}
+        <Text style={styles.heading02}>{renderExperience()}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Location</Text>
         <Text style={styles.heading02}>{job?.jobLocation || ''}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Salary</Text>
-        <Text style={styles.heading02}>{jobSalaryFrom} to {jobSalaryTo}</Text>
+        {/* <Text style={styles.heading02}>{jobSalaryFrom} to {jobSalaryTo}</Text> */}
+        <Text style={styles.heading02}>{renderSalary()}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Responsibilities</Text>
         <Text style={styles.heading02}>{`\u25CF ${job.jobResponsibilities}`}</Text>

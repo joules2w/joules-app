@@ -72,15 +72,23 @@ const TicketDetails = ({ route }) => {
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
+
+                {/* Heading */}
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
+
+                {/* Title */}
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.texthead01}>{ticket.heading}</Text>
                     <TouchableOpacity style={styles.button}>
                         <Text style={styles.buttontext}>Save</Text>
                     </TouchableOpacity>
                 </View>
+                
+                {/* Description */}
                 <Text style={styles.heading01}>Ticket Description</Text>
                 <Text style={styles.heading02}>{ticket.ticketdescription} </Text>
+
+                {/* Ticket Information */}
                 <Text style={styles.texthead01}>Ticket info</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                     <Text style={styles.heading01}>Ticket ID - </Text>
@@ -94,6 +102,8 @@ const TicketDetails = ({ route }) => {
                     <Text style={styles.heading01}>Created By - </Text>
                     <Text style={styles.heading03}>{ticket.createdBy}</Text>
                 </View>
+
+                {/* Ticket Priority */}
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                     <Text style={styles.heading01}>Ticket Priority - </Text>
                     <TouchableOpacity onPress={toggleDropdown} style={styles.dropdownButton}>
@@ -118,6 +128,8 @@ const TicketDetails = ({ route }) => {
                         </View>
                     </Modal>
                 </View>
+
+                {/* Ticket Status */}
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                     <Text style={styles.heading01}>Ticket Status - </Text>
                     <TouchableOpacity onPress={toggleStatusDropdown} style={styles.dropdownButton}>
@@ -143,6 +155,8 @@ const TicketDetails = ({ route }) => {
                     </Modal>
                 </View>
                 <View style={styles.line} />
+
+                {/* Discussion point */}
                 <Text style={styles.texthead01}>Discussion Point</Text>
                 <Text style={styles.heading02}>Description</Text>
                 <View style={styles.textInputContainer}>

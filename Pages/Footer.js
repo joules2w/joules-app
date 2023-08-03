@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, View, Text, TouchableOpacity, Linking } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Linking, Dimensions } from 'react-native';
 
 const Footer = () => {
   const openFacebook = () => {
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   footer1: {
     backgroundColor: '#449B93',
     fontWeight: 'bold',
+    width: Dimensions.get('window').width,
   },
   view : {
     flexDirection: 'row', 

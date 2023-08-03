@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
-
-const API_BASE_URL = 'http://www.consultant.joulestowatts-uat.com/auth'; // Replace with your API base URL
+import BASE_URL from '../src/constants/mainurl';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -17,10 +16,14 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const sendOTP = (phoneNumber) => {
-    const apiUrl = `${API_BASE_URL}/sendotp`; // Use the correct API endpoint
+
+    const apiUrl = `${BASE_URL}auth/sendotp`
+    const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
+
 
     axios.post(apiUrl, { phone : phoneNumber }, {
       headers: {
+        Authorization: `Bearer ${bearerToken}`,
         'Content-Type': 'application/json',
       },
     })
@@ -64,6 +67,12 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Details')}>
+            <Text style={styles.buttonText}>Others</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Extra')}>
+            <Text style={styles.buttonText}>Extra</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -119,12 +128,16 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   button: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 20,
-    marginRight: 30,
-    borderRadius: '10%',
+    width: '48%',
+    height: 40,
+    backgroundColor: '#5f9ea0',
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   image: {
     height: 130,

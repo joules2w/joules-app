@@ -18,6 +18,7 @@ import Other from './Pages/Other';
 import JobDetails from './Pages/JobDetails';
 import TicketDetails from './Pages/TicketDetails';
 import HomeScreen from './Pages/HomeScreen';
+import Extra from './Pages/Extra';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +42,7 @@ const App = () => {
         <Stack.Screen name='JobDetail' component={JobDetails} options={{ headerShown : false }} />
         <Stack.Screen name='TicketDetails' component={TicketDetails} options={{ headerShown : false }} />
         <Stack.Screen name='Details' component={HomeScreen} options={{ headerShown : false }} />
-
+        <Stack.Screen name='Extra' component={Extra} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

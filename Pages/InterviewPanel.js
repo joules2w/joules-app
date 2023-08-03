@@ -1,59 +1,125 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, FlatList, ImageBackground, Dimensions, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Header from "./Header";
 import Footer from "./Footer";
 import SearchBox from "./SearchBox";
 import Filter from "./Filter";
+import BASE_URL from "../src/constants/mainurl";
 
 const InterViewPanel = ({ navigation }) => {
 
     const [jobs, setJobs] = useState([]);
     const [filteredJobs, setFilteredJobs] = useState([]); 
     const [searchQuery, setSearchQuery] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [searchTotalPages, setSearchTotalPages] = useState(0);
+    const [showScrollToTop, setShowScrollToTop] = useState(false); 
+    const scrollViewRef = useRef();
 
-    useEffect(() => {
-        fetchJobs();
-    }, []);
+    const jobsPerPage = 10;
 
-    const handleSearch = useCallback((searchQuery) => {
-        setSearchQuery(searchQuery);
-        const filteredJobs = jobs.data.filter((job) => {
-          const skills = job.jobSkills || [];
-          const normalizedQuery = searchQuery.toLowerCase();
-          return (
-            job.jobTitle.toLowerCase().includes(normalizedQuery) ||
-            job.jobLocation.toLowerCase().includes(normalizedQuery) ||
-            skills.some((skill) => skill.toLowerCase().includes(normalizedQuery))
-          );
-        });
-        setFilteredJobs(filteredJobs);
-      }, [jobs.data]);
-
-    const fetchJobs = async () => {
-        try {
-
-            const apiurl = 'http://www.consultant.joulestowatts-uat.com/job/get_all_jobs?page=2&limit=10&search=&jobExperience=2-6&jobSalary=500000-1100000&jobLocation=Bangalore';
-            const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
-            const response = await fetch(apiurl, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${bearerToken}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            console.log('Fetched jobs:', data);
-            setJobs(data);
-        } catch (error) {
-            console.error('Error fetching jobs:', error);
-        }
+    const [filterCriteria, setFilterCriteria] = useState({
+      jobExperience: { jobExperienceFrom: 0, jobExperienceTo: 15 },
+      salaryRange: [0, 100],
+      location: '',
+    });
+  
+    const calculateTotalPages = (filteredJobs) => {
+      return Math.ceil(filteredJobs?.length / jobsPerPage);
     };
+  
+    useEffect(() => {
+      fetchJobs();
+    }, []);
+  
+    const fetchJobs = async () => {
+      try {
+        const apiurl = `${BASE_URL}job/get_all_jobs?limit=237`;
+        const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
+
+        const response = await fetch(apiurl, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        const data = await response.json();
+        console.log('Fetched jobs:', data);
+        setJobs(data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+
+    const handleSearch = useCallback(
+        (searchQuery) => {
+          setSearchQuery(searchQuery);
+          setCurrentPage(1);
+    
+          // Update the filtered jobs based on the search query
+          const filteredJobs = jobs?.data?.filter((job) => {
+            const skills = job.jobSkills || [];
+            const normalizedQuery = searchQuery.toLowerCase();
+            return (
+              job.jobTitle.toLowerCase().includes(normalizedQuery) ||
+              job.jobLocation.toLowerCase().includes(normalizedQuery) ||
+              skills.some((skill) => skill.toLowerCase().includes(normalizedQuery))
+            );
+          });
+    
+          // Calculate the total pages for filtered jobs and update the searchTotalPages state
+          const totalFilteredPages = Math.ceil(filteredJobs?.length / jobsPerPage);
+          setSearchTotalPages(totalFilteredPages);
+    
+          // Set the filtered jobs in the state
+          setFilteredJobs(filteredJobs);
+    
+          console.log('filteredJobs:', filteredJobs);
+          console.log('totalPages:', totalFilteredPages);
+        },
+        [jobs.data, jobsPerPage]
+      );
+
+      useEffect(() => {
+        // Recalculate total pages whenever filteredJobs changes
+        setTotalPages(calculateTotalPages(filteredJobs));
+        console.log('filteredJobs:', filteredJobs);
+      console.log('totalPages:', totalPages);
+      }, [filteredJobs]);
+    
+      useEffect(() => {
+        // Fetch the jobs whenever the search query changes
+        fetchJobs();
+      }, [searchQuery]);
+    
+    
+      const handleApplyFilter = (filterCriteria) => {
+        // Apply filtering based on the filter criteria and set the filtered jobs
+        // const filteredJobs = jobs?.filter((job) => {
+        //   const { jobExperience, salaryRange, location } = filterCriteria;
+    
+        //   // Apply filtering logic here based on jobExperience, salaryRange, and location
+    
+        //   return true; // Replace this with your actual filtering logic
+        // });
+    
+        setFilteredJobs(filteredJobs || []);
+      };
+    
+      useEffect(() => {
+        if (filterCriteria) {
+          handleApplyFilter(filterCriteria);
+        }
+      }, [filterCriteria]);
 
     const handleJobPress = (job) => {
         navigation.navigate('MoreDetails', { job });
@@ -74,38 +140,50 @@ const InterViewPanel = ({ navigation }) => {
     };
 
     const renderJobItem = ({ item }) => {
-        if (!item) {
-            return null;
-        }
-
-        const jobId = item.jobId || '';
-        const jobTitle = item.jobTitle || '';
-        const jobDescription = item.jobDescription || '';
-        const jobSkills = item.jobSkills || [];
-
-        const skillsToShow = jobSkills.slice(0, 3);
-        const remainingSkillsCount = jobSkills.length - 3;
-
-        return (
-            <View style={[styles.card, styles.elevation]}>
-                <TouchableOpacity onPress={() => handleJobPress(item)}>
-                    <Text style={styles.heading01}>{jobTitle}</Text>
-                    <Text style={styles.heading02}>{renderCellContent(jobDescription)}</Text>
-                    <View style={styles.skillsContainer}>
-                        {skillsToShow.map((skill, index) => (
-                            <View key={index} style={styles.skillItem}>
-                                <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
-                            </View>
-                        ))}
-                        {remainingSkillsCount > 0 && (
-                            <View style={styles.skillItem}>
-                                <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
-                            </View>
-                        )}
-                    </View>
-                </TouchableOpacity>
+      if (!item) {
+        return null;
+      }
+  
+      const jobTitle = item.jobTitle || '';
+      const jobDescription = item.jobDescription || '';
+      const jobSkills = item.jobSkills || [];
+  
+      const skillsToShow = jobSkills.slice(0, 3);
+      const remainingSkillsCount = jobSkills.length - 3;
+  
+      return (
+        <View style={[styles.card, styles.elevation]}>
+          <TouchableOpacity onPress={() => handleJobPress(item)}>
+            <Text style={styles.heading01}>{jobTitle}</Text>
+            <Text style={styles.heading02}>{renderCellContent(jobDescription)}</Text>
+            <View style={styles.skillsContainer}>
+              {skillsToShow.map((skill, index) => (
+                <View key={index} style={styles.skillItem}>
+                  <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
+                </View>
+              ))}
+              {remainingSkillsCount > 0 && (
+                <View style={styles.skillItem}>
+                  <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
+                </View>
+              )}
             </View>
-        )
+            
+          </TouchableOpacity>
+        </View>
+      );
+    };
+
+    const handleScrollToTop = () => {
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ y: 0, animated: true });
+      }
+    };
+  
+    const handleScroll = (event) => {
+      const offsetY = event.nativeEvent.contentOffset.y;
+      const isVisible = offsetY > Dimensions.get('window').height;
+      setShowScrollToTop(isVisible);
     };
 
     const logout = () => {
@@ -126,7 +204,10 @@ const InterViewPanel = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={styles.scrollContainer} ref={scrollViewRef}
+        onScroll={handleScroll} // Added event handler for scrolling
+        scrollEventThrottle={5} // Adjust the scroll event throttle as needed
+         >
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 <ImageBackground style={styles.background} source={require('./Images/background.png')}>
                     <Text style={styles.texthead01}>Interview Panel</Text>
@@ -140,16 +221,29 @@ const InterViewPanel = ({ navigation }) => {
                     data={filteredJobs.length > 0 ? filteredJobs : jobs.data}
                     renderItem={renderJobItem}
                     keyExtractor={(item) => item.id.toString()} />
+
+                    <View style={styles.footer}>
                 <Footer />
+                </View>
             </ScrollView>
+            {showScrollToTop && ( 
+          <TouchableOpacity style={styles.scrollToTopButton}   onPress={handleScrollToTop}>
+            <Icon name="arrow-up" size={24} color="#e0f9f6" />
+          </TouchableOpacity>
+        )}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+      flex : 1,
         backgroundColor: '#fff',
         alignContent: 'center',
+    },
+    scrollContainer: {
+      flexGrow: 1,
+      paddingBottom: 120,
     },
     background: {
         height: 150,
@@ -229,6 +323,14 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         textDecorationLine: 'underline',
         fontSize: 13,
+    },
+    footer: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
 })
 
