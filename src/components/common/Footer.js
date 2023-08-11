@@ -46,13 +46,16 @@ const styles = StyleSheet.create({
   },
   view : {
     flexDirection: 'row', 
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    alignSelf : 'center',
+    marginBottom : '5%',
   },
   footerText: {
     padding : 10,
-    color: 'white',
+    color: '#ffffff',
     fontSize: 15,
     fontWeight: "bold",
+    alignSelf : 'center',
   },
 });
 

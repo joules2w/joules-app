@@ -41,7 +41,6 @@ const OtpScreen = ({ route, navigation }) => {
         // Something happened in setting up the request that triggered an error
         console.error('Error:', error.message);
       }
-  
       Alert.alert('Error', 'Failed to send OTP. Please try again later.');
     });
   };
@@ -50,11 +49,9 @@ const OtpScreen = ({ route, navigation }) => {
     const countdown = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
     }, 1000);
-
     if (timer === 0) {
       clearInterval(countdown);
     }
-
     return () => {
       clearInterval(countdown);
     };
@@ -94,34 +91,35 @@ const OtpScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Image style={styles.image} source={require('./Images/logo.png')} />
-        <Text style={styles.texthead02}>Innovative Talent Solution</Text>
-        <Text style={styles.texthead05}>Creating the future</Text>
-
-        <Text style={styles.texthead04}>Welcome to Joules to Watts Consultant Portal</Text>
+        {/* Logo and Headings */}
+        <Image style={styles.image} source={require('../../../Assets/Images/logo.jpg')} />
+        <Text style={styles.texthead01}>Innovative Talent Solution</Text>
+        <Text style={styles.texthead02}>Creating the future</Text>
+        <Text style={styles.texthead03}>Welcome to Joules to Watts Consultant Portal</Text>
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
+          {/* Verufy OTP */}
+          <TextInput style={styles.input}
             onChangeText={handleOTPChange}
             value={otp}
             keyboardType="numeric"
             maxLength={4}
             placeholder="Enter OTP"
-            placeholderTextColor={'black'}
-          />
+            placeholderTextColor={'black'} />
         </View>
+        {/* Resend and Submit button */}
         <View style={styles.buttonContainer}>
           {timer > 0 ? (
             <Text style={styles.timerText}>Timer: {timer}</Text>
           ) : (
-            <TouchableOpacity style={styles.resendButton} onPress={handleResend}>
-              <Text style={styles.resendButtonText}>Resend</Text>
+            <TouchableOpacity style={styles.button} onPress={handleResend}>
+              <Text style={styles.buttonText}>Resend</Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
+
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Details')}>
             <Text style={styles.buttonText}>Others</Text>
           </TouchableOpacity>
@@ -133,86 +131,64 @@ const OtpScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
   },
+  image: {
+    height: 100,
+    width: 100,
+    marginHorizontal : '10%',
+    marginTop : '10%',
+  },
+  texthead01: {
+    marginLeft: '5%',
+    marginHorizontal : '5%',
+    color: '#000000',
+    fontSize: 25,
+    fontWeight : "bold",
+  },
+  texthead02: {
+    color: '#000000',
+    margin : '5%',
+    fontSize: 20,
+  },
+  texthead03: {
+    color: '#000000',
+    fontSize: 20,
+    marginHorizontal : '5%',
+  },
   inputContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-    color: 'black',
+    alignSelf : 'center',
+    color: '#000000',
   },
   input: {
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal : 40,
     borderWidth: 1,
     borderRadius: 10,
-    height: 50,
-    width: 200,
     textAlign: 'center',
-    color: 'black',
-  },
-  timerText: {
-    marginBottom: 10,
-    fontSize: 16,
-    color: 'black',
-  },
-  resendButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '48%',
-    height: 40,
-    backgroundColor: '#5f9ea0',
-    borderRadius: 10,
-  },
-  resendButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: '#000000',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginTop: 20,
-    width: '100%',
-    paddingHorizontal: 20,
+    margin : '5%',
+  },
+  timerText: {
+    fontSize: 15,
+    color: '#000000',
   },
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '48%',
-    height: 40,
+    alignSelf : 'center',
     backgroundColor: '#5f9ea0',
     borderRadius: 10,
+    paddingVertical : 10,
+    paddingHorizontal : 30,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  texthead02: {
-    marginLeft: '10%',
-    marginBottom: 10,
-    marginRight: '10%',
-    color: 'black',
-    fontSize: 32,
-  },
-  texthead04: {
-    color: 'black',
-    fontSize: 20,
-    marginLeft: '10%',
-    marginBottom: 20,
-    marginRight: '10%',
-  },
-  texthead05: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: '100',
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  textinput01: {
-    height: 40,
-    width: 300,
-    color: 'red',
-  },
+    color: '#fff',
+    fontWeight: "bold",
+    fontSize : 15,
+  },  
 });
 
 export default OtpScreen;

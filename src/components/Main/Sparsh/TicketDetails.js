@@ -3,8 +3,8 @@ import { View, StyleSheet, Text, TouchableOpacity, Modal, TextInput, ScrollView 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DocumentPicker from 'react-native-document-picker';
 
-import Header from './Header';
-import Footer from './Footer';
+import Header from '../../common/Header/Header';
+import Footer from '../../common/Footer';
 
 const TicketDetails = ({ route }) => {
 
@@ -24,8 +24,8 @@ const TicketDetails = ({ route }) => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
-    const toggleStatusDropdown = () => {
-        setIsStatusDropdownOpen(!isStatusDropdownOpen);
+    const handlePriorityPress = () => {
+        setIsDropdownOpen(false);
     };
 
     const handleOptionSelect = (option) => {
@@ -33,8 +33,16 @@ const TicketDetails = ({ route }) => {
         setIsDropdownOpen(false);
     };
 
+    const toggleStatusDropdown = () => {
+        setIsStatusDropdownOpen(!isStatusDropdownOpen);
+    };
+
     const handleStatusSelect = (statusoption) => {
         setSelectedStatusOption(statusoption);
+        setIsStatusDropdownOpen(false);
+    };
+
+    const handleTicketPress = () => {
         setIsStatusDropdownOpen(false);
     };
 
@@ -83,7 +91,7 @@ const TicketDetails = ({ route }) => {
                         <Text style={styles.buttontext}>Save</Text>
                     </TouchableOpacity>
                 </View>
-                
+
                 {/* Description */}
                 <Text style={styles.heading01}>Ticket Description</Text>
                 <Text style={styles.heading02}>{ticket.ticketdescription} </Text>
@@ -109,23 +117,22 @@ const TicketDetails = ({ route }) => {
                     <TouchableOpacity onPress={toggleDropdown} style={styles.dropdownButton}>
                         <Text style={styles.dropdownButtonText}>{selectedOption || ticket.priority}</Text>
                     </TouchableOpacity>
-                    <Modal
-                        visible={isDropdownOpen}
-                        transparent
-                        animationType="fade"
+                    <Modal visible={isDropdownOpen} transparent animationType="fade"
                         onRequestClose={() => setIsDropdownOpen(false)}>
-                        <View style={styles.modalContainer}>
-                            <View style={styles.dropdownList}>
-                                {options.map((option, index) => (
-                                    <TouchableOpacity
-                                        key={index}
-                                        onPress={() => handleOptionSelect(option)}
-                                        style={styles.dropdownOption}>
-                                        <Text style={styles.dropdownOptionText}>{option}</Text>
-                                    </TouchableOpacity>
-                                ))}
+                        <TouchableOpacity style={styles.backdrop} onPress={handlePriorityPress}>
+                            <View style={styles.modalContainer}>
+                                <View style={styles.dropdownList}>
+                                    {options.map((option, index) => (
+                                        <TouchableOpacity
+                                            key={index}
+                                            onPress={() => handleOptionSelect(option)}
+                                            style={styles.dropdownOption}>
+                                            <Text style={styles.dropdownOptionText}>{option}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     </Modal>
                 </View>
 
@@ -135,23 +142,22 @@ const TicketDetails = ({ route }) => {
                     <TouchableOpacity onPress={toggleStatusDropdown} style={styles.dropdownButton}>
                         <Text style={styles.dropdownButtonText}>{selectedStatusOption || ticket.status}</Text>
                     </TouchableOpacity>
-                    <Modal
-                        visible={isStatusDropdownOpen}
-                        transparent
-                        animationType="fade"
+                    <Modal visible={isStatusDropdownOpen} transparent animationType="fade"
                         onRequestClose={() => setIsStatusDropdownOpen(false)}>
-                        <View style={styles.modalContainer}>
-                            <View style={styles.dropdownList}>
-                                {statusoption.map((statusoption, index) => (
-                                    <TouchableOpacity
-                                        key={index}
-                                        onPress={() => handleStatusSelect(statusoption)}
-                                        style={styles.dropdownOption}>
-                                        <Text style={styles.dropdownOptionText}>{statusoption}</Text>
-                                    </TouchableOpacity>
-                                ))}
+                        <TouchableOpacity style={styles.backdrop} onPress={handleTicketPress}>
+                            <View style={styles.modalContainer}>
+                                <View style={styles.dropdownList}>
+                                    {statusoption.map((statusoption, index) => (
+                                        <TouchableOpacity
+                                            key={index}
+                                            onPress={() => handleStatusSelect(statusoption)}
+                                            style={styles.dropdownOption}>
+                                            <Text style={styles.dropdownOptionText}>{statusoption}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     </Modal>
                 </View>
                 <View style={styles.line} />
@@ -300,6 +306,10 @@ const styles = StyleSheet.create({
         marginLeft: '5%',
         marginRight: '5%',
         padding: 5
+    },
+    backdrop: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     input: {
         borderWidth: 1,

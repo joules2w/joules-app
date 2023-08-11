@@ -5,9 +5,9 @@ import CheckBox from 'react-native-check-box';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import Header from '../src/components/common/Header/Header';
-import Footer from '../src/components/common/Footer';
-import { ticket, assign } from '../src/components/common/StaticValues';
+import Header from '../../common/Header/Header';
+import Footer from '../../common/Footer';
+import { ticket, assign } from '../../common/StaticValues';
 
 const Sparsh = ({ navigation, onSelectionConfirmed }) => {
 
@@ -359,7 +359,7 @@ const Sparsh = ({ navigation, onSelectionConfirmed }) => {
           <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
 
           {/* Image background */}
-          <ImageBackground source={require('../src/Assets/Images/background.jpg')} style={styles.background}>
+          <ImageBackground source={require('../../../Assets/Images/background.jpg')} style={styles.background}>
             <Text style={styles.texthead01}>Sparsh</Text>
             <Text style={styles.texthead02}>Say Hello to Hassle-Free HR Query Resolution with sparsh : Your On-Stop Tcking Raising Platform</Text>
           </ImageBackground>

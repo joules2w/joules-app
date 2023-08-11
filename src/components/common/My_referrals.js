@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Text, FlatList, ImageBackground, ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, FlatList, ImageBackground, ScrollView, Dimensions, Touchable, TouchableOpacity } from 'react-native';
 import { referrals } from './StaticValues';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import Header from './Header';
+import Header from './Header/Header';
 import SearchBox from './SearchBox';
 import Footer from './Footer';
 
@@ -11,33 +11,37 @@ const MyReferrals = ({ navigation }) => {
 
   const renderOrderItem = ({ item }) => (
     <View style={[styles.card, styles.elevation]}>
-      <View style={{ flexDirection : 'row' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
         <View>
-      <View style={{ flexDirection: 'row', alignContent: 'flex-start' }}>
-        <Text style={styles.kay}>Name : </Text>
-        <Text style={styles.value}>{item.name}</Text>
-      </View>
-      <View style={{ flexDirection: 'row', alignContent: 'flex-start' }}>
-        <Text style={styles.kay}>Job ID : </Text>
-        <Text style={styles.value}>{item.jobid}</Text>
-      </View>
-      <View style={{ flexDirection: 'row', alignContent: 'flex-start' }}>
-        <Text style={styles.kay}>Total Experience : </Text>
-        <Text style={styles.value}>{item.totalexperience}</Text>
-      </View>
-      <View style={{ flexDirection: 'row', alignContent: 'flex-start' }}>
-        <Text style={styles.kay}>Phone Number : </Text>
-        <Text style={styles.value}>{item.mobilenumber}</Text>
-      </View>
-      <View style={{ flexDirection: 'row', alignContent: 'flex-start' }}>
-        <Text style={styles.kay}>Email ID : </Text>
-        <Text style={styles.value}>{item.email}</Text>
-      </View>
-      </View>
-      <View style={{ flexDirection : 'column', justifyContent : 'space-around' }}>
-        <MaterialIcons name="call" style={styles.icon} />
-        <MaterialIcons name="email" style={styles.icon} />
-      </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.kay}>Name : </Text>
+            <Text style={styles.value}>{item.name}</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.kay}>Job ID : </Text>
+            <Text style={styles.value}>{item.jobid}</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.kay}>Total Experience : </Text>
+            <Text style={styles.value}>{item.totalexperience}</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.kay}>Phone Number : </Text>
+            <Text style={styles.value}>{item.mobilenumber}</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.kay}>Email ID : </Text>
+            <Text style={styles.value}>{item.email}</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
+          <TouchableOpacity>
+            <MaterialIcons name="call" style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <MaterialIcons name="email" style={styles.icon} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -45,19 +49,15 @@ const MyReferrals = ({ navigation }) => {
   const logout = () => {
     navigation.navigate('Login')
   }
-
   const interviewpanel = () => {
     navigation.navigate('InterviewPanel')
   }
-
   const jobportal = () => {
     navigation.navigate('Job_Portal')
   }
-
   const sparsh = () => {
     navigation.navigate('Sparsh')
   }
-
   const home = () => {
     navigation.navigate('Home')
   }
@@ -65,10 +65,10 @@ const MyReferrals = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={{ flexDirection: 'row', width: '80%' }}>
+        <View style={{ flexDirection: 'row' }}>
           <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
         </View>
-        <ImageBackground style={styles.backgroundimage} source={require('./Images/background.png')}>
+        <ImageBackground style={styles.backgroundimage} source={require('../../Assets/Images/background.jpg')}>
           <Text style={styles.texthead01}>My Refarrals</Text>
           <Text style={styles.text}>Lorem ipsum dolor sit amet consectetur. Maecenas cursus eget sed semper tellus tristique.</Text>
         </ImageBackground>
@@ -79,8 +79,7 @@ const MyReferrals = ({ navigation }) => {
         <FlatList scrollEnabled={false}
           data={referrals}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={renderOrderItem}
-        />
+          renderItem={renderOrderItem} />
         <View style={styles.footer}>
           <Footer />
         </View>
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   text: {
-    color: 'black',
+    color: '#000000',
     fontSize: 16,
     marginLeft: '5%',
     marginRight: '5%',
@@ -123,14 +122,14 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: '#000000',
     padding: 5,
     marginLeft: '5%',
     marginRight: '5%',
     marginBottom: '5%',
   },
   elevation: {
-    shadowColor: 'black',
+    shadowColor: '#000000',
     elevation: 3,
   },
   footer: {
@@ -147,7 +146,6 @@ const styles = StyleSheet.create({
   },
   kay: {
     color: '#449B93',
-    marginLeft: '5%',
     fontSize: 15,
   },
   value: {
@@ -156,7 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   icon: {
-    color: 'black',
+    color: '#000000',
     fontSize: 30,
   },
 })

@@ -2,10 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Switch, TextInput, Dimensions, ImageBackground, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 
-import Header from './Header';
-import Footer from './Footer';
-import SearchBox from './SearchBox';
-import Filter from './Filter';
+import Header from '../../common/Header/Header';
+import Footer from '../../common/Footer';
 
 const JobDetailScreen = ({ route, navigation }) => {
   const { job } = route.params;
@@ -118,7 +116,6 @@ const JobDetailScreen = ({ route, navigation }) => {
         return `Fresher to ${firstExperience.jobExperienceTo} years`;
       }
     }
-
     return 'Experience details not available';
   };
 
@@ -167,32 +164,32 @@ const JobDetailScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+
+        {/* Header and Background image */}
         <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-        <ImageBackground style={styles.background} source={require('./Images/background.png')}>
+        <ImageBackground style={styles.background} source={require('../../../Assets/Images/background.jpg')}>
           <Text style={styles.texthead01}>Job Portal</Text>
           <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
         </ImageBackground>
+
+        {/* My referral */}
         <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
           <Text style={styles.myreferral}>My Referrals</Text>
         </TouchableOpacity>
-        {/* <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
-          <SearchBox />
-          <Filter />
-        </View> */}
+
+        {/* Job Details */}
         <Text style={styles.heading03}>{job.jobTitle}</Text>
         <Text style={styles.heading02}>Job created on 23 August</Text>
         <Text style={styles.heading01}>Description</Text>
         <Text style={styles.heading02}>{job.jobDescription}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Experience</Text>
-        {/* <Text style={styles.heading02}>{jobExperienceFrom} to {jobExperienceTo} years</Text> */}
         <Text style={styles.heading02}>{renderExperience()}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Location</Text>
         <Text style={styles.heading02}>{job?.jobLocation || ''}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Salary</Text>
-        {/* <Text style={styles.heading02}>{jobSalaryFrom} to {jobSalaryTo}</Text> */}
         <Text style={styles.heading02}>{renderSalary()}</Text>
         <View style={styles.line} />
         <Text style={styles.heading01}>Responsibilities</Text>
@@ -202,6 +199,7 @@ const JobDetailScreen = ({ route, navigation }) => {
         {renderSkills()}
         <View style={styles.line} />
 
+        {/* Application details */}
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
           <Text style={styles.texthead}>Application</Text>
           <TouchableOpacity style={styles.referbutton} onPress={() => navigation.navigate('myreferral')}>
@@ -210,16 +208,22 @@ const JobDetailScreen = ({ route, navigation }) => {
         </View>
         <Text style={styles.heading02}>Switch the toggle button, if you wish to apply for this job.</Text>
         <Switch trackColor={{ true: '#344953', false: 'grey' }} style={styles.switch} value={isSwitchOn} onValueChange={handleSwitchToggle} />
+
+        {/* Applicant's name */}
         <Text style={styles.heading01}>Application name<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Enter your name'
           placeholderTextColor='#808080' />
+
+        {/* Applicant's email address */}
         <Text style={styles.heading01}>Application Email id<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Enter your email'
           placeholderTextColor='#808080'
           value={email}
           onChangeText={(text) => setEmail(text)} />
+
+        {/* Applicant's mobile number */}
         <Text style={styles.heading01}>Applicant Mobile number<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Enter your mobile number'
@@ -228,11 +232,14 @@ const JobDetailScreen = ({ route, navigation }) => {
           onChangeText={(text) => setPhoneNumber(text)}
           keyboardType='numeric'
           maxLength={10} />
+
+        {/* Applicant's total experience */}
         <Text style={styles.heading01}>Applicant total experience<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Total Experience'
           placeholderTextColor='#808080' />
 
+        {/* Attach required pdf file */}
         <View style={[styles.card, styles.elevation]}>
           <TouchableOpacity style={styles.attachbutton} onPress={handleDocumentSelection}>
             <Text style={styles.heading02}>File supported (.pdf), file size should not exceed more than 10 MB</Text>
@@ -247,6 +254,8 @@ const JobDetailScreen = ({ route, navigation }) => {
             </Text>
           ))}
         </View>
+
+        {/* Apply button */}
         <TouchableOpacity style={styles.submitbutton} onPress={validateInput}>
           <Text style={styles.submittext}>Apply Now</Text>
         </TouchableOpacity>
@@ -286,9 +295,9 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     marginRight: '5%',
   },
-  referbutton : {
-    marginRight : '5%',
-    marginTop : '5%',
+  referbutton: {
+    marginRight: '5%',
+    marginTop: '5%',
   },
   myreferral: {
     color: 'red',

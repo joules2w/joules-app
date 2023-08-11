@@ -243,8 +243,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, TouchableWithoutFeedback, Alert } from 'react-native';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import BASE_URL from '../src/constants/mainurl';
-import { formatSalary } from './utils';
+import BASE_URL from '../../constants/baseurl';
+import { formatSalary } from '../../../Pages/utils';
 
 const Filter = ({ onApplyFilter }) => {
   const [isModalVisible, setModalVisible] = useState(false);

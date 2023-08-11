@@ -155,7 +155,101 @@ const ticket = [
     }
 ]
 
+const assign = [
+    {
+        id : 1,
+        name : 'Ramya',
+    },
+    {
+        id : 2,
+        name : 'Priyanka',
+    },
+    {
+        id : 3,
+        name : 'Tharani',
+    },
+    {
+        id : 4,
+        name : 'Sheetal',
+    },
+    {
+        id : 5,
+        name : 'Khoshboo',
+    },
+    {
+        id : 6,
+        name : 'Sindhura',
+    },
+    {
+        id : 7,
+        name : 'Meenu',
+    },
+    {
+        id : 8,
+        name : 'Pooja',
+    },
+    {
+        id : 9,
+        name : 'Sumona',
+    },
+    {
+        id : 10,
+        name : 'Sai',
+    },
+    {
+        id : 11,
+        name : 'Sanjana',
+    },
+    {
+        id : 12,
+        name : 'Chetan',
+    },
+    {
+        id : 13,
+        name : 'Prakash',
+    },
+    {
+        id : 14,
+        name : 'Harish',
+    },
+    {
+        id : 15,
+        name : 'Manoj',
+    },
+    {
+        id : 16,
+        name : 'Kiran',
+    },
+    {
+        id : 17,
+        name : 'Vadiraj',
+    },
+    {
+        id : 18,
+        name : 'VK',
+    },
+    {
+        id : 19,
+        name : 'GK',
+    },
+    {
+        id : 20,
+        name : 'Harish',
+    },
+    {
+        id : 21,
+        name : 'Pramod',
+    },
+    {
+        id :22,
+        name : 'Prakash',
+    },
+    {
+        id : 23,
+        name : 'Veeresh',
+    },
+]
    
 
 
-export { constants, referrals, ticket };
+export { constants, referrals, ticket, assign };

@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, FlatList, ScrollView, ImageBackground, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Header from './Header';
-import Footer from './Footer';
-import Filter from './Filter';
-import SearchBox from './SearchBox';
-import BASE_URL from '../src/constants/mainurl';
-import { formatSalary } from './utils';
+import Header from '../../common/Header/Header';
+import Footer from '../../common/Footer';
+import Filter from '../../common/Filter';
+import SearchBox from '../../common/SearchBox';
+import BASE_URL from '../../../constants/baseurl';
 
 const Job_portal = ({ navigation }) => {
   const [jobs, setJobs] = useState([]);
@@ -107,13 +106,13 @@ const Job_portal = ({ navigation }) => {
 
   const handleApplyFilter = (filterCriteria) => {
     // Apply filtering based on the filter criteria and set the filtered jobs
-    const filteredJobs = jobs?.filter((job) => {
-      const { jobExperience, salaryRange, location } = filterCriteria;
+    // const filteredJobs = jobs?.filter((job) => {
+    //   const { jobExperience, salaryRange, location } = filterCriteria;
 
-      // Apply filtering logic here based on jobExperience, salaryRange, and location
+    //   // Apply filtering logic here based on jobExperience, salaryRange, and location
 
-      return true; // Replace this with your actual filtering logic
-    });
+    //   return true; // Replace this with your actual filtering logic
+    // });
 
     setFilteredJobs(filteredJobs || []);
   };
@@ -144,10 +143,12 @@ const Job_portal = ({ navigation }) => {
       return null;
     }
 
+    // Give empty values if the value is null
     const jobTitle = item.jobTitle || '';
     const jobDescription = item.jobDescription || '';
     const jobSkills = item.jobSkills || [];
 
+    // Limiting 3 skills per job
     const skillsToShow = jobSkills.slice(0, 3);
     const remainingSkillsCount = jobSkills.length - 3;
 
@@ -157,18 +158,19 @@ const Job_portal = ({ navigation }) => {
           <Text style={styles.heading01}>{jobTitle}</Text>
           <Text style={styles.heading02}>{renderCellContent(jobDescription)}</Text>
           <View style={styles.skillsContainer}>
+            {/* Limiting to first 3 skills only */}
             {skillsToShow.map((skill, index) => (
               <View key={index} style={styles.skillItem}>
                 <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
               </View>
             ))}
+            {/* If there is more than 3 skills, then it shows number of remaining skills */}
             {remainingSkillsCount > 0 && (
               <View style={styles.skillItem}>
                 <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
               </View>
             )}
           </View>
-          
         </TouchableOpacity>
       </View>
     );
@@ -185,8 +187,6 @@ const Job_portal = ({ navigation }) => {
     const isVisible = offsetY > Dimensions.get('window').height;
     setShowScrollToTop(isVisible);
   };
-
-  // const currentJobs = searchQuery ? filteredJobs : jobs?.data;
 
   const logout = () => {
     navigation.navigate('Login');
@@ -210,10 +210,11 @@ const Job_portal = ({ navigation }) => {
         onScroll={handleScroll} // Added event handler for scrolling
         scrollEventThrottle={5} // Adjust the scroll event throttle as needed
         >
+          {/* Heading */}
         <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
 
         {/* Image Background */}
-        <ImageBackground style={styles.background} source={require('./Images/background.png')}>
+        <ImageBackground style={styles.background} source={require('../../../Assets/Images/background.jpg')}>
           <Text style={styles.texthead01}>Job Portal</Text>
           <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
         </ImageBackground>
@@ -233,13 +234,13 @@ const Job_portal = ({ navigation }) => {
         <FlatList scrollEnabled={false}
           data={filteredJobs.length > 0 ? filteredJobs : jobs.data}
           keyExtractor={(item) => item?.jobId?.toString()}
-          renderItem={renderJobItem}
-        />
+          renderItem={renderJobItem} />
         
         <View style={styles.footer}>
           <Footer />
         </View>
       </ScrollView>
+      {/* Go to top button */}
       {showScrollToTop && ( 
           <TouchableOpacity style={styles.scrollToTopButton}   onPress={handleScrollToTop}>
             <Icon name="arrow-up" size={24} color="#e0f9f6" />
