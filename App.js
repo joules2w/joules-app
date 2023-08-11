@@ -2,23 +2,21 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import LoginScreen from './Pages/LoginScreen';
-import OtpScreen from './Pages/OtpScreen';
-import Home from './Pages/Home';
-import Job_PortalScreen from './Pages/Job_PortalScreen';
-import MyReferrals from './Pages/My_referrals';
-import InterviewPanel from './Pages/InterviewPanel';
-import MoreDetails from './Pages/MoreDetails';
-import SideMenu from './Pages/SideMenu';
-import ProfileScreen from './Pages/ProfileScreen';
-import AssignPanelMember from './Pages/AssignPanelMember';
-import Sparsh from './Pages/Sparsh';
-import Ticket from './Pages/Createticket';
-import Other from './Pages/Other';
-import JobDetails from './Pages/JobDetails';
-import TicketDetails from './Pages/TicketDetails';
+import LoginScreen from './src/components/Main/Login/LoginScreen';
+import OtpScreen from './src/components/Main/Otp/OtpScreen';
+import Home from './src/components/Main/Home/Home';
+import Job_PortalScreen from './src/components/Main/JobPortal/Job_PortalScreen';
+import MyReferrals from './src/components/common/My_referrals';
+import InterviewPanel from './src/components/Main/InterviewPanel/InterviewPanel';
+import MoreDetails from './src/components/Main/InterviewPanel/MoreDetails/MoreDetails';
+import SideMenu from './src/components/common/Header/SideMenu';
+import ProfileScreen from './src/components/common/Header/ProfileScreen';
+import AssignPanelMember from './src/components/Main/InterviewPanel/MoreDetails/AssignPanelMember';
+import Sparsh from './src/components/Main/Sparsh/Sparsh';
+import Ticket from './src/components/Main/Sparsh/Createticket';
+import JobDetails from './src/components/Main/JobPortal/JobDetails';
+import TicketDetails from './src/components/Main/Sparsh/TicketDetails';
 import HomeScreen from './Pages/HomeScreen';
-import Extra from './Pages/Extra';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,11 +36,9 @@ const App = () => {
         <Stack.Screen name='AssignPanelMember' component={AssignPanelMember} options={{ headerShown : false }} />
         <Stack.Screen name='Sparsh' component={Sparsh} options={{ headerShown : false }} />
         <Stack.Screen name='ticket' component={Ticket} options={{ headerShown : false }} />
-        <Stack.Screen name="Other" component={Other} options={{ headerShown : false }} />
         <Stack.Screen name='JobDetail' component={JobDetails} options={{ headerShown : false }} />
         <Stack.Screen name='TicketDetails' component={TicketDetails} options={{ headerShown : false }} />
         <Stack.Screen name='Details' component={HomeScreen} options={{ headerShown : false }} />
-        <Stack.Screen name='Extra' component={Extra} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -51,3 +47,17 @@ const App = () => {
 export default App;
 
 
+// import React from "react";
+// import { View } from 'react-native';
+
+// import Main from './src/components/Main/Main';
+
+// const App = () => {
+//   return (
+//     <View>
+//       <Main />
+//     </View>
+//   );
+// }
+
+// export default App;
