@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Image, Alert, StyleSheet, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import { setOtpDetails } from '../../../redux/actions/authActions';
 import axios from 'axios';
+import BASE_URL from '../../../constants/baseurl';
 
-const API_BASE_URL = 'http://www.consultant.joulestowatts-uat.com/auth';
+const mapDispatchToProps = {
+  setOtpDetails,
+};
 
 const OtpScreen = ({ route, navigation }) => {
 
@@ -17,7 +22,7 @@ const OtpScreen = ({ route, navigation }) => {
   };
 
   const sendOTP = (phoneNumber) => {
-    const apiUrl = `${API_BASE_URL}/sendotp`;
+    const apiUrl = `${BASE_URL}auth/sendotp`;
 
     axios.post(apiUrl, { phone: phoneNumber }, {
       headers: {
@@ -39,7 +44,8 @@ const OtpScreen = ({ route, navigation }) => {
         console.error('No response received:', error.request);
       } else {
         // Something happened in setting up the request that triggered an error
-        console.error('Error:', error.message);
+        // console.error('Error:', error.message);
+        Alert.alert('Error', 'Failed to send OTP. Please try again later.');
       }
       Alert.alert('Error', 'Failed to send OTP. Please try again later.');
     });
@@ -63,10 +69,11 @@ const OtpScreen = ({ route, navigation }) => {
 
   const handleSubmit = () => {
     verifyOTP(phone, otp);
+    setOtp('');
   };
 
   const verifyOTP = (phoneNumber, enteredOTP) => {
-    const apiUrl = `${API_BASE_URL}/verifyotp`;
+    const apiUrl = `${BASE_URL}auth/verifyotp`;
 
     axios.post(apiUrl, { phone: phoneNumber, otpEnteredByUser: enteredOTP }, {
       headers: {
@@ -83,8 +90,8 @@ const OtpScreen = ({ route, navigation }) => {
       }
     })
     .catch((error) => {
-      console.error('Error verifying OTP:', error);
-      Alert.alert('Error', 'Failed to verify OTP. Please try again later.');
+      // console.error('Error verifying OTP:', error);
+      Alert.alert('Error', 'Please enter a valid 4 digit OTP');
     });
   };  
 
@@ -119,10 +126,6 @@ const OtpScreen = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Details')}>
-            <Text style={styles.buttonText}>Others</Text>
-          </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -191,4 +194,6 @@ const styles = StyleSheet.create({
   },  
 });
 
-export default OtpScreen;
+const ConnectedOTPScreeen = connect(null, mapDispatchToProps)(OtpScreen);
+
+export default ConnectedOTPScreeen;

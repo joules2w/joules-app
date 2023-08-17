@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { StyleSheet, TextInput, Text, View, ScrollView, TouchableOpacity, Modal, ImageBackground } from 'react-native';
+import { StyleSheet, TextInput, Text, View, ScrollView, TouchableOpacity, Modal, ImageBackground, Alert } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -10,14 +10,11 @@ const CreateTicket = ({ navigation }) => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [flashVisible, setFlashVisible] = useState(false);
-
   const [isPriorityDropdownOpen, setIsPriorityDropdownOpen] = useState(false);
   const [selectedPriority, setSelectedPriority] = useState('');
+  const [fileResponse, setFileResponse] = useState([]);
 
   const PriorityOptions = ['High', 'Medium', 'Low'];
-
-  const [fileResponse, setFileResponse] = useState([]);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -43,7 +40,16 @@ const CreateTicket = ({ navigation }) => {
   };
 
   const handleButton1Press = () => {
-    setFlashVisible(true);
+    if (!title || !description || fileResponse.length === 0 || !selectedPriority) {
+      Alert.alert("Please fill all the required fields and attach the pdf file");
+    } else {
+      Alert.alert("Ticket created succesfully");
+      setTitle('');
+      setDescription('');
+      setFileResponse([]);
+      setSelectedPriority('');
+      navigation.navigate('Sparsh')
+    }
   };
 
   const togglePriorityDropdown = () => {
@@ -56,7 +62,15 @@ const CreateTicket = ({ navigation }) => {
   }
 
   const handleCancelButtonPress = () => {
+    setTitle('');
+    setDescription('');
+    setSelectedPriority('');
+    setFileResponse([]);
     navigation.navigate('Sparsh');
+  };
+
+  const handlePriorityPress = () => {
+    setIsPriorityDropdownOpen(false);
   };
 
   const logout = () => {
@@ -129,17 +143,20 @@ const CreateTicket = ({ navigation }) => {
         </TouchableOpacity>
         <Modal transparent animationType="fade"
           visible={isPriorityDropdownOpen}
+          value={selectedPriority}
           onRequestClose={() => setIsPriorityDropdownOpen(false)}>
-          <View style={styles.modalContainer}>
-            <View style={styles.dropdownList}>
-              {PriorityOptions.map((option, index) => (
-                <TouchableOpacity style={styles.dropdownOption} key={index}
-                  onPress={() => handlePrioritySelect(option)}>
-                  <Text style={styles.dropdownOptionText}>{option}</Text>
-                </TouchableOpacity>
-              ))}
+          <TouchableOpacity style={styles.backdrop} onPress={handlePriorityPress}>
+            <View style={styles.modalContainer}>
+              <View style={styles.dropdownList}>
+                {PriorityOptions.map((option, index) => (
+                  <TouchableOpacity style={styles.dropdownOption} key={index}
+                    onPress={() => handlePrioritySelect(option)}>
+                    <Text style={styles.dropdownOptionText}>{option}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         </Modal>
 
         {/* Buttons */}
@@ -151,13 +168,6 @@ const CreateTicket = ({ navigation }) => {
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
-
-        {/* Flash message */}
-        {flashVisible && (
-          <View style={styles.flashMessage}>
-            <Text style={styles.flashText}>Ticket created successfully</Text>
-          </View>
-        )}
 
         {/* Footer */}
         <View style={styles.footer}>
@@ -241,7 +251,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   attachtext: {
-    color: 'black',
+    color: '#000000',
     alignSelf: 'center',
     marginLeft: '5%',
     fontSize: 13
@@ -249,6 +259,10 @@ const styles = StyleSheet.create({
   dropdownButtonText: {
     fontSize: 13,
     color: '#000000',
+  },
+  backdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContainer: {
     flex: 1,

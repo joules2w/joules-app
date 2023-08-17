@@ -1,19 +1,18 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Modal, TextInput, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Modal, TextInput, ScrollView, Alert } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DocumentPicker from 'react-native-document-picker';
 
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer';
 
-const TicketDetails = ({ route }) => {
+const TicketDetails = ({ route, navigation }) => {
 
     const { ticket } = route.params;
-    const [text, setText] = useState('');
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
-
+    const [description, setDescription] = useState('');
     const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
     const [selectedStatusOption, setSelectedStatusOption] = useState('');
 
@@ -46,6 +45,25 @@ const TicketDetails = ({ route }) => {
         setIsStatusDropdownOpen(false);
     };
 
+    const Save = () => {
+        Alert.alert("Saved successfully");
+        navigation.goBack();
+    }
+
+    const Send = () => {
+        if(!description){
+            Alert.alert("Enter some message");
+        }
+        else if(fileResponse.length===0){
+            Alert.alert("Attach a required pdf file");
+        }
+        else{
+            setDescription('');
+            setFileResponse([]);
+            Alert.alert("Send successfully");
+        }
+    }
+
     const [fileResponse, setFileResponse] = useState([]);
 
     const handleDocumentSelection = useCallback(async () => {
@@ -60,6 +78,12 @@ const TicketDetails = ({ route }) => {
             console.warn(err);
         }
     }, []);
+
+    const handleDescriptionChange = (text) => {
+        if (text.length <= 500) {
+            setDescription(text);
+        }
+    };
 
     const logout = () => {
         navigation.navigate('Login')
@@ -87,7 +111,7 @@ const TicketDetails = ({ route }) => {
                 {/* Title */}
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.texthead01}>{ticket.heading}</Text>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={Save}>
                         <Text style={styles.buttontext}>Save</Text>
                     </TouchableOpacity>
                 </View>
@@ -166,16 +190,16 @@ const TicketDetails = ({ route }) => {
                 <Text style={styles.texthead01}>Discussion Point</Text>
                 <Text style={styles.heading02}>Description</Text>
                 <View style={styles.textInputContainer}>
-                    <TextInput multiline style={styles.input}
-                        placeholder='Type your message here...'
-                        placeholderTextColor='#808080'
-                        value={text}
-                        onChangeText={setText} />
-                    <View style={styles.buttonContainer}>
+                    <TextInput style={styles.descriptionInput} multiline
+                        onChangeText={handleDescriptionChange}
+                        value={description}
+                        placeholder="Enter description (max 500 characters)"
+                        placeholderTextColor={'#808080'}
+                        maxLength={500} />
+                    <View style={styles.buttonContainer01}>
                         <TouchableOpacity style={styles.button01}>
                             <Text style={styles.buttontext} onPress={handleDocumentSelection}>
-                                <MaterialIcons name="attach-file" size={18} style={styles.icon} />
-                                Attach file</Text>
+                                <MaterialIcons name="attach-file" size={18} style={styles.icon} />Attach file</Text>
                             {fileResponse.map((file, index) => (
                                 <Text style={styles.attachtext}
                                     key={index.toString()}
@@ -185,11 +209,12 @@ const TicketDetails = ({ route }) => {
                                 </Text>
                             ))}
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button01} onPress={Send}>
                             <Text style={styles.buttontext}>Send</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
+
                 <View style={styles.footer}>
                     <Footer />
                 </View>
@@ -215,14 +240,6 @@ const styles = StyleSheet.create({
         marginRight: '5%',
         marginTop: 15,
         fontWeight: "bold",
-    },
-    texthead02: {
-        color: 'black',
-        fontSize: 15,
-        marginLeft: '5%',
-        marginRight: '5%',
-        marginBottom: '8%',
-        textAlign: "justify",
     },
     heading01: {
         fontSize: 16,
@@ -257,8 +274,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#449B93',
         padding: 10,
         borderRadius: 5,
-        marginRight: '5%',
-        width: '50%'
+        marginHorizontal: '5%',
+        maxWidth : '50%',
     },
     buttontext: {
         color: '#fff',
@@ -300,6 +317,15 @@ const styles = StyleSheet.create({
     textInputContainer: {
         position: 'relative',
     },
+    descriptionInput: {
+        height: 100,
+        borderWidth: 1,
+        borderRadius: 5,
+        textAlignVertical: 'top',
+        color: '#000000',
+        marginLeft: '5%',
+        marginRight: '5%',
+    },
     line: {
         borderBottomColor: '#808080',
         borderBottomWidth: 0.5,
@@ -311,14 +337,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
-    input: {
-        borderWidth: 1,
-        borderColor: '#808080',
-        borderRadius: 5,
-        margin: '5%',
-        padding: 10,
-        height: 150,
-        color: '#000000',
+    buttonContainer01: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -331,7 +352,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     attachtext: {
-        color: 'black',
+        color: '#000000',
         alignSelf: 'center',
         marginLeft: '5%',
         fontSize: 13

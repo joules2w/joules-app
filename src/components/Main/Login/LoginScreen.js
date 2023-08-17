@@ -1,17 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TextInput, Image, Alert, TouchableOpacity, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import { setPhoneNumber } from '../../../redux/actions/authActions';
 import BASE_URL from '../../../constants/baseurl';
 
-const LoginScreen = ({ navigation }) => {
+const mapStateToProps = (state) => ({
+  phoneNumber: state.auth.phoneNumber,
+});
 
-  const [phoneNumber, setPhoneNumber] = useState('');
+const mapDispatchToProps = {
+  setPhoneNumber,
+};
+
+const LoginScreen = ({ navigation, phoneNumber, setPhoneNumber }) => {
+
+  // const [phoneNumber, setPhoneNumber] = useState('');
+
+  // const handlePhoneNumber = (value) => {
+  //   setPhoneNumber(value);
+  // };
 
   const handlePhoneNumber = (value) => {
-    setPhoneNumber(value);
+    setPhoneNumber(value); // Dispatch the action to update phoneNumber in Redux
+    setPhoneNumber(value); // Local state update
   };
 
   const handleOTP = () => {
     sendOTP(phoneNumber);
+    setPhoneNumber('');
   };
 
   const sendOTP = (emailOrMobile) => {
@@ -38,10 +54,14 @@ const LoginScreen = ({ navigation }) => {
         navigation.navigate('Otp', { phone: emailOrMobile }); // Pass the phone parameter here
       })
       .catch((error) => {
-        console.error('Error sending OTP:', error);
-        Alert.alert('Error', 'Failed to send OTP. Please try again later.');
+        // console.error('Error sending OTP:', error);
+        Alert.alert('Error', 'Please Enter a Valid 10 digit Phone Number to send OTP');
       });
   };
+
+  const CancelOTP = () => {
+    setPhoneNumber('');
+  }
 
   return (
     <View style={styles.container}>
@@ -69,12 +89,12 @@ const LoginScreen = ({ navigation }) => {
             <TouchableOpacity style={styles.button01} onPress={handleOTP}>
               <Text style={styles.buttonText}>Send OTP</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button01}>
+            <TouchableOpacity style={styles.button01} onPress={CancelOTP}>
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('Details')}>
+          <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('Sparsh')}>
             <Text style={styles.buttonText}>Others</Text>
           </TouchableOpacity>
         </View>
@@ -143,4 +163,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+const ConnectedLoginScreen = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+
+export default ConnectedLoginScreen;

@@ -7,12 +7,13 @@ import Footer from '../../common/Footer';
 
 const JobDetailScreen = ({ route, navigation }) => {
   const { job } = route.params;
-
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [totalExperience, setTotalExperience] = useState('');
 
   const validateEmail = () => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
 
     if (emailRegex.test(email)) {
       return true;
@@ -32,6 +33,12 @@ const JobDetailScreen = ({ route, navigation }) => {
   };
 
   const validateInput = () => {
+
+    if (!name || !email || !phoneNumber || !totalExperience || fileResponse.length === 0) {
+      Alert.alert('Incomplete Information', 'Please fill in all the required fields and attach a PDF document.');
+      return;
+    }
+
     const isEmailValid = validateEmail();
     const isPhoneNumberValid = validatePhoneNumber();
 
@@ -43,6 +50,15 @@ const JobDetailScreen = ({ route, navigation }) => {
     } else {
       Alert.alert('Invalid Phone Number', 'Please enter a valid 10-digit phone number.');
     }
+
+    Alert.alert("Job applied succesfully");
+    setName('');
+    setEmail('');
+    setPhoneNumber('');
+    setTotalExperience('');
+    setFileResponse([]);
+    // navigation.navigate('Job_Portal');
+    navigation.goBack();
   };
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -213,7 +229,10 @@ const JobDetailScreen = ({ route, navigation }) => {
         <Text style={styles.heading01}>Application name<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Enter your name'
-          placeholderTextColor='#808080' />
+          placeholderTextColor='#808080'
+          value={name}
+          maxLength={40}
+          onChangeText={(text) => setName(text)} />
 
         {/* Applicant's email address */}
         <Text style={styles.heading01}>Application Email id<Text style={styles.require}>*</Text></Text>
@@ -234,10 +253,14 @@ const JobDetailScreen = ({ route, navigation }) => {
           maxLength={10} />
 
         {/* Applicant's total experience */}
-        <Text style={styles.heading01}>Applicant total experience<Text style={styles.require}>*</Text></Text>
+        <Text style={styles.heading01}>Applicant total experience(in years)<Text style={styles.require}>*</Text></Text>
         <TextInput style={styles.inputtext}
           placeholder='Total Experience'
-          placeholderTextColor='#808080' />
+          placeholderTextColor='#808080'
+          value={totalExperience}
+          keyboardType='numeric'
+          maxLength={2}
+          onChangeText={(text) => setTotalExperience(text)} />
 
         {/* Attach required pdf file */}
         <View style={[styles.card, styles.elevation]}>

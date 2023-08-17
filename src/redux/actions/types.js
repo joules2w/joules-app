@@ -1,0 +1,1 @@
+export const SET_OTP_DETAILS = 'SET_OTP_DETAILS';

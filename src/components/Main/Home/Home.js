@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, FlatList, Text, TouchableOpacity, BackHandler, Alert, ScrollView } from 'react-native';
 import { ticket } from '../../common/StaticValues';
 
 import Header from '../../common/Header/Header';
@@ -195,6 +195,31 @@ const Home = ({ navigation }) => {
                 renderItem={ticketItem} />
         );
     };
+
+//     // Handle back button press
+//   useEffect(() => {
+//     const backAction = () => {
+//       Alert.alert("Confirm", "Are you sure you want to go back?", [
+//         {
+//           text: "No",
+//           onPress: () => null,
+//           style: "cancel"
+//         },
+//         {
+//           text: "Yes",
+//           onPress: () => {
+//             // Navigate back
+//             navigation.goBack();
+//           }
+//         }
+//       ]);
+//       return true;
+//     };
+
+//     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+//     return () => backHandler.remove();
+//   }, []);
+
 
     const logout = () => {
         navigation.navigate('Login')
