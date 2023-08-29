@@ -1,1 +1,2 @@
-export const SET_OTP_DETAILS = 'SET_OTP_DETAILS';
+export const SET_JOBS = 'SET_JOBS';
+export const SET_FILTERED_JOBS = 'SET_FILTERED_JOBS';

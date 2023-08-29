@@ -14,7 +14,7 @@ const ProfileScreen = ({ interviewpanel, home, sparsh, jobportal, logout }) => {
       Animated.timing(animatedValue, {
         toValue: isMenuOpen ? 1 : 0,
         duration: 300,
-        useNativeDriver: true,
+        useNativeDriver: false,
       }).start();
     }, [isMenuOpen]);
   

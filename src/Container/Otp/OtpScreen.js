@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Image, Alert, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { setOtpDetails } from '../../../redux/actions/authActions';
+// import { setOtpDetails } from '../../redux/actions/authActions';
 import axios from 'axios';
-import BASE_URL from '../../../constants/baseurl';
+import BASE_URL from '../../constants/baseurl';
 
-const mapDispatchToProps = {
-  setOtpDetails,
-};
+// const mapDispatchToProps = {
+//   setOtpDetails,
+// };
 
 const OtpScreen = ({ route, navigation }) => {
 
@@ -99,7 +99,7 @@ const OtpScreen = ({ route, navigation }) => {
     <View style={styles.container}>
       <ScrollView>
         {/* Logo and Headings */}
-        <Image style={styles.image} source={require('../../../Assets/Images/logo.jpg')} />
+        <Image style={styles.image} source={require('../../Assets/Images/logo.jpg')} />
         <Text style={styles.texthead01}>Innovative Talent Solution</Text>
         <Text style={styles.texthead02}>Creating the future</Text>
         <Text style={styles.texthead03}>Welcome to Joules to Watts Consultant Portal</Text>
@@ -194,6 +194,6 @@ const styles = StyleSheet.create({
   },  
 });
 
-const ConnectedOTPScreeen = connect(null, mapDispatchToProps)(OtpScreen);
+// const ConnectedOTPScreeen = connect(null, mapDispatchToProps)(OtpScreen);
 
-export default ConnectedOTPScreeen;
+export default OtpScreen;

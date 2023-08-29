@@ -3,8 +3,8 @@ import { StyleSheet, TextInput, Text, View, ScrollView, TouchableOpacity, Modal,
 import DocumentPicker from 'react-native-document-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import Header from '../../common/Header/Header';
-import Footer from '../../common/Footer';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer';
 
 const CreateTicket = ({ navigation }) => {
 
@@ -97,7 +97,7 @@ const CreateTicket = ({ navigation }) => {
         <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
 
         {/* Background Image */}
-        <ImageBackground source={require('../../../Assets/Images/background.jpg')} style={styles.backgroundImage}>
+        <ImageBackground source={require('../../Assets/Images/background.jpg')} style={styles.backgroundImage}>
           <Text style={styles.texthead01}>Please send us your questions, we will get back to you.</Text>
           <Text style={styles.texthead02}>Loream ipsum dolor sit amet consectur.Maecenas cursus eget semper tellus tristique</Text>
         </ImageBackground>

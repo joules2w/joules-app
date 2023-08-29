@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Text, ImageBackground, Dimensions, ScrollView } from 'react-native';
 
-import Header from "../../../common/Header/Header";
-import Footer from "../../../common/Footer";
+import Header from '../../../components/Header/Header';
+import Footer from "../../../components/Footer";
 import AssignPanelMember from './AssignPanelMember';
 
 const MoreDetails = ({ route, navigation }) => {
@@ -61,7 +61,7 @@ const MoreDetails = ({ route, navigation }) => {
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-                <ImageBackground style={styles.background} source={require('../../../../Assets/Images/background.jpg')}>
+                <ImageBackground style={styles.background} source={require('../../../Assets/Images/background.jpg')}>
                     <Text style={styles.texthead01}>Interview Panel For {job.jobTitle}</Text>
                     <Text style={styles.texthead02}>Job created on 28th September 2015</Text>
                     <Text style={styles.texthead03}>₹ 4000 per panel member</Text>

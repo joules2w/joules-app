@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { setPhoneNumber } from '../../../redux/actions/authActions';
-import BASE_URL from '../../../constants/baseurl';
+import { setPhoneNumber } from '../../redux/actions/authActions';
+import BASE_URL from '../../constants/baseurl';
 
-const mapStateToProps = (state) => ({
-  phoneNumber: state.auth.phoneNumber,
-});
+// const mapStateToProps = (state) => ({
+//   phoneNumber: state.auth.phoneNumber,
+// });
 
-const mapDispatchToProps = {
-  setPhoneNumber,
-};
+// const mapDispatchToProps = {
+//   setPhoneNumber,
+// };
 
-const LoginScreen = ({ navigation, phoneNumber, setPhoneNumber }) => {
+const LoginScreen = ({ navigation }) => {
 
-  // const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   // const handlePhoneNumber = (value) => {
   //   setPhoneNumber(value);
@@ -68,7 +68,7 @@ const LoginScreen = ({ navigation, phoneNumber, setPhoneNumber }) => {
       <ScrollView>
         <View>
           {/* Logo and Headings */}
-          <Image style={styles.image} source={require('../../../Assets/Images/logo.jpg')} />
+          <Image style={styles.image} source={require('../../Assets/Images/logo.jpg')} />
           <Text style={styles.texthead02}>Innovative Talent Solution</Text>
           <Text style={styles.texthead05}>Creating the future</Text>
           <Text style={styles.texthead01}>Login</Text>
@@ -93,10 +93,9 @@ const LoginScreen = ({ navigation, phoneNumber, setPhoneNumber }) => {
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
-
-          <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('Sparsh')}>
-            <Text style={styles.buttonText}>Others</Text>
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('Others')}>
+              <Text style={styles.buttonText}>Others</Text>
+            </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -163,6 +162,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const ConnectedLoginScreen = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+// const ConnectedLoginScreen = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 
-export default ConnectedLoginScreen;
+export default LoginScreen;

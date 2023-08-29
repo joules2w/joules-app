@@ -1,9 +1,8 @@
-import { SET_JOBS, SET_FILTERED_JOBS } from '../constants/jobTypes';
+import { SET_JOBS, SET_FILTERED_JOBS } from '../actions/types';
 
 const initialState = {
   jobs: [],
   filteredJobs: [],
-  // ... other initial state properties
 };
 
 const jobReducer = (state = initialState, action) => {
@@ -11,14 +10,13 @@ const jobReducer = (state = initialState, action) => {
     case SET_JOBS:
       return {
         ...state,
-        jobs: action.payload,
+        jobs: action.payload
       };
     case SET_FILTERED_JOBS:
       return {
         ...state,
-        filteredJobs: action.payload,
+        filteredJobs: action.payload
       };
-    // ... other cases
     default:
       return state;
   }

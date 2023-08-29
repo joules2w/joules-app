@@ -1,26 +1,37 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, FlatList, ScrollView, ImageBackground, Dimensions } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
+import { fetchJobs, setFilteredJobs } from '../../redux/actions/jobActions';
 
-import Header from '../src/components/common/Header/Header';
-import Footer from '../src/components/common/Footer';
-import Filter from '../src/components/common/Filter';
-import SearchBox from '../src/components/common/SearchBox';
-import BASE_URL from '../src/constants/baseurl';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer';
+import Filter from '../../components/Filter';
+import SearchBox from '../../components/SearchBox';
 
-const Job_portal = ({ navigation }) => {
-  const [jobs, setJobs] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState([]);
+const mapStateToProps = (state) => ({
+  jobs: state.jobs.jobs,
+  filteredJobs: state.jobs.filteredJobs,
+});
+
+const mapDispatchToProps = {
+  fetchJobs,
+  setFilteredJobs,
+};
+
+const Job_portal = ({ navigation, jobs, filteredJobs, fetchJobs, setFilteredJobs }) => {
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTotalPages, setSearchTotalPages] = useState(0);
-  const [showScrollToTop, setShowScrollToTop] = useState(false); 
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const scrollViewRef = useRef();
 
   const jobsPerPage = 100;
 
-  const [filterCriteria, setFilterCriteria] = useState({
+  const [filterCriteria] = useState({
     jobExperience: { jobExperienceFrom: 0, jobExperienceTo: 15 },
     salaryRange: [0, 100],
     location: '',
@@ -34,29 +45,29 @@ const Job_portal = ({ navigation }) => {
     fetchJobs();
   }, []);
 
-  const fetchJobs = async () => {
-    try {
-      const apiurl = `${BASE_URL}job/get_all_jobs?limit=100000`;
-      const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
-      const response = await fetch(apiurl, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-          'Content-Type': 'application/json',
-        },
-      });
+  // const fetchJobs = async () => {
+  //   try {
+  //     const apiurl = `${BASE_URL}job/get_all_jobs?limit=100000`;
+  //     const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
+  //     const response = await fetch(apiurl, {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: `Bearer ${bearerToken}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
 
-      const data = await response.json();
-      console.log('Fetched jobs:', data);
-      setJobs(data);
-    } catch (error) {
-      console.error('Error fetching jobs:', error);
-    }
-  };
+  //     const data = await response.json();
+  //     console.log('Fetched jobs:', data);
+  //     setJobs(data);
+  //   } catch (error) {
+  //     console.error('Error fetching jobs:', error);
+  //   }
+  // };
 
   const handleJobPress = (job) => {
     navigation.navigate('JobDetail', { job });
@@ -86,16 +97,16 @@ const Job_portal = ({ navigation }) => {
       setFilteredJobs(filteredJobs);
 
       console.log('filteredJobs:', filteredJobs);
-      console.log('totalPages:', totalFilteredPages);
+      // console.log('totalPages:', totalFilteredPages);
     },
-    [jobs.data, jobsPerPage]
+    [jobs.data, jobsPerPage, setFilteredJobs]
   );
 
   useEffect(() => {
     // Recalculate total pages whenever filteredJobs changes
     setTotalPages(calculateTotalPages(filteredJobs));
     console.log('filteredJobs:', filteredJobs);
-  console.log('totalPages:', totalPages);
+    // console.log('totalPages:', totalPages);
   }, [filteredJobs]);
 
   useEffect(() => {
@@ -202,24 +213,24 @@ const Job_portal = ({ navigation }) => {
   };
   const home = () => {
     navigation.navigate('Home');
-  };  
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer} ref={scrollViewRef}
         onScroll={handleScroll} // Added event handler for scrolling
         scrollEventThrottle={5} // Adjust the scroll event throttle as needed
-        >
-          {/* Heading */}
+      >
+        {/* Heading */}
         <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
 
         {/* Image Background */}
-        <ImageBackground style={styles.background} source={require('../src/Assets/Images/background.jpg')}>
+        <ImageBackground style={styles.background} source={require('../../Assets/Images/background.jpg')}>
           <Text style={styles.texthead01}>Job Portal</Text>
           <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
         </ImageBackground>
 
-         {/* My Referrals */}
+        {/* My Referrals */}
         <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
           <Text style={styles.myreferral}>My Referrals</Text>
         </TouchableOpacity>
@@ -235,17 +246,17 @@ const Job_portal = ({ navigation }) => {
           data={filteredJobs.length > 0 ? filteredJobs : jobs.data}
           keyExtractor={(item) => item?.jobId?.toString()}
           renderItem={renderJobItem} />
-        
+
         <View style={styles.footer}>
           <Footer />
         </View>
       </ScrollView>
       {/* Go to top button */}
-      {showScrollToTop && ( 
-          <TouchableOpacity style={styles.scrollToTopButton}   onPress={handleScrollToTop}>
-            <Icon name="arrow-up" size={24} color="#e0f9f6" />
-          </TouchableOpacity>
-        )}
+      {showScrollToTop && (
+        <TouchableOpacity style={styles.scrollToTopButton} onPress={handleScrollToTop}>
+          <Icon name="arrow-up" size={24} color="#e0f9f6" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -347,16 +358,16 @@ const styles = StyleSheet.create({
   paginationButton: {
     fontSize: 15,
     paddingHorizontal: 6,
-    color: '#808080', 
+    color: '#808080',
   },
   activePage: {
     fontWeight: 'bold',
-    color : '#000000',
+    color: '#000000',
   },
   scrollToTopButton: {
     position: 'relative',
-    bottom: 20, 
-    alignSelf:'flex-end',
+    bottom: 20,
+    alignSelf: 'flex-end',
     backgroundColor: '#808080',
     borderRadius: 20,
     padding: '2%',
@@ -364,4 +375,6 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Job_portal;
+const ConnectedJob_portalScreen = connect(mapStateToProps, mapDispatchToProps)(Job_portal);
+
+export default ConnectedJob_portalScreen;

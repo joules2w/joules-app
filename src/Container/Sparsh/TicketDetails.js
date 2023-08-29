@@ -3,8 +3,8 @@ import { View, StyleSheet, Text, TouchableOpacity, Modal, TextInput, ScrollView,
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DocumentPicker from 'react-native-document-picker';
 
-import Header from '../../common/Header/Header';
-import Footer from '../../common/Footer';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer';
 
 const TicketDetails = ({ route, navigation }) => {
 

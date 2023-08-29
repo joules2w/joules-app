@@ -2,8 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Switch, TextInput, Dimensions, ImageBackground, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 
-import Header from '../../common/Header/Header';
-import Footer from '../../common/Footer';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer';
 
 const JobDetailScreen = ({ route, navigation }) => {
   const { job } = route.params;
@@ -57,7 +57,6 @@ const JobDetailScreen = ({ route, navigation }) => {
     setPhoneNumber('');
     setTotalExperience('');
     setFileResponse([]);
-    // navigation.navigate('Job_Portal');
     navigation.goBack();
   };
 
@@ -183,13 +182,13 @@ const JobDetailScreen = ({ route, navigation }) => {
 
         {/* Header and Background image */}
         <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
-        <ImageBackground style={styles.background} source={require('../../../Assets/Images/background.jpg')}>
+        <ImageBackground style={styles.background} source={require('../../Assets/Images/background.jpg')}>
           <Text style={styles.texthead01}>Job Portal</Text>
           <Text style={styles.texthead02}>Uncover the Best Career Opportunities with the Best Jobs in the Market</Text>
         </ImageBackground>
 
         {/* My referral */}
-        <TouchableOpacity onPress={() => navigation.navigate('myreferral')}>
+        <TouchableOpacity style={styles.referbutton} onPress={() => navigation.navigate('myreferral')}>
           <Text style={styles.myreferral}>My Referrals</Text>
         </TouchableOpacity>
 

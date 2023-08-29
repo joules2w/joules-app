@@ -243,8 +243,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, TouchableWithoutFeedback, Alert } from 'react-native';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import BASE_URL from '../../constants/baseurl';
-import { formatSalary } from '../../../Pages/utils';
+import BASE_URL from '../constants/baseurl';
 
 const Filter = ({ onApplyFilter }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -303,7 +302,6 @@ const Filter = ({ onApplyFilter }) => {
       if (thousand > 0) {
         formattedSalary += thousand + ' Thousand ';
       }
-  
       return formattedSalary.trim();
     }
   
@@ -311,11 +309,9 @@ const Filter = ({ onApplyFilter }) => {
     return trimmedValue;
   };
   
-
   const handleSalaryChange = (values) => {
     setSalaryRange(values);
   };
-
 
   const handleExperienceChange = (values) => {
     setJobExperience({ jobExperienceFrom: values[0], jobExperienceTo: values[1] });
@@ -345,7 +341,7 @@ const Filter = ({ onApplyFilter }) => {
   const fetchFilteredJobs = async () => {
     try {
       const apiUrl = `${BASE_URL}job/get_all_jobs?limit=237`;
-      const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw'; // Replace with your actual bearer token
+      const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
 
       // Extract filter criteria from the filterCriteria object
       const { jobExperience, salaryRange, location } = filterCriteria;
@@ -396,14 +392,6 @@ const Filter = ({ onApplyFilter }) => {
     }
   };
 
-
-  const applyFilter = () => {
-    fetchFilteredJobs(filterCriteria);
-    setModalVisible(false);
-  };
-
-  
-
   useEffect(() => {
     if (isModalVisible) {
       fetchFilteredJobs(filterCriteria); // Pass the filter criteria object here
@@ -444,8 +432,7 @@ const Filter = ({ onApplyFilter }) => {
                   onValuesChange={handleExperienceChange}
                   minMarkerOverlapDistance={10}
                   selectedStyle={styles.selectedStyle}
-                  unselectedStyle={styles.unselectedStyle}
-                />
+                  unselectedStyle={styles.unselectedStyle} />
 
                 <Text style={styles.subheading}>Salary</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -463,8 +450,7 @@ const Filter = ({ onApplyFilter }) => {
                   onValuesChange={handleSalaryChange}
                   minMarkerOverlapDistance={10}
                   selectedStyle={styles.selectedStyle}
-                  unselectedStyle={styles.unselectedStyle}
-                />
+                  unselectedStyle={styles.unselectedStyle} />
 
                 <Text style={styles.subheading}>Location</Text>
                 <TextInput
@@ -473,8 +459,7 @@ const Filter = ({ onApplyFilter }) => {
                   placeholder="Enter location"
                   placeholderTextColor="gray"
                   value={location}
-                  onChangeText={setLocation}
-                />
+                  onChangeText={setLocation} />
 
                 <TouchableOpacity style={styles.applyButton} onPress={handleApplyFilter}>
                   <Text style={styles.applyButtonText}>Apply Filter</Text>

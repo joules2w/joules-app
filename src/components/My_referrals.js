@@ -68,7 +68,7 @@ const MyReferrals = ({ navigation }) => {
         <View style={{ flexDirection: 'row' }}>
           <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
         </View>
-        <ImageBackground style={styles.backgroundimage} source={require('../../Assets/Images/background.jpg')}>
+        <ImageBackground style={styles.backgroundimage} source={require('../Assets/Images/background.jpg')}>
           <Text style={styles.texthead01}>My Refarrals</Text>
           <Text style={styles.text}>Lorem ipsum dolor sit amet consectetur. Maecenas cursus eget sed semper tellus tristique.</Text>
         </ImageBackground>

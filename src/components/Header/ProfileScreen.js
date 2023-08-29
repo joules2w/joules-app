@@ -31,7 +31,7 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       {/* Side menu item */}
       <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-        <Image style={styles.profileImage} source={require('../../../Assets/Images/profile.jpg')} />
+        <Image style={styles.profileImage} source={require('../../Assets/Images/profile.jpg')} />
         <Text style={styles.text}>Profile</Text>
       </TouchableOpacity>
 

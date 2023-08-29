@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, BackHandler, Alert, ScrollView } from 'react-native';
-import { ticket } from '../../common/StaticValues';
+import { ticket } from '../../components/StaticValues';
 
-import Header from '../../common/Header/Header';
-import Footer from '../../common/Footer';
-import BASE_URL from "../../../constants/baseurl";
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer';
+// import { useCustomBackHandler } from "./useCustomBackHandler";
+import BASE_URL from '../../constants/baseurl';
 
 const Home = ({ navigation }) => {
+
+    // const currentPage = 'Home';    // Set the current page name
+    // useCustomBackHandler(navigation, currentPage); // Call the custom hook
 
     const [selectedTab, setSelectedTab] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
@@ -33,7 +37,7 @@ const Home = ({ navigation }) => {
             }
 
             const data = await response.json();
-            console.log('Fetched jobs:', data);
+            // console.log('Fetched jobs:', data);
             setJobs(data);
         } catch (error) {
             console.error('Error fetching jobs:', error);
@@ -195,31 +199,6 @@ const Home = ({ navigation }) => {
                 renderItem={ticketItem} />
         );
     };
-
-//     // Handle back button press
-//   useEffect(() => {
-//     const backAction = () => {
-//       Alert.alert("Confirm", "Are you sure you want to go back?", [
-//         {
-//           text: "No",
-//           onPress: () => null,
-//           style: "cancel"
-//         },
-//         {
-//           text: "Yes",
-//           onPress: () => {
-//             // Navigate back
-//             navigation.goBack();
-//           }
-//         }
-//       ]);
-//       return true;
-//     };
-
-//     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
-//     return () => backHandler.remove();
-//   }, []);
-
 
     const logout = () => {
         navigation.navigate('Login')
