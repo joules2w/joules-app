@@ -1,17 +1,25 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, FlatList, ImageBackground, Dimensions, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from "react-redux";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer";
 import SearchBox from "../../components/SearchBox";
 import Filter from "../../components/Filter";
-import BASE_URL from "../../constants/baseurl";
+import { fetchJobs, setFilteredJobs } from "../../redux/actions/jobActions";
 
-const InterViewPanel = ({ navigation }) => {
+const mapStateToProps = (state) => ({
+  jobs: state.jobs.jobs,
+  filteredJobs: state.jobs.filteredJobs,
+});
 
-  const [jobs, setJobs] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState([]);
+const mapDispatchToProps = {
+  fetchJobs,
+  setFilteredJobs,
+};
+
+const InterViewPanel = ({ navigation, jobs, filteredJobs, fetchJobs, setFilteredJobs }) => {
+
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -19,7 +27,7 @@ const InterViewPanel = ({ navigation }) => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const scrollViewRef = useRef();
 
-  const jobsPerPage = 100;
+  const jobsPerPage = 20;
 
   const [filterCriteria, setFilterCriteria] = useState({
     jobExperience: { jobExperienceFrom: 0, jobExperienceTo: 15 },
@@ -27,80 +35,43 @@ const InterViewPanel = ({ navigation }) => {
     location: '',
   });
 
-  const calculateTotalPages = (filteredJobs) => {
-    return Math.ceil(filteredJobs?.length / jobsPerPage);
+  const calculateTotalPages = (totalItems) => {
+    return Math.ceil(totalItems / jobsPerPage);
   };
 
   useEffect(() => {
+    // Fetch all jobs initially
     fetchJobs();
   }, []);
 
-  const fetchJobs = async () => {
-    try {
-      const apiurl = `${BASE_URL}job/get_all_jobs?limit=237`;
-      const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
-
-      const response = await fetch(apiurl, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      // console.log('Fetched jobs:', data);
-      setJobs(data);
-    } catch (error) {
-      console.error('Error fetching jobs:', error);
-    }
-  };
 
   const handleSearch = useCallback(
-    (searchQuery) => {
-      setSearchQuery(searchQuery);
+    (query) => {
+      setSearchQuery(query);
       setCurrentPage(1);
 
       // Update the filtered jobs based on the search query
-      const filteredJobs = jobs?.data?.filter((job) => {
+      const normalizedQuery = query.toLowerCase();
+      const newFilteredJobs = jobs?.data?.filter((job) => {
         const skills = job.jobSkills || [];
-        const normalizedQuery = searchQuery.toLowerCase();
         return (
           job.jobTitle.toLowerCase().includes(normalizedQuery) ||
+          job.jobDescription.toLowerCase().includes(normalizedQuery) ||
           job.jobLocation.toLowerCase().includes(normalizedQuery) ||
           skills.some((skill) => skill.toLowerCase().includes(normalizedQuery))
         );
       });
 
-      // Calculate the total pages for filtered jobs and update the searchTotalPages state
-      const totalFilteredPages = Math.ceil(filteredJobs?.length / jobsPerPage);
-      setSearchTotalPages(totalFilteredPages);
-
-      // Set the filtered jobs in the state
-      setFilteredJobs(filteredJobs);
-
-      console.log('Interview filtered Jobs:', filteredJobs);
-      console.log('Interview total Pages:', totalFilteredPages);
+      setFilteredJobs(newFilteredJobs);
+      setSearchTotalPages(calculateTotalPages(newFilteredJobs?.length));
     },
-    [jobs.data, jobsPerPage]
+    [jobs, setFilteredJobs]
   );
 
   useEffect(() => {
     // Recalculate total pages whenever filteredJobs changes
-    setTotalPages(calculateTotalPages(filteredJobs));
-    console.log('filteredJobs:', filteredJobs);
-    // console.log('totalPages:', totalPages);
+    setTotalPages(calculateTotalPages(filteredJobs?.length));
   }, [filteredJobs]);
-
-  useEffect(() => {
-    // Fetch the jobs whenever the search query changes
-    fetchJobs();
-  }, [searchQuery]);
-
 
   const handleApplyFilter = (filterCriteria) => {
     // Apply filtering based on the filter criteria and set the filtered jobs
@@ -123,6 +94,18 @@ const InterViewPanel = ({ navigation }) => {
 
   const handleJobPress = (job) => {
     navigation.navigate('MoreDetails', { job });
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   const renderCellContent = (value) => {
@@ -177,17 +160,55 @@ const InterViewPanel = ({ navigation }) => {
     );
   };
 
-  const handleScrollToTop = () => {
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({ y: 0, animated: true });
-    }
-  };
-
   const handleScroll = (event) => {
     const offsetY = event.nativeEvent.contentOffset.y;
     const isVisible = offsetY > Dimensions.get('window').height;
     setShowScrollToTop(isVisible);
   };
+
+  const startIndex = (currentPage - 1) * jobsPerPage;
+  const endIndex = startIndex + jobsPerPage;
+  const currentJobs = searchQuery ? filteredJobs?.slice(startIndex, endIndex) : jobs?.data?.slice(startIndex, endIndex);
+
+  const totalPage = Math.ceil((filteredJobs?.length > 0 ? filteredJobs?.length : jobs?.data?.length) / jobsPerPage);
+  console.log('totalPages:', totalPage);
+
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+
+    // Always include the first page number
+    pageNumbers.push(1);
+
+    // Calculate the range of page numbers to be displayed around the current page
+    const range = 2;
+    let start = Math.max(2, currentPage - range);
+    let end = Math.min(totalPage - 1, currentPage + range);
+
+    // Add the page numbers in the range
+    for (let i = start; i <= end; i++) {
+      pageNumbers.push(i);
+    }
+
+    // Add the last page number if it's not already included
+    if (!pageNumbers.includes(totalPage) && totalPage > 1) {
+      pageNumbers.push(totalPage);
+    }
+
+    // Add the dots if needed
+    if (!pageNumbers.includes(2)) {
+      pageNumbers.splice(1, 0, '...');
+    }
+    if (!pageNumbers.includes(totalPage - 1) && totalPage > 2) {
+      pageNumbers.splice(pageNumbers.length - 1, 0, '...');
+    }
+
+    console.log('pageNumbers:', pageNumbers);
+
+    return pageNumbers;
+  };
+
+  const isPreviousButtonDisabled = currentPage === 1;
+  const isNextButtonDisabled = currentPage === totalPage;
 
   const logout = () => {
     navigation.navigate('Login')
@@ -226,9 +247,25 @@ const InterViewPanel = ({ navigation }) => {
 
         {/* Displaying All jobs in the form of cards */}
         <FlatList scrollEnabled={false}
-          data={filteredJobs.length > 0 ? filteredJobs : jobs.data}
+          data={currentJobs}
           renderItem={renderJobItem}
-          keyExtractor={(item) => item.id.toString()} />
+          keyExtractor={(item) => item?.jobId?.toString()} />
+
+          {/* Pagination */}
+        <View style={styles.paginationContainer}>
+          <TouchableOpacity onPress={handlePrevPage} disabled={isPreviousButtonDisabled}>
+            <Text style={[styles.paginationButton, isPreviousButtonDisabled && styles.disabledButton]}>Previous</Text>
+          </TouchableOpacity>
+          {getPageNumbers().map((pageNumber, index) => (
+            <TouchableOpacity key={index} onPress={() => handlePageClick(pageNumber)} disabled={pageNumber === '...' || currentPage === pageNumber}>
+              <Text
+                style={[styles.paginationButton, currentPage === pageNumber && styles.activePage, pageNumber === '...' && styles.disabledButton]}>{pageNumber === '...' ? '...' : pageNumber}</Text>
+            </TouchableOpacity>
+          ))}
+          <TouchableOpacity onPress={handleNextPage} disabled={isNextButtonDisabled}>
+            <Text style={[styles.paginationButton, isNextButtonDisabled && styles.disabledButton]}>Next</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* Footer */}
         <View style={styles.footer}>
@@ -236,12 +273,6 @@ const InterViewPanel = ({ navigation }) => {
         </View>
         
       </ScrollView>
-      {/* Go to top button */}
-      {showScrollToTop && (
-        <TouchableOpacity style={styles.scrollToTopButton} onPress={handleScrollToTop}>
-          <Icon name="arrow-up" size={24} color="#e0f9f6" />
-        </TouchableOpacity>
-      )}
     </View>
   )
 }
@@ -263,7 +294,7 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
   },
   texthead01: {
-    color: 'black',
+    color: '#000000',
     fontSize: 22,
     textAlign: 'left',
     marginLeft: '5%',
@@ -272,7 +303,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   texthead02: {
-    color: 'black',
+    color: '#000000',
     fontSize: 16,
     textAlign: 'justify',
     marginLeft: '5%',
@@ -288,14 +319,14 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: '#000000',
     padding: 5,
     marginLeft: '5%',
     marginRight: '5%',
     marginBottom: '5%',
   },
   elevation: {
-    shadowColor: 'black',
+    shadowColor: '#000000',
     elevation: 3,
   },
   heading01: {
@@ -303,7 +334,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: '5%',
     marginRight: '5%',
-    color: 'black',
+    color: '#000000',
     padding: 5,
   },
   heading02: {
@@ -343,6 +374,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  paginationButton: {
+    fontSize: 15,
+    paddingHorizontal: 6,
+    color: '#808080',
+  },
+  activePage: {
+    fontWeight: 'bold',
+    color: '#000000',
+  },
 })
 
-export default InterViewPanel;
+const ConnectedJob_Interviewpanel = connect(mapStateToProps, mapDispatchToProps)(InterViewPanel);
+
+export default ConnectedJob_Interviewpanel;

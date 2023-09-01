@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
   background: {
     height: 150,
     width: Dimensions.get('window').width,
-    opacity: 0.45,
+    opacity: 0.5,
   },
   texthead01: {
     color: 'black',

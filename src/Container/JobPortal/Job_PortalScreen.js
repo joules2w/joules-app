@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, FlatList, ScrollView, ImageBackground, Dimensions } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { fetchJobs, setFilteredJobs } from '../../redux/actions/jobActions';
 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer';
-import Filter from '../../components/Filter';
+import FilterBy from '../../components/Filter';
 import SearchBox from '../../components/SearchBox';
+import { fetchJobs, setFilteredJobs } from '../../redux/actions/jobActions';
 
 const mapStateToProps = (state) => ({
   jobs: state.jobs.jobs,
@@ -21,119 +19,58 @@ const mapDispatchToProps = {
 };
 
 const Job_portal = ({ navigation, jobs, filteredJobs, fetchJobs, setFilteredJobs }) => {
-  
+
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTotalPages, setSearchTotalPages] = useState(0);
-  const [showScrollToTop, setShowScrollToTop] = useState(false);
-  const scrollViewRef = useRef();
+  const jobsPerPage = 20;
 
-  const jobsPerPage = 100;
-
-  const [filterCriteria] = useState({
-    jobExperience: { jobExperienceFrom: 0, jobExperienceTo: 15 },
-    salaryRange: [0, 100],
-    location: '',
-  });
-
-  const calculateTotalPages = (filteredJobs) => {
-    return Math.ceil(filteredJobs?.length / jobsPerPage);
+  const calculateTotalPages = (totalItems) => {
+    return Math.ceil(totalItems / jobsPerPage);
   };
 
   useEffect(() => {
+    // Fetch all jobs initially
     fetchJobs();
   }, []);
-
-  // const fetchJobs = async () => {
-  //   try {
-  //     const apiurl = `${BASE_URL}job/get_all_jobs?limit=100000`;
-  //     const bearerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDAwNjdhYzQxNjY4ZTI3ZDNjNDFmNDEiLCJpYXQiOjE2ODk4Mzc3Njh9.7kJGZq32P17z3bWosWS0mmoX95pKT2f5g4P63QO17Mw';
-  //     const response = await fetch(apiurl, {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: `Bearer ${bearerToken}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-
-  //     const data = await response.json();
-  //     console.log('Fetched jobs:', data);
-  //     setJobs(data);
-  //   } catch (error) {
-  //     console.error('Error fetching jobs:', error);
-  //   }
-  // };
 
   const handleJobPress = (job) => {
     navigation.navigate('JobDetail', { job });
   };
 
   const handleSearch = useCallback(
-    (searchQuery) => {
-      setSearchQuery(searchQuery);
+    (query) => {
+      setSearchQuery(query);
       setCurrentPage(1);
 
       // Update the filtered jobs based on the search query
-      const filteredJobs = jobs?.data?.filter((job) => {
+      const normalizedQuery = query.toLowerCase();
+      const newFilteredJobs = jobs?.data?.filter((job) => {
         const skills = job.jobSkills || [];
-        const normalizedQuery = searchQuery.toLowerCase();
         return (
           job.jobTitle.toLowerCase().includes(normalizedQuery) ||
+          job.jobDescription.toLowerCase().includes(normalizedQuery) ||
           job.jobLocation.toLowerCase().includes(normalizedQuery) ||
           skills.some((skill) => skill.toLowerCase().includes(normalizedQuery))
         );
       });
 
-      // Calculate the total pages for filtered jobs and update the searchTotalPages state
-      const totalFilteredPages = Math.ceil(filteredJobs?.length / jobsPerPage);
-      setSearchTotalPages(totalFilteredPages);
-
-      // Set the filtered jobs in the state
-      setFilteredJobs(filteredJobs);
-
-      console.log('filteredJobs:', filteredJobs);
-      // console.log('totalPages:', totalFilteredPages);
+      setFilteredJobs(newFilteredJobs);
+      setSearchTotalPages(calculateTotalPages(newFilteredJobs?.length));
     },
-    [jobs.data, jobsPerPage, setFilteredJobs]
+    [jobs, setFilteredJobs]
   );
 
-  useEffect(() => {
-    // Recalculate total pages whenever filteredJobs changes
-    setTotalPages(calculateTotalPages(filteredJobs));
-    console.log('filteredJobs:', filteredJobs);
-    // console.log('totalPages:', totalPages);
-  }, [filteredJobs]);
-
-  useEffect(() => {
-    // Fetch the jobs whenever the search query changes
-    fetchJobs();
-  }, [searchQuery]);
-
-
-  const handleApplyFilter = (filterCriteria) => {
-    // Apply filtering based on the filter criteria and set the filtered jobs
-    // const filteredJobs = jobs?.filter((job) => {
-    //   const { jobExperience, salaryRange, location } = filterCriteria;
-
-    //   // Apply filtering logic here based on jobExperience, salaryRange, and location
-
-    //   return true; // Replace this with your actual filtering logic
-    // });
-
-    setFilteredJobs(filteredJobs || []);
+  const handleClearSearch = () => {
+    setSearchQuery('');
+    setFilteredJobs([]); // Clear filtered jobs
   };
 
   useEffect(() => {
-    if (filterCriteria) {
-      handleApplyFilter(filterCriteria);
-    }
-  }, [filterCriteria]);
-
+    // Recalculate total pages whenever filteredJobs changes
+    setTotalPages(calculateTotalPages(filteredJobs?.length));
+  }, [filteredJobs]);
 
   const renderCellContent = (value) => {
     if (value?.length > 10) {
@@ -154,12 +91,10 @@ const Job_portal = ({ navigation, jobs, filteredJobs, fetchJobs, setFilteredJobs
       return null;
     }
 
-    // Give empty values if the value is null
     const jobTitle = item.jobTitle || '';
     const jobDescription = item.jobDescription || '';
     const jobSkills = item.jobSkills || [];
 
-    // Limiting 3 skills per job
     const skillsToShow = jobSkills.slice(0, 3);
     const remainingSkillsCount = jobSkills.length - 3;
 
@@ -169,13 +104,11 @@ const Job_portal = ({ navigation, jobs, filteredJobs, fetchJobs, setFilteredJobs
           <Text style={styles.heading01}>{jobTitle}</Text>
           <Text style={styles.heading02}>{renderCellContent(jobDescription)}</Text>
           <View style={styles.skillsContainer}>
-            {/* Limiting to first 3 skills only */}
             {skillsToShow.map((skill, index) => (
               <View key={index} style={styles.skillItem}>
                 <Text style={styles.skillText}>{renderskillContent(skill)}</Text>
               </View>
             ))}
-            {/* If there is more than 3 skills, then it shows number of remaining skills */}
             {remainingSkillsCount > 0 && (
               <View style={styles.skillItem}>
                 <Text style={styles.skillText}>+{remainingSkillsCount} more</Text>
@@ -187,17 +120,61 @@ const Job_portal = ({ navigation, jobs, filteredJobs, fetchJobs, setFilteredJobs
     );
   };
 
-  const handleScrollToTop = () => {
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({ y: 0, animated: true });
-    }
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
   };
 
-  const handleScroll = (event) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const isVisible = offsetY > Dimensions.get('window').height;
-    setShowScrollToTop(isVisible);
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const startIndex = (currentPage - 1) * jobsPerPage;
+  const endIndex = startIndex + jobsPerPage;
+  const currentJobs = searchQuery ? filteredJobs?.slice(startIndex, endIndex) : jobs?.data?.slice(startIndex, endIndex);
+
+  const totalPage = Math.ceil((filteredJobs?.length > 0 ? filteredJobs?.length : jobs?.data?.length) / jobsPerPage);
+  console.log('totalPages:', totalPage);
+
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+
+    // Always include the first page number
+    pageNumbers.push(1);
+
+    // Calculate the range of page numbers to be displayed around the current page
+    const range = 2;
+    let start = Math.max(2, currentPage - range);
+    let end = Math.min(totalPage - 1, currentPage + range);
+
+    // Add the page numbers in the range
+    for (let i = start; i <= end; i++) {
+      pageNumbers.push(i);
+    }
+
+    // Add the last page number if it's not already included
+    if (!pageNumbers.includes(totalPage) && totalPage > 1) {
+      pageNumbers.push(totalPage);
+    }
+
+    // Add the dots if needed
+    if (!pageNumbers.includes(2)) {
+      pageNumbers.splice(1, 0, '...');
+    }
+    if (!pageNumbers.includes(totalPage - 1) && totalPage > 2) {
+      pageNumbers.splice(pageNumbers.length - 1, 0, '...');
+    }
+
+    console.log('pageNumbers:', pageNumbers);
+
+    return pageNumbers;
+  };
+
+  const isPreviousButtonDisabled = currentPage === 1;
+  const isNextButtonDisabled = currentPage === totalPage;
 
   const logout = () => {
     navigation.navigate('Login');
@@ -217,11 +194,7 @@ const Job_portal = ({ navigation, jobs, filteredJobs, fetchJobs, setFilteredJobs
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer} ref={scrollViewRef}
-        onScroll={handleScroll} // Added event handler for scrolling
-        scrollEventThrottle={5} // Adjust the scroll event throttle as needed
-      >
-        {/* Heading */}
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
 
         {/* Image Background */}
@@ -237,26 +210,38 @@ const Job_portal = ({ navigation, jobs, filteredJobs, fetchJobs, setFilteredJobs
 
         {/* Search and Filter */}
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%' }}>
-          <SearchBox searchQuery={searchQuery} onSearch={handleSearch} />
-          <Filter onApplyFilter={handleApplyFilter} />
+          <SearchBox searchQuery={searchQuery} onSearch={handleSearch} onClear={handleClearSearch} />
+          <FilterBy />
         </View>
 
         {/* Job List */}
         <FlatList scrollEnabled={false}
-          data={filteredJobs.length > 0 ? filteredJobs : jobs.data}
+          data={currentJobs}
           keyExtractor={(item) => item?.jobId?.toString()}
-          renderItem={renderJobItem} />
+          renderItem={renderJobItem}/>
 
+        {/* Pagination */}
+        <View style={styles.paginationContainer}>
+          <TouchableOpacity onPress={handlePrevPage} disabled={isPreviousButtonDisabled}>
+            <Text style={[styles.paginationButton, isPreviousButtonDisabled && styles.disabledButton]}>Previous</Text>
+          </TouchableOpacity>
+          {getPageNumbers().map((pageNumber, index) => (
+            <TouchableOpacity key={index} onPress={() => handlePageClick(pageNumber)} disabled={pageNumber === '...' || currentPage === pageNumber}>
+              <Text
+                style={[styles.paginationButton, currentPage === pageNumber && styles.activePage, pageNumber === '...' && styles.disabledButton]}>{pageNumber === '...' ? '...' : pageNumber}</Text>
+            </TouchableOpacity>
+          ))}
+          <TouchableOpacity onPress={handleNextPage} disabled={isNextButtonDisabled}>
+            <Text style={[styles.paginationButton, isNextButtonDisabled && styles.disabledButton]}>Next</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Footer */}
         <View style={styles.footer}>
           <Footer />
         </View>
+
       </ScrollView>
-      {/* Go to top button */}
-      {showScrollToTop && (
-        <TouchableOpacity style={styles.scrollToTopButton} onPress={handleScrollToTop}>
-          <Icon name="arrow-up" size={24} color="#e0f9f6" />
-        </TouchableOpacity>
-      )}
     </View>
   );
 };
@@ -273,7 +258,7 @@ const styles = StyleSheet.create({
   background: {
     height: 150,
     width: Dimensions.get('window').width,
-    opacity: 0.45,
+    opacity: 0.5,
   },
   texthead01: {
     color: 'black',
@@ -363,15 +348,6 @@ const styles = StyleSheet.create({
   activePage: {
     fontWeight: 'bold',
     color: '#000000',
-  },
-  scrollToTopButton: {
-    position: 'relative',
-    bottom: 20,
-    alignSelf: 'flex-end',
-    backgroundColor: '#808080',
-    borderRadius: 20,
-    padding: '2%',
-    opacity: 0.9,
   },
 })
 

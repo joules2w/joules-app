@@ -41,6 +41,13 @@ const MoreDetails = ({ route, navigation }) => {
         ));
     };
 
+    const renderCellContent = (value) => {
+        if (value?.length > 10) {
+          return <Text>{value.substring(0, 10)}</Text>;
+        }
+        return <Text>{value}</Text>;
+      };
+
     const logout = () => {
         navigation.navigate('Login')
     }
@@ -63,7 +70,7 @@ const MoreDetails = ({ route, navigation }) => {
                 <Header logout={logout} interviewpanel={interviewpanel} jobportal={jobportal} home={home} sparsh={sparsh} />
                 <ImageBackground style={styles.background} source={require('../../../Assets/Images/background.jpg')}>
                     <Text style={styles.texthead01}>Interview Panel For {job.jobTitle}</Text>
-                    <Text style={styles.texthead02}>Job created on 28th September 2015</Text>
+                    <Text style={styles.texthead02}>Job created on {renderCellContent(job.jobCreatedAt)}</Text>
                     <Text style={styles.texthead03}>₹ 4000 per panel member</Text>
                 </ImageBackground>
 
@@ -97,7 +104,7 @@ const styles = StyleSheet.create({
     background: {
         height: 150,
         width: Dimensions.get('window').width,
-        opacity: 0.45,
+        opacity: 0.5,
     },
     texthead01: {
         color: 'black',

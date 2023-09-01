@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, TextInput, Modal, TouchableWi
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const SideMenu = () => {
+const AssignPanelmember = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const animatedValue = new Animated.Value(0);
 
@@ -319,4 +319,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SideMenu;
+export default AssignPanelmember;

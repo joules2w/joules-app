@@ -476,6 +476,100 @@ const Sparsh = ({ navigation, onSelectionConfirmed }) => {
           )}
           {activeTab === 'Tab2' && (
             <View>
+              <View style={styles.tabview}>
+                <Text style={styles.text}>FilterBy</Text>
+                <TouchableOpacity onPress={clearFilter}>
+                  <Text style={styles.clearfiltertext}>Clear Filter</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Select Ticket priority */}
+              <TouchableOpacity onPress={toggleDropdown} style={styles.dropdownButton}>
+                <View style={{flexDirection : 'row', justifyContent:'space-evenly' }}>
+                <Text style={styles.dropdownButtonText}>Ticket priority : {selectedPriority}</Text>
+                <Icon name="chevron-down" size={15} color="#666" style={styles.searchIcon} />
+                </View>
+              </TouchableOpacity>
+              <Modal transparent visible={isPriorityDropdownOpen} animationType="fade"
+                onRequestClose={() => setIsPriorityDropdownOpen(false)}>
+                <TouchableOpacity style={styles.backdrop} onPress={handlePriorityPress}>
+                  <View style={styles.modalContainer}>
+                    <View style={styles.dropdownList}>
+                      {PriorityOptions.map((option, index) => (
+                        <TouchableOpacity style={styles.dropdownOption} key={index}
+                          onPress={() => handlePrioritySelect(option)}>
+                          <Text style={styles.dropdownOptionText}>{option}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </Modal>
+
+              {/* Select Ticket assign to */}
+              <TouchableOpacity style={styles.dropdownButton} onPress={toggleTicketDropdown}>
+                <Text style={styles.dropdownButtonText}>Ticket Assigned To </Text>
+              </TouchableOpacity>
+              <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={() => setIsPriorityDropdownOpen(false)}>
+                <TouchableOpacity style={styles.backdrop} onPress={handleTicketPress}>
+                  <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                      <FlatList scrollEnabled={true}
+                        data={assign}
+                        keyExtractor={(item) => item?.jobId?.toString()}
+                        renderItem={renderName} />
+                      <TouchableOpacity style={styles.confirmbutton} onPress={handleSelectionConfirm}>
+                        <Text style={styles.confirmtext}>Confirm</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </Modal>
+
+              {/* Select Start and End date */}
+              <TouchableOpacity onPress={toggleDateDropdown} style={styles.dropdownButton}>
+                <Text style={styles.dropdownButtonText}>Created Date : {selectedDate}</Text>
+              </TouchableOpacity>
+              <Modal transparent visible={isDateDropdownOpen} animationType="fade" onRequestClose={() => setIsDateDropdownOpen(false)}>
+                <TouchableOpacity style={styles.backdrop} onPress={handleBackdropPress}>
+                  <View style={styles.modalContainer}>
+                    <View style={styles.dropdownList}>
+                      <TouchableOpacity style={styles.dropdownOption} onPress={() => handleDateSelect('Today')}>
+                        <Text style={styles.dropdownOptionText}>Today</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.dropdownOption} onPress={() => handleDateSelect('Yesterday')}>
+                        <Text style={styles.dropdownOptionText}>Yesterday</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.dropdownOption} onPress={() => handleDateSelect('This week')}>
+                        <Text style={styles.dropdownOptionText}>This week</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.dropdownOption} onPress={() => handleDateSelect('Custom date')}>
+                        <Text style={styles.dropdownOptionText}>Custom date</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </Modal>
+              {/* Render the date selector based on the selectedDate */}
+              {selectedDate === 'Custom date' && (
+                <View style={styles.dateSelectorContainer}>
+                  {renderDateSelector()}
+                </View>
+              )}
+
+              {/* Search */}
+              <View style={styles.view}>
+                <Icon name="search" size={15} color="#666" style={styles.searchIcon} />
+                <TextInput style={styles.textinput} maxLength={20}
+                  placeholder="search with ticket number here.."
+                  keyboardType="numeric"
+                  placeholderTextColor="#808080" />
+              </View>
+
+              {/* Tickets */}
+              <View>
+                {renderTabContent()}
+              </View>
             </View>
           )}
           <View style={styles.footer}><Footer /></View>
@@ -497,7 +591,7 @@ const styles = StyleSheet.create({
   background: {
     height: 150,
     width: Dimensions.get('window').width,
-    opacity: 0.6,
+    opacity: 0.5,
   },
   texthead01: {
     marginLeft: '8%',
