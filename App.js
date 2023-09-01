@@ -2,26 +2,32 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import LoginScreen from './Pages/LoginScreen';
-import OtpScreen from './Pages/OtpScreen';
-import Home from './Pages/Home';
-import Job_PortalScreen from './Pages/Job_PortalScreen';
-import MyReferrals from './Pages/My_referrals';
-import InterviewPanel from './Pages/InterviewPanel';
-import MoreDetails from './Pages/MoreDetails';
-import SideMenu from './Pages/SideMenu';
-import ProfileScreen from './Pages/ProfileScreen';
-import AssignPanelMember from './Pages/AssignPanelMember';
-import Sparsh from './Pages/Sparsh';
-import Ticket from './Pages/ticket';
-import Other from './Pages/Other';
-import JobDetails from './Pages/JobDetails';
-import OpenTicket from './Pages/OpenTicket';
-
+import LoginScreen from './src/components/main/Login/LoginScreen';
+import OtpScreen from './src/components/main/Login/OtpScreen';
+import Home from './src/components/home/Home';
+import Job_PortalScreen from './src/components/main/jobportal/Job_PortalScreen';
+import MyReferrals from './src/components/common/My_referrals';
+import InterviewPanel from './src/components/main/interviewpanel/InterviewPanel';
+import MoreDetails from './src/components/main/interviewpanel/MoreDetails';
+import SideMenu from './src/components/common/header/SideMenu';
+import ProfileScreen from './src/components/common/header/ProfileScreen';
+import AssignPanelMember from './src/components/main/interviewpanel/AssignPanelMember';
+import Sparsh from './src/components/main/sparsh/Sparsh';
+import Ticket from './src/components/main/sparsh/ticket';
+import Other from './src/components/main/Login/Other';
+import JobDetails from './src/components/main/jobportal/JobDetails';
+import OpenTicket from './src/components/main/sparsh/OpenTicket';
+import TicketDetails from './src/components/main/sparsh/TicketDetails';
+import TimeandDate from './src/components/main/Login/TimeandDate';
+import { Provider } from 'react-redux';
+import store from './src/store';
+// import { createStore, combineReducers } from 'redux';
+// import jobReducer from './';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown : false }} />
@@ -36,14 +42,55 @@ const App = () => {
         <Stack.Screen name='AssignPanelMember' component={AssignPanelMember} options={{ headerShown : false }} />
         <Stack.Screen name='Sparsh' component={Sparsh} options={{ headerShown : false }} />
         <Stack.Screen name='ticket' component={Ticket} options={{ headerShown : false }} />
-        <Stack.Screen name="Other" component={Other} options={{ headerShown : false }} />
+        <Stack.Screen name="Others" component={Other} options={{ headerShown : false }} />
         <Stack.Screen name='JobDetail' component={JobDetails} options={{ headerShown : false }} />
         <Stack.Screen name='OpenTicket' component={OpenTicket} options={{ headerShown : false }} />
+        <Stack.Screen name='TicketDetails' component={TicketDetails} options={{ headerShown : false }} />
+        <Stack.Screen name='TimeandDate' component={TimeandDate} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
+     </Provider>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

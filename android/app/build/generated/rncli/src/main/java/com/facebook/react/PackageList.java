@@ -11,12 +11,12 @@ import com.facebook.react.shell.MainReactPackage;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-// @react-native-community/datetimepicker
-import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 // @react-native-community/viewpager
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 // @react-native-picker/picker
 import com.reactnativecommunity.picker.RNCPickerPackage;
+// react-native-date-picker
+import com.henninghall.date_picker.DatePickerPackage;
 // react-native-document-picker
 import com.reactnativedocumentpicker.RNDocumentPickerPackage;
 // react-native-gesture-handler
@@ -76,9 +76,9 @@ public class PackageList {
   public ArrayList<ReactPackage> getPackages() {
     return new ArrayList<>(Arrays.<ReactPackage>asList(
       new MainReactPackage(mConfig),
-      new RNDateTimePickerPackage(),
       new RNCViewPagerPackage(),
       new RNCPickerPackage(),
+      new DatePickerPackage(),
       new RNDocumentPickerPackage(),
       new RNGestureHandlerPackage(),
       new PagerViewPackage(),
