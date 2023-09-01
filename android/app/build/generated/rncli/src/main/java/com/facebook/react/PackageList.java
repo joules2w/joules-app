@@ -11,6 +11,8 @@ import com.facebook.react.shell.MainReactPackage;
 import java.util.Arrays;
 import java.util.ArrayList;
 
+// @react-native-community/checkbox
+import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 // @react-native-community/datetimepicker
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 // @react-native-community/viewpager
@@ -21,12 +23,12 @@ import com.reactnativecommunity.picker.RNCPickerPackage;
 import com.reactnativedocumentpicker.RNDocumentPickerPackage;
 // react-native-fs
 import com.rnfs.RNFSPackage;
+// react-native-geolocation-service
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-pager-view
 import com.reactnativepagerview.PagerViewPackage;
-// react-native-reanimated
-import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 // react-native-screens
@@ -78,14 +80,15 @@ public class PackageList {
   public ArrayList<ReactPackage> getPackages() {
     return new ArrayList<>(Arrays.<ReactPackage>asList(
       new MainReactPackage(mConfig),
+      new ReactCheckBoxPackage(),
       new RNDateTimePickerPackage(),
       new RNCViewPagerPackage(),
       new RNCPickerPackage(),
       new RNDocumentPickerPackage(),
       new RNFSPackage(),
+      new RNFusedLocationPackage(),
       new RNGestureHandlerPackage(),
       new PagerViewPackage(),
-      new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
       new VectorIconsPackage()

@@ -9,14 +9,15 @@ MERGED from [com.facebook.flipper:flipper-network-plugin:0.125.0] C:\Users\Inter
 MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.125.0] C:\Users\Intership\.gradle\caches\transforms-3\024dbf42cdc8215807d769da963f7240\transformed\jetified-flipper-fresco-plugin-0.125.0\AndroidManifest.xml:8:1-15:12
 MERGED from [com.facebook.flipper:flipper:0.125.0] C:\Users\Intership\.gradle\caches\transforms-3\7791fe77b8ab9730d0e25ce55c6aa090\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:8:1-18:12
 MERGED from [:react-native-vector-icons] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-community_checkbox] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-community\checkbox\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-community_datetimepicker] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-community\datetimepicker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-community_viewpager] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-community\viewpager\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-picker_picker] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-picker\picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-document-picker] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-document-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-fs] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-geolocation-service] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-geolocation-service\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-gesture-handler] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-pager-view] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
-MERGED from [:react-native-reanimated] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-reanimated\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-safe-area-context] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-screens\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.react:react-android:0.71.11] C:\Users\Intership\.gradle\caches\transforms-3\e72c384b604489998aa7d7b6ebf2cf81\transformed\jetified-react-android-0.71.11-debug\AndroidManifest.xml:2:1-11:12
@@ -44,6 +45,11 @@ MERGED from [androidx.sqlite:sqlite-framework:2.1.0] C:\Users\Intership\.gradle\
 MERGED from [androidx.appcompat:appcompat-resources:1.4.1] C:\Users\Intership\.gradle\caches\transforms-3\9b230f311cc35dd4147b6acf97323ff0\transformed\jetified-appcompat-resources-1.4.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.autofill:autofill:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\8a384341752d328d6389029a8be9e815\transformed\jetified-autofill-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\4c9158d8e99590720e6250d25b3c2568\transformed\jetified-viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-location:18.0.0] C:\Users\Intership\.gradle\caches\transforms-3\9054a2f9dfa0d5799e7cc5ddae50e32b\transformed\jetified-play-services-location-18.0.0\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:17:1-29:12
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\Intership\.gradle\caches\transforms-3\69f4276bdd2e30cb44adb242d84528b7\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:17.2.0] C:\Users\Intership\.gradle\caches\transforms-3\b0a4493d8358972577fca232ff657b29\transformed\jetified-play-services-tasks-17.2.0\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\5eb6ecffddd002f3888c333c623272c2\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:17:1-28:12
 MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Intership\.gradle\caches\transforms-3\009475ad1e3b80ac1111b584b7f6f8f8\transformed\fragment-1.3.6\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.activity:activity:1.2.4] C:\Users\Intership\.gradle\caches\transforms-3\6f0cc7f50c41ecc30c8e0f4e62245db9\transformed\jetified-activity-1.2.4\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.emoji2:emoji2-views-helper:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\b17465c459985364903baa36c5dca517\transformed\jetified-emoji2-views-helper-1.0.0\AndroidManifest.xml:17:1-24:12
@@ -115,6 +121,16 @@ MERGED from [com.facebook.soloader:soloader:0.10.4] C:\Users\Intership\.gradle\c
 MERGED from [com.facebook.soloader:soloader:0.10.4] C:\Users\Intership\.gradle\caches\transforms-3\849a2bfd51db2f8814130636457ff317\transformed\jetified-soloader-0.10.4\AndroidManifest.xml:11:5-20
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\c20482aa656a8f35781a177390b7232d\transformed\material-1.1.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\c20482aa656a8f35781a177390b7232d\transformed\material-1.1.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-location:18.0.0] C:\Users\Intership\.gradle\caches\transforms-3\9054a2f9dfa0d5799e7cc5ddae50e32b\transformed\jetified-play-services-location-18.0.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:18.0.0] C:\Users\Intership\.gradle\caches\transforms-3\9054a2f9dfa0d5799e7cc5ddae50e32b\transformed\jetified-play-services-location-18.0.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\Intership\.gradle\caches\transforms-3\69f4276bdd2e30cb44adb242d84528b7\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\Intership\.gradle\caches\transforms-3\69f4276bdd2e30cb44adb242d84528b7\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-tasks:17.2.0] C:\Users\Intership\.gradle\caches\transforms-3\b0a4493d8358972577fca232ff657b29\transformed\jetified-play-services-tasks-17.2.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:17.2.0] C:\Users\Intership\.gradle\caches\transforms-3\b0a4493d8358972577fca232ff657b29\transformed\jetified-play-services-tasks-17.2.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\5eb6ecffddd002f3888c333c623272c2\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\5eb6ecffddd002f3888c333c623272c2\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.emoji2:emoji2:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\f1880cf4497a0a81e315b120458930c1\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:25:5-35:19
 MERGED from [androidx.emoji2:emoji2:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\f1880cf4497a0a81e315b120458930c1\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:25:5-35:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Intership\.gradle\caches\transforms-3\d734cd817a6eba2dc56ecab0ed4b46f1\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:25:5-35:19
@@ -187,6 +203,8 @@ MERGED from [com.facebook.flipper:flipper:0.125.0] C:\Users\Intership\.gradle\ca
 MERGED from [com.facebook.flipper:flipper:0.125.0] C:\Users\Intership\.gradle\caches\transforms-3\7791fe77b8ab9730d0e25ce55c6aa090\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:11:5-13:41
 MERGED from [:react-native-vector-icons] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-vector-icons] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-community_checkbox] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-community\checkbox\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-community_checkbox] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-community\checkbox\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-community_datetimepicker] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-community\datetimepicker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-community_datetimepicker] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-community\datetimepicker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-community_viewpager] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\@react-native-community\viewpager\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
@@ -197,12 +215,12 @@ MERGED from [:react-native-document-picker] C:\Users\Intership\Documents\GitHub\
 MERGED from [:react-native-document-picker] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-document-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-fs] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-fs] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-geolocation-service] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-geolocation-service\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-geolocation-service] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-geolocation-service\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-gesture-handler] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-gesture-handler] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-pager-view] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-pager-view] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-pager-view\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-reanimated] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-reanimated\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-reanimated] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-reanimated\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-screens\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
@@ -257,6 +275,16 @@ MERGED from [androidx.autofill:autofill:1.1.0] C:\Users\Intership\.gradle\caches
 MERGED from [androidx.autofill:autofill:1.1.0] C:\Users\Intership\.gradle\caches\transforms-3\8a384341752d328d6389029a8be9e815\transformed\jetified-autofill-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\4c9158d8e99590720e6250d25b3c2568\transformed\jetified-viewpager2-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\4c9158d8e99590720e6250d25b3c2568\transformed\jetified-viewpager2-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.gms:play-services-location:18.0.0] C:\Users\Intership\.gradle\caches\transforms-3\9054a2f9dfa0d5799e7cc5ddae50e32b\transformed\jetified-play-services-location-18.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:18.0.0] C:\Users\Intership\.gradle\caches\transforms-3\9054a2f9dfa0d5799e7cc5ddae50e32b\transformed\jetified-play-services-location-18.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\Intership\.gradle\caches\transforms-3\69f4276bdd2e30cb44adb242d84528b7\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\Intership\.gradle\caches\transforms-3\69f4276bdd2e30cb44adb242d84528b7\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:17.2.0] C:\Users\Intership\.gradle\caches\transforms-3\b0a4493d8358972577fca232ff657b29\transformed\jetified-play-services-tasks-17.2.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:17.2.0] C:\Users\Intership\.gradle\caches\transforms-3\b0a4493d8358972577fca232ff657b29\transformed\jetified-play-services-tasks-17.2.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\5eb6ecffddd002f3888c333c623272c2\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\5eb6ecffddd002f3888c333c623272c2\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Intership\.gradle\caches\transforms-3\009475ad1e3b80ac1111b584b7f6f8f8\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Intership\.gradle\caches\transforms-3\009475ad1e3b80ac1111b584b7f6f8f8\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.activity:activity:1.2.4] C:\Users\Intership\.gradle\caches\transforms-3\6f0cc7f50c41ecc30c8e0f4e62245db9\transformed\jetified-activity-1.2.4\AndroidManifest.xml:20:5-22:41
@@ -351,6 +379,20 @@ uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from [:react-native-fs] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:5-81
 	android:name
 		ADDED from [:react-native-fs] C:\Users\Intership\Documents\GitHub\New folder\joules-app\node_modules\react-native-fs\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:22-78
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:23:9-26:75
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:25:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:26:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\d733e851003cba4e6ef62cce1879546b\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:24:13-79
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\5eb6ecffddd002f3888c333c623272c2\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:23:9-25:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\5eb6ecffddd002f3888c333c623272c2\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:17.5.0] C:\Users\Intership\.gradle\caches\transforms-3\5eb6ecffddd002f3888c333c623272c2\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:24:13-58
 provider#androidx.startup.InitializationProvider
 ADDED from [androidx.emoji2:emoji2:1.0.0] C:\Users\Intership\.gradle\caches\transforms-3\f1880cf4497a0a81e315b120458930c1\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
 MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Intership\.gradle\caches\transforms-3\d734cd817a6eba2dc56ecab0ed4b46f1\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:26:9-34:20

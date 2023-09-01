@@ -15,7 +15,6 @@ import Sparsh from './src/Container/Sparsh/Sparsh';
 import Ticket from './src/Container/Sparsh/Createticket';
 import TicketDetails from './src/Container/Sparsh/TicketDetails';
 import store from './src/redux/store';
-import Others from './src/Container/Login/Others'
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +34,6 @@ const App = () => {
         <Stack.Screen name='Sparsh' component={Sparsh} options={{ headerShown : false }} />
         <Stack.Screen name='ticket' component={Ticket} options={{ headerShown : false }} />
         <Stack.Screen name='TicketDetails' component={TicketDetails} options={{ headerShown : false }} />
-        <Stack.Screen name='Others' component={Others} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

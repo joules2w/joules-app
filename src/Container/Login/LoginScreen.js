@@ -66,7 +66,6 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View>
           {/* Logo and Headings */}
           <Image style={styles.image} source={require('../../Assets/Images/logo.jpg')} />
           <Text style={styles.texthead02}>Innovative Talent Solution</Text>
@@ -93,10 +92,6 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('Others')}>
-              <Text style={styles.buttonText}>Others</Text>
-            </TouchableOpacity>
-        </View>
       </ScrollView>
     </View>
   );

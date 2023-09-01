@@ -16,7 +16,7 @@ const MoreDetails = ({ route, navigation }) => {
 
         for (let i = 0; i < skills.length; i++) {
             const skill = skills[i];
-            const isLongSkill = skill.length > 20;
+            const isLongSkill = skill.length > 150;
 
             if (isLongSkill || row.length === 3) {
                 rows.push(row);
